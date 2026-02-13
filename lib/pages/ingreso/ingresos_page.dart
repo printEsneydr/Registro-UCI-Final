@@ -28,10 +28,12 @@ class _IngresosPageState extends State<IngresosPage> {
             ? TextField(
                 controller: _searchController,
                 autofocus: true,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: "Buscar paciente...",
                   border: InputBorder.none,
-                  hintStyle: TextStyle(color: Colors.white70),
+                  hintStyle: TextStyle(
+                    color: Colors.white.withValues(alpha: 0.7),
+                  ),
                 ),
                 style: const TextStyle(color: Colors.white),
                 onChanged: (value) {
@@ -39,9 +41,16 @@ class _IngresosPageState extends State<IngresosPage> {
                 },
               )
             : const Text("Lista de Ingresos"),
-        actions: [
-          IconButton(
-            icon: Icon(_isSearching ? Icons.close : Icons.search),
+        actions: const [
+          LogoutIconButton(),
+        ],
+      ),
+      body: IngresosListWidget(searchQuery: _searchController.text),
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton.small(
+            heroTag: 'search',
             onPressed: () {
               setState(() {
                 if (_isSearching) {
@@ -50,12 +59,18 @@ class _IngresosPageState extends State<IngresosPage> {
                 _isSearching = !_isSearching;
               });
             },
+            backgroundColor: _isSearching
+                ? Theme.of(context).colorScheme.error
+                : Theme.of(context).colorScheme.secondary,
+            child: Icon(
+              _isSearching ? Icons.close : Icons.search,
+              color: Colors.white,
+            ),
           ),
-          const LogoutIconButton(),
+          const SizedBox(height: 8),
+          const CreateIngresoFAB(),
         ],
       ),
-      body: IngresosListWidget(searchQuery: _searchController.text),
-      floatingActionButton: const CreateIngresoFAB(),
     );
   }
 }
