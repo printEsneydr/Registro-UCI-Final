@@ -136,21 +136,6 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
     );
   }
 
-  Widget _buildParameterRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2.0),
-      child: Row(
-        children: [
-          Text(
-            '$label: ',
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          Text(value),
-        ],
-      ),
-    );
-  }
-
   List<Widget> _buildTimeList(
     List<MonitoriaHemodinamica> monitorias,
     BuildContext context,

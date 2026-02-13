@@ -412,21 +412,6 @@ class _ControlDeRiesgosPageState extends State<ControlDeRiesgosPage> {
     );
   }
 
-  Widget _buildStatusChip(String label, String value, {Color? color}) {
-    return Chip(
-      label: Text('$label: $value'),
-      backgroundColor: color?.withOpacity(0.2),
-      labelStyle: TextStyle(
-        color: color ?? Colors.black,
-        fontWeight: FontWeight.bold,
-      ),
-      side: BorderSide(color: color ?? Colors.grey),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-    );
-  }
-
   Color _getRiskColor(String risk) {
     switch (risk.toLowerCase()) {
       case 'alto':

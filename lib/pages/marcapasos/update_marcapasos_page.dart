@@ -102,7 +102,7 @@ class _EditMarcapasoPageState extends ConsumerState<EditMarcapasoPage> {
                   if (pickedDate != null) {
                     setState(() {
                       fechaController.text =
-                          DateFormat('yyyy-MM-dd').format(pickedDate!);
+                          DateFormat('yyyy-MM-dd').format(pickedDate);
                     });
                   }
                 },

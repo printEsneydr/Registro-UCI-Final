@@ -59,13 +59,13 @@ class ListadoCateteresPage extends ConsumerWidget {
             itemCount: cateteres.length,
             itemBuilder: (context, index) {
               final cateter = cateteres[index];
-              final fechaInsercion = cateter.fechaInsercion ?? DateTime.now();
+              final fechaInsercion = cateter.fechaInsercion;
               final fechaRetiro = cateter.fechaRetiro;
               final diasEnUso = fechaRetiro == null
                   ? DateTime.now().difference(fechaInsercion).inDays
                   : fechaRetiro.difference(fechaInsercion).inDays;
               final isActive = fechaRetiro == null;
-              final tipoCateter = (cateter.tipo ?? '').trim().toLowerCase();
+              final tipoCateter = cateter.tipo.trim().toLowerCase();
               final isPeriferico = tipoCateter.contains("periférico");
 
               return Card(
@@ -95,7 +95,7 @@ class ListadoCateteresPage extends ConsumerWidget {
                     ),
                   ),
                   title: Text(
-                    cateter.tipo ?? 'Tipo no especificado',
+                    cateter.tipo,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -175,13 +175,13 @@ class ListadoCateteresPage extends ConsumerWidget {
                     _buildInfoRow(
                       icon: Icons.location_on,
                       label: 'Sitio',
-                      value: cateter.sitio ?? 'No especificado',
+                      value: cateter.sitio,
                     ),
                     const SizedBox(height: 12),
                     _buildInfoRow(
                       icon: Icons.place,
                       label: 'Procedencia',
-                      value: cateter.lugarProcedencia ?? 'No especificado',
+                      value: cateter.lugarProcedencia,
                     ),
                     if (fechaRetiro != null) ...[
                       const SizedBox(height: 12),

@@ -165,23 +165,6 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
     }
   }
 
-  String _calcularRiesgoUPP() {
-    final manana = int.tryParse(uppMananaController.text) ?? 0;
-    final tarde = int.tryParse(uppTardeController.text) ?? 0;
-    final noche = int.tryParse(uppNocheController.text) ?? 0;
-
-    final promedio = (manana + tarde + noche) / 3;
-
-    // Comprobamos el promedio según los rangos definidos
-    if (promedio < 12) {
-      return 'Alto'; // Riesgo alto
-    } else if (promedio >= 13 && promedio <= 14) {
-      return 'Medio'; // Riesgo medio
-    } else {
-      return 'Bajo'; // Riesgo bajo
-    }
-  }
-
   String _calcularRiesgoCaida() {
     final manana = int.tryParse(caidaMananaController.text) ?? 0;
     final tarde = int.tryParse(caidaTardeController.text) ?? 0;

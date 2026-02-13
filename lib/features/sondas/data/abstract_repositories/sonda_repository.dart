@@ -19,4 +19,9 @@ abstract class SondaRepository {
   /// Obtiene todas las sondas asociadas a un ingreso específico.
   /// [idIngreso] es el ID del ingreso cuyos registros de sondas se van a recuperar.
   Stream<List<Sonda>> getSondas(String idIngreso);
+
+  /// Obtiene una sonda específica por su ID.
+  /// [id] es el ID de la sonda a obtener.
+  /// [idIngreso] es el ID del ingreso donde se encuentra la sonda.
+  Future<Sonda?> getSondaById(String id, String idIngreso);
 }

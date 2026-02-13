@@ -72,9 +72,9 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
 
     // Inicializar valores con los datos actuales
     tieneUPP = widget.controlDeRiesgos.tieneUPP;
-    uppResuelta = widget.controlDeRiesgos.uppResuelta ?? false;
-    enAislamiento = widget.controlDeRiesgos.enAislamiento ?? false;
-    usaAnticoagulantes = widget.controlDeRiesgos.usaAnticoagulantes ?? false;
+    uppResuelta = widget.controlDeRiesgos.uppResuelta;
+    enAislamiento = widget.controlDeRiesgos.enAislamiento;
+    usaAnticoagulantes = widget.controlDeRiesgos.usaAnticoagulantes;
     tieneEventoAdversoCaida =
         widget.controlDeRiesgos.numeroReporteCaida != null;
 

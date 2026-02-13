@@ -49,11 +49,6 @@ class _UpdateSondaFormState extends ConsumerState<UpdateSondaForm> {
   Widget build(BuildContext context) {
     final updateSondaState = ref.watch(updateSondaControllerProvider);
 
-    // ✅ Calcular días en uso
-    int diasEnUso = fechaRetiro == null
-        ? DateTime.now().difference(fechaColocacion).inDays
-        : fechaRetiro!.difference(fechaColocacion).inDays;
-
     return Form(
       key: _formKey,
       child: Column(

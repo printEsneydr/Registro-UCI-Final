@@ -54,7 +54,7 @@ final actualizarCateterProvider = FutureProvider.family<
     await repository.updateCateter(
         params.idIngreso, params.idCateter, params.dto);
     ref.invalidate(allCateteresProvider);
-    ref.refresh(cateteresByIngresoProvider(params.idIngreso));
+    ref.invalidate(cateteresByIngresoProvider(params.idIngreso));
   } catch (e) {
     throw Exception("⚠️ Error al actualizar el catéter: $e");
   }
