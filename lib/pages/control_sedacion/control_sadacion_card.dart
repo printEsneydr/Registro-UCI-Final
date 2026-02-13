@@ -19,7 +19,7 @@ class ControlSedacionCard extends ConsumerWidget {
       idIngreso: idIngreso,
       idRegistroDiario: idRegistroDiario,
     );
-    final sedacionData = ref.watch(controlSedacionProvider(params));
+    final sedacionData = ref.watch(controlSedacionStreamProvider(params));
 
     return Card(
       margin: const EdgeInsets.all(16.0),
@@ -379,7 +379,7 @@ class _SelectorSedacionDialogState
   }
 
   Future<void> _cargarDatosExistente() async {
-    final controles = ref.read(controlSedacionProvider(ControlSedacionParams(
+    final controles = ref.read(controlSedacionStreamProvider(ControlSedacionParams(
       idIngreso: widget.idIngreso,
       idRegistroDiario: widget.idRegistroDiario,
     )));
@@ -601,7 +601,7 @@ class _SelectorSedacionDialogState
         ),
       ).future);
 
-      ref.invalidate(controlSedacionProvider(ControlSedacionParams(
+      ref.invalidate(controlSedacionStreamProvider(ControlSedacionParams(
         idIngreso: widget.idIngreso,
         idRegistroDiario: widget.idRegistroDiario,
       )));

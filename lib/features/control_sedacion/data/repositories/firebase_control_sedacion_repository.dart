@@ -18,6 +18,21 @@ class FirebaseControlSedacionRepository implements ControlSedacionRepository {
   }
 
   @override
+  Stream<List<ControlSedacion>> getControlesSedacionStream(
+    String idIngreso,
+    String idRegistroDiario,
+  ) {
+    return _getCollectionRef(idIngreso, idRegistroDiario)
+        .orderBy('orden', descending: false)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) {
+        return ControlSedacion.fromJson(doc.data(), id: doc.id);
+      }).toList();
+    });
+  }
+
+  @override
   Future<List<ControlSedacion>> getControlesSedacion(
     String idIngreso,
     String idRegistroDiario,

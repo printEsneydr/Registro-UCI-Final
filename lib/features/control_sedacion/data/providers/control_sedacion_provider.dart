@@ -51,45 +51,24 @@ class GuardarControlSedacionParams {
   });
 }
 
-// Provider para obtener controles de sedación
-final controlSedacionProvider =
-    FutureProvider.family<List<ControlSedacion>, ControlSedacionParams>(
-  (ref, params) async {
+final controlSedacionStreamProvider =
+    StreamProvider.family<List<ControlSedacion>, ControlSedacionParams>(
+  (ref, params) {
     final repository = ref.watch(controlSedacionRepositoryProvider);
-
-    try {
-      List<ControlSedacion> controles;
-
-      if (params.idControlSedacion != null) {
-        final control = await repository.getControlSedacionById(
-          params.idIngreso,
-          params.idRegistroDiario,
-          params.idControlSedacion!,
-        );
-        controles = control != null ? [control] : [];
-      } else {
-        controles = await repository.getControlesSedacion(
-          params.idIngreso,
-          params.idRegistroDiario,
-        );
-      }
-
-      return controles;
-    } catch (e) {
-      throw Exception('Error al obtener controles de sedación: $e');
-    }
+    return repository.getControlesSedacionStream(
+      params.idIngreso,
+      params.idRegistroDiario,
+    );
   },
 );
 
-// Provider para guardar/actualizar controles de sedación
 final guardarControlSedacionProvider =
     FutureProvider.family<void, GuardarControlSedacionParams>(
   (ref, params) async {
-    final repository = ref.watch(controlSedacionRepositoryProvider);
+    final repository = ref.read(controlSedacionRepositoryProvider);
 
     try {
       if (params.idControlSedacion != null) {
-        // Actualización
         await repository.actualizarControlSedacion(
           params.idIngreso,
           params.idRegistroDiario,
@@ -100,7 +79,6 @@ final guardarControlSedacionProvider =
           orden: params.orden,
         );
       } else {
-        // Creación
         await repository.guardarControlSedacion(
           params.idIngreso,
           params.idRegistroDiario,
@@ -116,7 +94,6 @@ final guardarControlSedacionProvider =
   },
 );
 
-// Provider para el último control de sedación
 final ultimoControlSedacionProvider =
     FutureProvider.family<ControlSedacion?, ControlSedacionParams>(
   (ref, params) async {
@@ -134,11 +111,10 @@ final ultimoControlSedacionProvider =
   },
 );
 
-// Provider para eliminar un control de sedación
 final eliminarControlSedacionProvider =
     FutureProvider.family<void, ControlSedacionParams>(
   (ref, params) async {
-    final repository = ref.watch(controlSedacionRepositoryProvider);
+    final repository = ref.read(controlSedacionRepositoryProvider);
 
     try {
       if (params.idControlSedacion != null) {
@@ -155,7 +131,6 @@ final eliminarControlSedacionProvider =
   },
 );
 
-// Provider para obtener el resumen de RASS
 final resumenRASSProvider =
     FutureProvider.family<Map<String, int>, ControlSedacionParams>(
   (ref, params) async {
@@ -173,7 +148,6 @@ final resumenRASSProvider =
   },
 );
 
-// Provider para reordenar controles de sedación
 final reordenarControlesSedacionProvider = FutureProvider.family<void,
     ({String idIngreso, String idRegistroDiario, List<String> idsEnOrden})>(
   (ref, params) async {

@@ -1,6 +1,12 @@
 import 'package:registro_uci/features/control_sedacion/domain/models/control_sedacion.dart';
 
 abstract class ControlSedacionRepository {
+  /// Obtiene un stream de todos los controles de sedación registrados
+  Stream<List<ControlSedacion>> getControlesSedacionStream(
+    String idIngreso,
+    String idRegistroDiario,
+  );
+
   /// Obtiene todos los controles de sedación registrados
   Future<List<ControlSedacion>> getControlesSedacion(
     String idIngreso,
