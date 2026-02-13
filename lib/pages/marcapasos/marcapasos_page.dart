@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:registro_uci/features/marcapasos/data/providers/marcapasos_provider.dart';
+import 'package:registro_uci/features/marcapasos/presentation/controllers/delete_marcapaso_controller.dart';
 import 'update_marcapasos_page.dart';
 import '../../features/marcapasos/presentation/widgets/components/buttons/create_marcapasos_floating_button.dart';
 
@@ -18,10 +19,9 @@ class ListadoMarcapasosPage extends ConsumerWidget {
         title: const Text("Lista de Marcapasos"),
         centerTitle: true,
         elevation: 1,
-        backgroundColor: Colors.white, // Fondo blanco
-        foregroundColor: Colors.blue.shade800, // Color del texto e iconos
-        iconTheme:
-            IconThemeData(color: Colors.blue.shade800), // Color de iconos
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.blue.shade800,
+        iconTheme: IconThemeData(color: Colors.blue.shade800),
       ),
       body: marcapasosAsync.when(
         data: (marcapasos) {
@@ -50,103 +50,119 @@ class ListadoMarcapasosPage extends ConsumerWidget {
             itemCount: marcapasos.length,
             itemBuilder: (context, index) {
               final marcapaso = marcapasos[index];
+
               return Card(
                 elevation: 2,
-                margin: const EdgeInsets.symmetric(vertical: 8),
+                margin: const EdgeInsets.only(bottom: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                child: ExpansionTile(
+                  tilePadding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                  leading: Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade100,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(
+                      Icons.monitor_heart,
+                      color: Colors.blue.shade700,
+                    ),
+                  ),
+                  title: Text(
+                    marcapaso.modo,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Row(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            marcapaso.modo,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue.shade800,
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade100,
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: Colors.grey.shade300,
-                                width: 1,
-                              ),
-                            ),
-                            child: Text(
-                              marcapaso.fechaColocacion,
-                              style: TextStyle(
-                                color: Colors.grey.shade800,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ],
+                      Text(
+                        marcapaso.fechaColocacion,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey.shade600,
+                        ),
                       ),
-                      const SizedBox(height: 12),
-                      _buildInfoRow("Vía", marcapaso.via),
-                      _buildInfoRow(
-                          "Frecuencia", "${marcapaso.frecuencia} BPM"),
-                      _buildInfoRow(
-                          "Sensibilidad", "${marcapaso.sensibilidad} mV"),
-                      _buildInfoRow("Salida", "${marcapaso.salida} V"),
-                      const SizedBox(height: 12),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          _buildActionButton(
-                            icon: Icons.edit,
-                            color: Colors.blue.shade800,
-                            label: "Editar",
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => EditMarcapasoPage(
-                                    idIngreso: idIngreso,
-                                    marcapaso: marcapaso,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          _buildActionButton(
-                            icon: Icons.delete,
-                            color: Colors.red.shade700,
-                            label: "Eliminar",
-                            onPressed: () async {
-                              await ref.read(eliminarMarcapasoProvider((
-                                idIngreso: idIngreso,
-                                idMarcapaso: marcapaso.id,
-                              )).future);
-
-                              ref.invalidate(marcapasosByIngresoProvider);
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: const Text("Marcapaso eliminado"),
-                                  behavior: SnackBarBehavior.floating,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  backgroundColor: Colors.red.shade700,
-                                ),
-                              );
-                            },
-                          ),
-                        ],
+                      const SizedBox(width: 8),
+                      Text(
+                        '${marcapaso.frecuencia} BPM',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.blue.shade700,
+                        ),
                       ),
                     ],
                   ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.edit,
+                            color: Colors.blue, size: 20),
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditMarcapasoPage(
+                              idIngreso: idIngreso,
+                              marcapaso: marcapaso,
+                            ),
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.delete,
+                            color: Colors.red, size: 20),
+                        onPressed: () =>
+                            _confirmDelete(context, ref, marcapaso),
+                      ),
+                    ],
+                  ),
+                  children: [
+                    const Divider(),
+                    const SizedBox(height: 8),
+                    _buildInfoRow(
+                      icon: Icons.schedule,
+                      label: 'Modo',
+                      value: marcapaso.modo,
+                    ),
+                    const SizedBox(height: 12),
+                    _buildInfoRow(
+                      icon: Icons.route,
+                      label: 'Vía',
+                      value: marcapaso.via,
+                    ),
+                    const SizedBox(height: 12),
+                    _buildInfoRow(
+                      icon: Icons.speed,
+                      label: 'Frecuencia',
+                      value: '${marcapaso.frecuencia} BPM',
+                    ),
+                    const SizedBox(height: 12),
+                    _buildInfoRow(
+                      icon: Icons.sensors,
+                      label: 'Sensibilidad',
+                      value: '${marcapaso.sensibilidad} mV',
+                    ),
+                    const SizedBox(height: 12),
+                    _buildInfoRow(
+                      icon: Icons.electric_bolt,
+                      label: 'Salida',
+                      value: '${marcapaso.salida} V',
+                    ),
+                    const SizedBox(height: 12),
+                    _buildInfoRow(
+                      icon: Icons.calendar_today,
+                      label: 'Fecha de Colocación',
+                      value: marcapaso.fechaColocacion,
+                    ),
+                  ],
                 ),
               );
             },
@@ -177,6 +193,12 @@ class ListadoMarcapasosPage extends ConsumerWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.grey.shade600),
               ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () =>
+                    ref.invalidate(marcapasosByIngresoProvider(idIngreso)),
+                child: const Text('Reintentar'),
+              ),
             ],
           ),
         ),
@@ -186,51 +208,79 @@ class ListadoMarcapasosPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        children: [
-          Text(
-            "$label: ",
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.grey.shade700,
-                fontSize: 16),
-          ),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey.shade800,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildActionButton({
+  Widget _buildInfoRow({
     required IconData icon,
-    required Color color,
     required String label,
-    required VoidCallback onPressed,
+    required String value,
   }) {
-    return Column(
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        IconButton(
-          icon: Icon(icon, size: 28),
-          color: color,
-          onPressed: onPressed,
-        ),
-        Text(
-          label,
-          style: TextStyle(
-            color: color,
-            fontWeight: FontWeight.w500,
+        Icon(icon, size: 18, color: Colors.grey.shade600),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+              Text(
+                value,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
         ),
       ],
     );
+  }
+
+  void _confirmDelete(BuildContext context, WidgetRef ref, marcapaso) {
+    showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Confirmar eliminación"),
+        content:
+            const Text("¿Estás seguro de que deseas eliminar este marcapaso?"),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text("Cancelar"),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text("Eliminar", style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    ).then((confirm) async {
+      if (confirm == true) {
+        try {
+          await ref
+              .read(deleteMarcapasoControllerProvider.notifier)
+              .deleteMarcapaso(idIngreso, marcapaso.id);
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                  content: Text("Marcapaso eliminado correctamente")),
+            );
+          }
+        } catch (e) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Error al eliminar: $e")),
+            );
+          }
+        }
+      }
+    });
   }
 }

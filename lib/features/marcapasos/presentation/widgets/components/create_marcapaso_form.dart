@@ -12,31 +12,49 @@ class CreateMarcapasoForm extends ConsumerStatefulWidget {
   const CreateMarcapasoForm({super.key, required this.idIngreso});
 
   @override
-  _CreateMarcapasoFormState createState() => _CreateMarcapasoFormState();
+  ConsumerState<CreateMarcapasoForm> createState() =>
+      _CreateMarcapasoFormState();
 }
 
 class _CreateMarcapasoFormState extends ConsumerState<CreateMarcapasoForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _dateFormat = DateFormat('dd/MM/yyyy');
 
-  late TextEditingController fechaController;
-  String? selectedModo;
-  String? selectedVia;
-  int? selectedFrecuencia;
-  double? selectedSensibilidad;
-  double? selectedSalida;
+  late TextEditingController _fechaController;
+  String? _selectedModo;
+  String? _selectedVia;
+  int? _selectedFrecuencia;
+  double? _selectedSensibilidad;
+  double? _selectedSalida;
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    fechaController = TextEditingController(
-      text: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+    _fechaController = TextEditingController(
+      text: _dateFormat.format(DateTime.now()),
     );
   }
 
   @override
   void dispose() {
-    fechaController.dispose();
+    _fechaController.dispose();
     super.dispose();
+  }
+
+  Future<void> _selectDate() async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (pickedDate != null) {
+      setState(() {
+        _fechaController.text = _dateFormat.format(pickedDate);
+      });
+    }
   }
 
   @override
@@ -53,71 +71,57 @@ class _CreateMarcapasoFormState extends ConsumerState<CreateMarcapasoForm> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
-
-            // **Fecha de colocación**
-            TextFormField(
-              controller: fechaController,
-              decoration: const InputDecoration(
-                labelText: "Fecha de colocación",
-                border: OutlineInputBorder(),
+            InkWell(
+              onTap: _selectDate,
+              child: InputDecorator(
+                decoration: const InputDecoration(
+                  labelText: "Fecha de colocación",
+                  prefixIcon: Icon(Icons.calendar_today),
+                  border: OutlineInputBorder(),
+                ),
+                child: Text(
+                  _fechaController.text,
+                  style: const TextStyle(fontSize: 16),
+                ),
               ),
-              readOnly: true,
-              onTap: () async {
-                DateTime? pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2101),
-                );
-
-                if (pickedDate != null) {
-                  setState(() {
-                    fechaController.text =
-                        DateFormat('yyyy-MM-dd').format(pickedDate!);
-                  });
-                }
-              },
             ),
             const SizedBox(height: 16),
-
-            // **Dropdown Modo**
             DropdownButtonFormField<String>(
+              value: _selectedModo,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Modo",
+                prefixIcon: Icon(Icons.settings),
               ),
-              initialValue: selectedModo,
-              onChanged: (value) => setState(() => selectedModo = value),
+              onChanged: (value) => setState(() => _selectedModo = value),
               items: modosMarcapaso.map((modo) {
                 return DropdownMenuItem(value: modo, child: Text(modo));
               }).toList(),
               validator: (value) => value == null ? "Seleccione un modo" : null,
             ),
             const SizedBox(height: 16),
-
-            // **Dropdown Vía**
             DropdownButtonFormField<String>(
+              value: _selectedVia,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Vía",
+                prefixIcon: Icon(Icons.route),
               ),
-              initialValue: selectedVia,
-              onChanged: (value) => setState(() => selectedVia = value),
+              onChanged: (value) => setState(() => _selectedVia = value),
               items: viasMarcapaso.map((via) {
                 return DropdownMenuItem(value: via, child: Text(via));
               }).toList(),
               validator: (value) => value == null ? "Seleccione una vía" : null,
             ),
             const SizedBox(height: 16),
-
-            // **Dropdown Frecuencia**
             DropdownButtonFormField<int>(
+              value: _selectedFrecuencia,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Frecuencia",
+                prefixIcon: Icon(Icons.speed),
               ),
-              initialValue: selectedFrecuencia,
-              onChanged: (value) => setState(() => selectedFrecuencia = value),
+              onChanged: (value) => setState(() => _selectedFrecuencia = value),
               items: frecuenciasMarcapaso.map((freq) {
                 return DropdownMenuItem(value: freq, child: Text("$freq"));
               }).toList(),
@@ -125,16 +129,15 @@ class _CreateMarcapasoFormState extends ConsumerState<CreateMarcapasoForm> {
                   value == null ? "Seleccione una frecuencia" : null,
             ),
             const SizedBox(height: 16),
-
-            // **Dropdown Sensibilidad**
             DropdownButtonFormField<double>(
+              value: _selectedSensibilidad,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Sensibilidad",
+                prefixIcon: Icon(Icons.sensors),
               ),
-              initialValue: selectedSensibilidad,
               onChanged: (value) =>
-                  setState(() => selectedSensibilidad = value),
+                  setState(() => _selectedSensibilidad = value),
               items: sensibilidadesMarcapaso.map((sens) {
                 return DropdownMenuItem(value: sens, child: Text("$sens"));
               }).toList(),
@@ -142,15 +145,14 @@ class _CreateMarcapasoFormState extends ConsumerState<CreateMarcapasoForm> {
                   value == null ? "Seleccione una sensibilidad" : null,
             ),
             const SizedBox(height: 16),
-
-            // **Dropdown Salida**
             DropdownButtonFormField<double>(
+              value: _selectedSalida,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Salida",
+                prefixIcon: Icon(Icons.electric_bolt),
               ),
-              initialValue: selectedSalida,
-              onChanged: (value) => setState(() => selectedSalida = value),
+              onChanged: (value) => setState(() => _selectedSalida = value),
               items: salidasMarcapaso.map((salida) {
                 return DropdownMenuItem(value: salida, child: Text("$salida"));
               }).toList(),
@@ -158,44 +160,57 @@ class _CreateMarcapasoFormState extends ConsumerState<CreateMarcapasoForm> {
                   value == null ? "Seleccione una salida" : null,
             ),
             const SizedBox(height: 16),
-
-            // **Botón de Registro**
             PrimaryButton(
-              onTap: () async {
-                if (_formKey.currentState!.validate()) {
-                  final dto = CreateMarcapasoDto(
-                    idIngreso: widget.idIngreso,
-                    fechaColocacion: fechaController.text,
-                    modo: selectedModo ?? "No definido",
-                    via: selectedVia ?? "No definida",
-                    frecuencia: selectedFrecuencia ?? 0,
-                    sensibilidad: selectedSensibilidad ?? 0.0,
-                    salida: selectedSalida ?? 0.0,
-                  );
-
-                  try {
-                    await ref.read(registrarMarcapasoProvider(dto).future);
-                    if (mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content:
-                                Text("✅ Marcapaso registrado exitosamente.")),
-                      );
-                    }
-                  } catch (e) {
-                    if (mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("⚠ Error al registrar: $e")),
-                      );
-                    }
-                  }
-                }
-              },
-              child: const Text("REGISTRAR MARCAPASO"),
+              onTap: _isLoading ? null : _registerMarcapaso,
+              child: _isLoading
+                  ? const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : const Text("REGISTRAR MARCAPASO"),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _registerMarcapaso() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() => _isLoading = true);
+
+      final dto = CreateMarcapasoDto(
+        idIngreso: widget.idIngreso,
+        fechaColocacion: _fechaController.text,
+        modo: _selectedModo ?? "No definido",
+        via: _selectedVia ?? "No definida",
+        frecuencia: _selectedFrecuencia ?? 0,
+        sensibilidad: _selectedSensibilidad ?? 0.0,
+        salida: _selectedSalida ?? 0.0,
+      );
+
+      try {
+        await ref.read(registrarMarcapasoProvider(dto).future);
+        ref.invalidate(marcapasosByIngresoProvider(widget.idIngreso));
+
+        if (mounted) {
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Marcapaso registrado exitosamente")),
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Error al registrar: $e")),
+          );
+        }
+      } finally {
+        if (mounted) {
+          setState(() => _isLoading = false);
+        }
+      }
+    }
   }
 }
