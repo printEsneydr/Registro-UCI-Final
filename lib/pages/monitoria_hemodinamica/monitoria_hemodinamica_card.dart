@@ -231,11 +231,15 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
   }
 
   Widget _buildTimeLabel(int hour, bool hasRecord) {
-    return Text(
-      _formatHour(hour),
-      style: TextStyle(
-        fontWeight: FontWeight.w500,
-        color: hasRecord ? Colors.green : Colors.grey[700],
+    return Flexible(
+      child: Text(
+        _formatHour(hour),
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+          color: hasRecord ? Colors.green : Colors.grey[700],
+          fontSize: 13,
+        ),
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }
@@ -250,71 +254,51 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        _buildAccessibleButton(
-          icon: Icons.add_circle_outline,
-          color: !hasRecord ? Colors.green : Colors.grey,
-          label: 'Agregar',
+        IconButton(
+          icon: Icon(
+            Icons.add_circle_outline,
+            color: !hasRecord ? Colors.green : Colors.grey,
+          ),
           onPressed: !hasRecord ? () => _createForm(context, hour: hour) : null,
+          tooltip: 'Agregar registro',
+          iconSize: 22,
+          padding: const EdgeInsets.all(8),
+          constraints: const BoxConstraints(),
         ),
         const SizedBox(width: 4),
-        _buildAccessibleButton(
-          icon: Icons.edit_outlined,
-          color: hasRecord ? Colors.blue : Colors.grey,
-          label: 'Editar',
+        IconButton(
+          icon: Icon(
+            Icons.edit_outlined,
+            color: hasRecord ? Colors.blue : Colors.grey,
+          ),
           onPressed: hasRecord
               ? () => _editForm(context, hour: hour, idMonitoria: idMonitoria)
               : null,
+          tooltip: 'Editar registro',
+          iconSize: 22,
+          padding: const EdgeInsets.all(8),
+          constraints: const BoxConstraints(),
         ),
         const SizedBox(width: 4),
-        _buildAccessibleButton(
-          icon: Icons.delete_outline,
-          color: hasRecord ? Colors.red : Colors.grey,
-          label: 'Eliminar',
+        IconButton(
+          icon: Icon(
+            Icons.delete_outline,
+            color: hasRecord ? Colors.red : Colors.grey,
+          ),
           onPressed: hasRecord
               ? () => _confirmDelete(context, ref, idMonitoria, hour)
               : null,
+          tooltip: 'Eliminar registro',
+          iconSize: 22,
+          padding: const EdgeInsets.all(8),
+          constraints: const BoxConstraints(),
         ),
       ],
     );
   }
-
-  Widget _buildAccessibleButton({
-    required IconData icon,
-    required Color color,
-    required String label,
-    required VoidCallback? onPressed,
-  }) {
-    return Tooltip(
-      message: label,
-      child: InkWell(
-        onTap: onPressed,
-        borderRadius: BorderRadius.circular(8),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, color: color, size: 20),
-              const SizedBox(width: 4),
-              Text(
-                label,
-                style: TextStyle(
-                  color: onPressed != null ? color : Colors.grey,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   String _formatHour(int hour) {
-    final period = hour < 12 ? 'AM' : 'PM';
     final hour12 = hour == 0 ? 12 : (hour > 12 ? hour - 12 : hour);
-    return '${hour.toString().padLeft(2, '0')}:00 ($hour12$period)';
+    return '${hour.toString().padLeft(2, '0')}:00 ${hour < 12 ? 'AM' : 'PM'}';
   }
 
   void _showDetails(BuildContext context, MonitoriaHemodinamica record) {
