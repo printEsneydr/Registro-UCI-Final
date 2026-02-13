@@ -66,9 +66,7 @@ class ControlSedacionCard extends ConsumerWidget {
 
   String _formatearHora(int hora) {
     if (hora < 0) return '--';
-    final periodo = hora < 12 ? 'AM' : 'PM';
-    final hora12 = hora == 0 ? 12 : (hora > 12 ? hora - 12 : hora);
-    return '${hora.toString().padLeft(2, '0')}:00 ($hora12$periodo)';
+    return '${hora.toString().padLeft(2, '0')}:00 ${hora < 12 ? 'AM' : 'PM'}';
   }
 
   List<Widget> _buildListaHoras(
@@ -157,21 +155,27 @@ class ControlSedacionCard extends ConsumerWidget {
           color: tieneRegistro ? Colors.green : Colors.grey,
         ),
         const SizedBox(width: 12),
-        Text(
-          _formatearHora(hora),
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            color: tieneRegistro ? Colors.green : Colors.grey[700],
+        SizedBox(
+          width: 70,
+          child: Text(
+            _formatearHora(hora),
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: tieneRegistro ? Colors.green : Colors.grey[700],
+              fontSize: 13,
+            ),
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 8),
         Expanded(
           child: Text(
             tieneRegistro ? 'RASS: ${control.rass}' : 'Sin registro',
             style: TextStyle(
               color: tieneRegistro ? Colors.green : Colors.grey,
               fontStyle: tieneRegistro ? FontStyle.normal : FontStyle.italic,
+              fontSize: 13,
             ),
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         _buildActionButtons(tieneRegistro, hora, control, context, ref),
@@ -414,13 +418,16 @@ class _SelectorSedacionDialogState
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                widget.horaInicial != null
-                    ? 'Editando sedación de las ${_formatearHora(widget.horaInicial!)}'
-                    : 'Nuevo registro de sedación',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+              Flexible(
+                child: Text(
+                  widget.horaInicial != null
+                      ? 'Editar: ${_formatearHora(widget.horaInicial!)}'
+                      : 'Nuevo registro',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
               const SizedBox(height: 20),
@@ -460,9 +467,7 @@ class _SelectorSedacionDialogState
   }
 
   String _formatearHora(int hora) {
-    final periodo = hora < 12 ? 'AM' : 'PM';
-    final hora12 = hora == 0 ? 12 : (hora > 12 ? hora - 12 : hora);
-    return '${hora.toString().padLeft(2, '0')}:00 ($hora12$periodo)';
+    return '${hora.toString().padLeft(2, '0')}:00 ${hora < 12 ? 'AM' : 'PM'}';
   }
 
   Widget _buildHoraSelector() {
@@ -494,7 +499,7 @@ class _SelectorSedacionDialogState
     ];
 
     return DropdownButtonFormField<int>(
-      initialValue: horasDisponibles.contains(selectedHora) ? selectedHora : 8,
+      value: horasDisponibles.contains(selectedHora) ? selectedHora : 8,
       decoration: InputDecoration(
         labelText: 'Hora',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -514,7 +519,7 @@ class _SelectorSedacionDialogState
 
   Widget _buildRassSelector() {
     return DropdownButtonFormField<int>(
-      initialValue: selectedRass,
+      value: selectedRass,
       decoration: InputDecoration(
         labelText: 'Escala RASS',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -523,43 +528,43 @@ class _SelectorSedacionDialogState
       items: const [
         DropdownMenuItem(
           value: 4,
-          child: Text('+4 - COMBATIVO. ANSIOSO, VIOLENTO'),
+          child: Text('+4 COMBATIVO'),
         ),
         DropdownMenuItem(
           value: 3,
-          child: Text('+3 - MUY AGITADO'),
+          child: Text('+3 MUY AGITADO'),
         ),
         DropdownMenuItem(
           value: 2,
-          child: Text('+2 - AGITADO'),
+          child: Text('+2 AGITADO'),
         ),
         DropdownMenuItem(
           value: 1,
-          child: Text('+1 - ANSIOSO'),
+          child: Text('+1 ANSIOSO'),
         ),
         DropdownMenuItem(
           value: 0,
-          child: Text('0 - ALERTA Y TRANQUILO'),
+          child: Text('0 ALERTA'),
         ),
         DropdownMenuItem(
           value: -1,
-          child: Text('-1 - ADORMILADO'),
+          child: Text('-1 ADORMILADO'),
         ),
         DropdownMenuItem(
           value: -2,
-          child: Text('-2 - SEDACIÓN LIGERA'),
+          child: Text('-2 SED. LIGERA'),
         ),
         DropdownMenuItem(
           value: -3,
-          child: Text('-3 - SEDACIÓN MODERADA'),
+          child: Text('-3 SED. MODERADA'),
         ),
         DropdownMenuItem(
           value: -4,
-          child: Text('-4 - SEDACIÓN PROFUNDA'),
+          child: Text('-4 SED. PROFUNDA'),
         ),
         DropdownMenuItem(
           value: -5,
-          child: Text('-5 - SEDACIÓN MUY PROFUNDA'),
+          child: Text('-5 SED. M. PROFUNDA'),
         ),
       ],
       onChanged: (value) {
