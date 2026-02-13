@@ -28,4 +28,11 @@ abstract class ControlDeRiesgosRepository {
     String idRegistroDiario,
     String idControlDeRiesgos,
   );
+
+  // Método para obtener un control de riesgos por ID
+  Future<ControlDeRiesgos?> getControlDeRiesgosById(
+    String idIngreso,
+    String idRegistroDiario,
+    String idControlDeRiesgos,
+  );
 }
