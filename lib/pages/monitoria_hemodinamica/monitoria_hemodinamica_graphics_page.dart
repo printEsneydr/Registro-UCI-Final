@@ -150,6 +150,7 @@ class GraphicsPage extends ConsumerWidget {
                 getValue: (m) => m.glucometria?.toDouble(),
                 color: Colors.pink,
                 unit: 'mg/dL',
+                minY: 0,
               ),
               const SizedBox(height: 20),
               _buildLineChartCard(
@@ -158,6 +159,32 @@ class GraphicsPage extends ConsumerWidget {
                 getValue: (m) => m.insulina?.toDouble(),
                 color: Colors.amber,
                 unit: 'U',
+                minY: 0,
+              ),
+              const SizedBox(height: 20),
+              _buildLineChartCard(
+                title: 'Resistencia Vascular Sistémica (RVS)',
+                data: monitorias,
+                getValue: (m) => m.rvc?.toDouble(),
+                color: Colors.cyan,
+                unit: 'dinas·s·cm⁻⁵',
+                minY: 0,
+              ),
+              const SizedBox(height: 20),
+              _buildLineChartCard(
+                title: 'Presión de Perfusión Arterial (PPA)',
+                data: monitorias,
+                getValue: (m) => m.ppa?.toDouble(),
+                color: Colors.red.shade700,
+                unit: 'mmHg',
+              ),
+              const SizedBox(height: 20),
+              _buildLineChartCard(
+                title: 'Presión de Perfusión Cerebral (PPC)',
+                data: monitorias,
+                getValue: (m) => m.ppc?.toDouble(),
+                color: Colors.deepOrange,
+                unit: 'mmHg',
               ),
             ],
           ),
@@ -187,6 +214,7 @@ class GraphicsPage extends ConsumerWidget {
     required Color color,
     required String unit,
     int decimalPlaces = 0,
+    double? minY,
   }) {
     final datosFiltrados = data.where((m) => getValue(m) != null).toList()
       ..sort((a, b) => a.hora.compareTo(b.hora));
@@ -196,10 +224,14 @@ class GraphicsPage extends ConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Text(
-              'No hay datos registrados para $title'), // Mensaje cuando no hay datos
+              'No hay datos registrados para $title'),
         ),
       );
     }
+
+    final horas = datosFiltrados.map((m) => m.hora).toList();
+    final minHora = horas.reduce((a, b) => a < b ? a : b);
+    final maxHora = horas.reduce((a, b) => a > b ? a : b);
 
     return Card(
       elevation: 3,
@@ -221,30 +253,22 @@ class GraphicsPage extends ConsumerWidget {
               height: 200,
               child: LineChart(
                 LineChartData(
-                  minX: 0,
-                  maxX: datosFiltrados.isNotEmpty
-                      ? (datosFiltrados.length - 1).toDouble()
-                      : 1,
-                  minY: 0,
-                  maxY: _calculateMaxY(datosFiltrados, getValue),
+                  minX: minHora.toDouble(),
+                  maxX: maxHora.toDouble(),
+                  minY: minY ?? _getMinY(title, datosFiltrados, getValue),
+                  maxY: _calculateMaxY(datosFiltrados, getValue, minY),
                   gridData: const FlGridData(show: true),
                   titlesData: FlTitlesData(
                     show: true,
                     bottomTitles: AxisTitles(
                       sideTitles: SideTitles(
                         showTitles: true,
+                        interval: _calculateInterval(minHora, maxHora),
                         getTitlesWidget: (value, meta) {
-                          final index = value.toInt();
-                          // Verifica si el índice es válido antes de usarlo
-                          if (index < 0 || index >= datosFiltrados.length) {
-                            return const Text(
-                                ''); // Si el índice es inválido, no muestra nada
-                          }
-                          final hora = datosFiltrados[index].hora;
                           return SideTitleWidget(
                             axisSide: meta.axisSide,
                             child: Text(
-                              '${hora}h',
+                              '${value.toInt()}h',
                               style: const TextStyle(fontSize: 10),
                             ),
                           );
@@ -255,15 +279,17 @@ class GraphicsPage extends ConsumerWidget {
                     leftTitles: AxisTitles(
                       sideTitles: SideTitles(
                         showTitles: true,
+                        reservedSize: 40,
                         getTitlesWidget: (value, meta) {
                           return Text(
                             value.toInt().toString(),
                             style: const TextStyle(fontSize: 10),
                           );
                         },
-                        reservedSize: 30,
                       ),
                     ),
+                    topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                   ),
                   borderData: FlBorderData(
                     show: true,
@@ -271,9 +297,8 @@ class GraphicsPage extends ConsumerWidget {
                   ),
                   lineBarsData: [
                     LineChartBarData(
-                      spots: datosFiltrados.asMap().entries.map((entry) {
-                        final valor = getValue(entry.value) ?? 0;
-                        return FlSpot(entry.key.toDouble(), valor);
+                      spots: datosFiltrados.map((m) {
+                        return FlSpot(m.hora.toDouble(), getValue(m) ?? 0);
                       }).toList(),
                       isCurved: true,
                       color: color,
@@ -287,15 +312,7 @@ class GraphicsPage extends ConsumerWidget {
                     touchTooltipData: LineTouchTooltipData(
                       getTooltipItems: (List<LineBarSpot> touchedSpots) {
                         return touchedSpots.map((spot) {
-                          final index = spot.x.toInt();
-                          // Verifica si el índice es válido antes de usarlo
-                          if (index < 0 || index >= datosFiltrados.length) {
-                            return const LineTooltipItem(
-                              'No hay datos disponibles',
-                              TextStyle(color: Colors.black),
-                            );
-                          }
-                          final hora = datosFiltrados[index].hora;
+                          final hora = spot.x.toInt();
                           return LineTooltipItem(
                             '${hora}h: ${spot.y.toStringAsFixed(decimalPlaces)} $unit',
                             TextStyle(
@@ -316,10 +333,32 @@ class GraphicsPage extends ConsumerWidget {
     );
   }
 
-  double _calculateMaxY(List<MonitoriaHemodinamica> data,
+  double _calculateInterval(int minHora, int maxHora) {
+    final diff = maxHora - minHora;
+    if (diff <= 6) return 1;
+    if (diff <= 12) return 2;
+    return 4;
+  }
+
+  double _getMinY(String title, List<MonitoriaHemodinamica> data, 
       double? Function(MonitoriaHemodinamica) getValue) {
-    final maxValue =
-        data.map((m) => getValue(m) ?? 0).reduce((a, b) => a > b ? a : b);
-    return maxValue * 1.2; // Añade 20% de espacio arriba
+    if (title.contains('Temperatura')) return 35;
+    if (title.contains('Sat')) return 80;
+    if (title.contains('FiO₂')) return 0;
+    final values = data.map((m) => getValue(m) ?? 0).toList();
+    if (values.isEmpty) return 0;
+    final min = values.reduce((a, b) => a < b ? a : b);
+    return (min * 0.8).clamp(0, double.infinity);
+  }
+
+  double _calculateMaxY(List<MonitoriaHemodinamica> data,
+      double? Function(MonitoriaHemodinamica) getValue, double? minY) {
+    final values = data.map((m) => getValue(m) ?? 0).toList();
+    if (values.isEmpty) return 100;
+    final max = values.reduce((a, b) => a > b ? a : b);
+    
+    if (minY != null) return max * 1.1;
+    if (max <= 100) return 100;
+    return max * 1.2;
   }
 }
