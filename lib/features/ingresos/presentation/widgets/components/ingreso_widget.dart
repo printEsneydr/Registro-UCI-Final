@@ -22,6 +22,7 @@ class IngresoWidget extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       child: TappableContainer(
         padding: 15,
+        backgroundColor: isActive ? null : Colors.grey.shade100,
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) {
@@ -32,13 +33,50 @@ class IngresoWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// **Sección de información del paciente**
-            Text(
-              ingreso.nombrePaciente.toUpperCase(),
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    fontWeight: FontWeight.w600,
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    ingreso.nombrePaciente.toUpperCase(),
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-              overflow: TextOverflow.ellipsis,
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color:
+                        isActive ? Colors.green.shade100 : Colors.grey.shade300,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        isActive ? Icons.play_circle : Icons.check_circle,
+                        size: 16,
+                        color: isActive
+                            ? Colors.green.shade700
+                            : Colors.grey.shade700,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        isActive ? "Activo" : "Terminado",
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: isActive
+                              ? Colors.green.shade700
+                              : Colors.grey.shade700,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 5),
             RichText(
