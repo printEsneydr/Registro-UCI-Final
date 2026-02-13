@@ -11,7 +11,6 @@ class IngresosPage extends StatefulWidget {
 }
 
 class _IngresosPageState extends State<IngresosPage> {
-  bool _isSearching = false;
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -24,53 +23,51 @@ class _IngresosPageState extends State<IngresosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: _isSearching
-            ? TextField(
-                controller: _searchController,
-                autofocus: true,
-                decoration: InputDecoration(
-                  hintText: "Buscar paciente...",
-                  border: InputBorder.none,
-                  hintStyle: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.7),
-                  ),
-                ),
-                style: const TextStyle(color: Colors.white),
-                onChanged: (value) {
-                  setState(() {});
-                },
-              )
-            : const Text("Lista de Ingresos"),
+        title: const Text("Lista de Ingresos"),
         actions: const [
           LogoutIconButton(),
         ],
       ),
-      body: IngresosListWidget(searchQuery: _searchController.text),
-      floatingActionButton: Column(
-        mainAxisSize: MainAxisSize.min,
+      body: Column(
         children: [
-          FloatingActionButton.small(
-            heroTag: 'search',
-            onPressed: () {
-              setState(() {
-                if (_isSearching) {
-                  _searchController.clear();
-                }
-                _isSearching = !_isSearching;
-              });
-            },
-            backgroundColor: _isSearching
-                ? Theme.of(context).colorScheme.error
-                : Theme.of(context).colorScheme.secondary,
-            child: Icon(
-              _isSearching ? Icons.close : Icons.search,
-              color: Colors.white,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 15, 15, 8),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: "Buscar paciente por nombre o identificación...",
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon: _searchController.text.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          _searchController.clear();
+                          setState(() {});
+                        },
+                      )
+                    : null,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                filled: true,
+                fillColor: Theme.of(context)
+                    .colorScheme
+                    .surfaceContainerHighest
+                    .withValues(alpha: 0.5),
+              ),
+              onChanged: (value) {
+                setState(() {});
+              },
             ),
           ),
-          const SizedBox(height: 8),
-          const CreateIngresoFAB(),
+          Expanded(
+            child: IngresosListWidget(searchQuery: _searchController.text),
+          ),
         ],
       ),
+      floatingActionButton: const CreateIngresoFAB(),
     );
   }
 }
