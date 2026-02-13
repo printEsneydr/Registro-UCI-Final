@@ -66,9 +66,7 @@ class CambioPosicionCard extends ConsumerWidget {
 
   String _formatearHora(int hora) {
     if (hora < 0) return '--';
-    final periodo = hora < 12 ? 'AM' : 'PM';
-    final hora12 = hora == 0 ? 12 : (hora > 12 ? hora - 12 : hora);
-    return '${hora.toString().padLeft(2, '0')}:00 ($hora12$periodo)';
+    return '${hora.toString().padLeft(2, '0')}:00 ${hora < 12 ? 'AM' : 'PM'}';
   }
 
   List<Widget> _buildListaHoras(
@@ -156,21 +154,27 @@ class CambioPosicionCard extends ConsumerWidget {
           color: tieneRegistro ? Colors.green : Colors.grey,
         ),
         const SizedBox(width: 12),
-        Text(
-          _formatearHora(hora),
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            color: tieneRegistro ? Colors.green : Colors.grey[700],
+        SizedBox(
+          width: 70,
+          child: Text(
+            _formatearHora(hora),
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: tieneRegistro ? Colors.green : Colors.grey[700],
+              fontSize: 13,
+            ),
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 8),
         Expanded(
           child: Text(
             tieneRegistro ? cambio.posicion : 'Sin registro',
             style: TextStyle(
               color: tieneRegistro ? Colors.green : Colors.grey,
               fontStyle: tieneRegistro ? FontStyle.normal : FontStyle.italic,
+              fontSize: 13,
             ),
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         _buildActionButtons(tieneRegistro, hora, cambio, context, ref),
@@ -404,13 +408,16 @@ class _SelectorPosicionDialogState
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                widget.horaInicial != null
-                    ? 'Editando posición de las ${_formatearHora(widget.horaInicial!)}'
-                    : 'Nuevo registro de posición',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+              Flexible(
+                child: Text(
+                  widget.horaInicial != null
+                      ? 'Editar: ${_formatearHora(widget.horaInicial!)}'
+                      : 'Nuevo registro',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
               const SizedBox(height: 20),
@@ -448,9 +455,7 @@ class _SelectorPosicionDialogState
   }
 
   String _formatearHora(int hora) {
-    final periodo = hora < 12 ? 'AM' : 'PM';
-    final hora12 = hora == 0 ? 12 : (hora > 12 ? hora - 12 : hora);
-    return '${hora.toString().padLeft(2, '0')}:00 ($hora12$periodo)';
+    return '${hora.toString().padLeft(2, '0')}:00 ${hora < 12 ? 'AM' : 'PM'}';
   }
 
   Widget _buildHoraSelector() {
@@ -482,7 +487,7 @@ class _SelectorPosicionDialogState
     ];
 
     return DropdownButtonFormField<int>(
-      initialValue: horasDisponibles.contains(selectedHora) ? selectedHora : 8,
+      value: horasDisponibles.contains(selectedHora) ? selectedHora : 8,
       decoration: InputDecoration(
         labelText: 'Hora',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -502,18 +507,18 @@ class _SelectorPosicionDialogState
 
   Widget _buildPosicionSelector() {
     return DropdownButtonFormField<String>(
-      initialValue: selectedPosicion,
+      value: selectedPosicion,
       decoration: InputDecoration(
         labelText: 'Posición',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         prefixIcon: const Icon(Icons.airline_seat_recline_normal),
       ),
-      items: [
-        'Decúbito dorsal',
-        'Decúbito lateral izquierdo',
-        'Decúbito lateral derecho',
-        'Prono',
-      ].map((pos) => DropdownMenuItem(value: pos, child: Text(pos))).toList(),
+      items: const [
+        DropdownMenuItem(value: 'Decúbito dorsal', child: Text('Decúbito dorsal')),
+        DropdownMenuItem(value: 'Decúbito lateral izquierdo', child: Text('Decúbito lateral izq.')),
+        DropdownMenuItem(value: 'Decúbito lateral derecho', child: Text('Decúbito lateral der.')),
+        DropdownMenuItem(value: 'Prono', child: Text('Prono')),
+      ],
       onChanged: (value) {
         if (value != null) setState(() => selectedPosicion = value);
       },
