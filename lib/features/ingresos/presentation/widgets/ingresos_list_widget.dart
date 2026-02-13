@@ -19,6 +19,7 @@ class _IngresosListWidgetState extends ConsumerState<IngresosListWidget>
   late TabController _tabController;
   Sala selectedSala = Sala.A;
   IngresoFilter filter = IngresoFilter.activos;
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -36,6 +37,7 @@ class _IngresosListWidgetState extends ConsumerState<IngresosListWidget>
   @override
   void dispose() {
     _tabController.dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -56,6 +58,34 @@ class _IngresosListWidgetState extends ConsumerState<IngresosListWidget>
             value: selectedSala.name,
             values: Sala.values.map((sala) => sala.name).toList(),
             prefixIcon: const Icon(Icons.filter_list),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: TextField(
+            controller: _searchController,
+            decoration: InputDecoration(
+              hintText: "Buscar por nombre...",
+              prefixIcon: const Icon(Icons.search),
+              suffixIcon: _searchController.text.isNotEmpty
+                  ? IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: () {
+                        _searchController.clear();
+                        setState(() {});
+                      },
+                    )
+                  : null,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+            ),
+            onChanged: (value) {
+              setState(() {});
+            },
           ),
         ),
         const SizedBox(height: 10),
@@ -84,11 +114,17 @@ class _IngresosListWidgetState extends ConsumerState<IngresosListWidget>
             controller: _tabController,
             children: [
               IngresosList(
-                  selectedSala: selectedSala, filter: IngresoFilter.activos),
+                  selectedSala: selectedSala,
+                  filter: IngresoFilter.activos,
+                  searchQuery: _searchController.text),
               IngresosList(
-                  selectedSala: selectedSala, filter: IngresoFilter.terminados),
+                  selectedSala: selectedSala,
+                  filter: IngresoFilter.terminados,
+                  searchQuery: _searchController.text),
               IngresosList(
-                  selectedSala: selectedSala, filter: IngresoFilter.todos),
+                  selectedSala: selectedSala,
+                  filter: IngresoFilter.todos,
+                  searchQuery: _searchController.text),
             ],
           ),
         ),
@@ -100,10 +136,12 @@ class _IngresosListWidgetState extends ConsumerState<IngresosListWidget>
 class IngresosList extends ConsumerWidget {
   final Sala selectedSala;
   final IngresoFilter filter;
+  final String searchQuery;
 
   const IngresosList({
     required this.selectedSala,
     required this.filter,
+    this.searchQuery = "",
     super.key,
   });
 
@@ -120,26 +158,31 @@ class IngresosList extends ConsumerWidget {
           final filteredIngresos = _filterIngresos(data);
 
           if (filteredIngresos.isEmpty) {
+            final isSearching = searchQuery.isNotEmpty;
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    filter == IngresoFilter.activos
-                        ? Icons.person_off
-                        : filter == IngresoFilter.terminados
-                            ? Icons.check_circle_outline
-                            : Icons.inbox,
+                    isSearching
+                        ? Icons.search_off
+                        : filter == IngresoFilter.activos
+                            ? Icons.person_off
+                            : filter == IngresoFilter.terminados
+                                ? Icons.check_circle_outline
+                                : Icons.inbox,
                     size: 64,
                     color: Colors.grey.shade400,
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    filter == IngresoFilter.activos
-                        ? "No hay ingresos activos"
-                        : filter == IngresoFilter.terminados
-                            ? "No hay ingresos terminados"
-                            : "No hay ingresos",
+                    isSearching
+                        ? "No se encontraron pacientes"
+                        : filter == IngresoFilter.activos
+                            ? "No hay ingresos activos"
+                            : filter == IngresoFilter.terminados
+                                ? "No hay ingresos terminados"
+                                : "No hay ingresos",
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.grey.shade600,
@@ -175,13 +218,28 @@ class IngresosList extends ConsumerWidget {
   }
 
   List<Ingreso> _filterIngresos(List<Ingreso> ingresos) {
+    var filtered = ingresos;
+
     switch (filter) {
       case IngresoFilter.activos:
-        return ingresos.where((i) => i.fechaFin == null).toList();
+        filtered = filtered.where((i) => i.fechaFin == null).toList();
+        break;
       case IngresoFilter.terminados:
-        return ingresos.where((i) => i.fechaFin != null).toList();
+        filtered = filtered.where((i) => i.fechaFin != null).toList();
+        break;
       case IngresoFilter.todos:
-        return ingresos;
+        break;
     }
+
+    if (searchQuery.isNotEmpty) {
+      final query = searchQuery.toLowerCase();
+      filtered = filtered
+          .where((i) =>
+              i.nombrePaciente.toLowerCase().contains(query) ||
+              i.identificacionPaciente.toLowerCase().contains(query))
+          .toList();
+    }
+
+    return filtered;
   }
 }
