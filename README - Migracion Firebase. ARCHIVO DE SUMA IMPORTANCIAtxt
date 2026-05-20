@@ -1,0 +1,677 @@
+================================================================================
+  GUIA COMPLETA PARA MIGRAR LA BASE DE DATOS DE FIREBASE A UN NUEVO PROYECTO
+                    SABANA DIGITAL DE ENFERMERIA
+================================================================================
+
+Este documento explica paso a paso como crear un nuevo proyecto en Firebase,
+configurar la base de datos Firestore, crear los usuarios con roles, y conectar
+la aplicacion Flutter al nuevo proyecto.
+
+
+================================================================================
+INDICE
+================================================================================
+
+1.  Crear un nuevo proyecto en Firebase Console
+2.  Configurar Firebase Authentication (correo/contraseña)
+3.  Crear la base de datos Firestore
+4.  Estructura completa de la base de datos
+5.  Crear los usuarios (Authentication)
+6.  Asignar roles a los usuarios
+7.  Configurar el proyecto Flutter para usar el nuevo Firebase
+8.  Configurar Firebase Hosting (opcional)
+9.  Compilar y desplegar la app
+10. Verificacion final
+
+
+================================================================================
+1. CREAR UN NUEVO PROYECTO EN FIREBASE CONSOLE
+================================================================================
+
+1. Abrir el navegador e ir a: https://console.firebase.google.com
+
+2. Hacer clic en "Crear un proyecto" (o "Add project").
+
+3. Ingresar el nombre del proyecto, por ejemplo: "SabanaDigital-HospitalX"
+
+4. Opcional: habilitar Google Analytics (no es necesario para el funcionamiento
+   de la app, puede omitirse).
+
+5. Hacer clic en "Crear proyecto". Esperar unos segundos mientras Firebase
+   prepara el proyecto.
+
+6. Una vez creado, Firebase mostrara la pantalla de bienvenida del proyecto.
+
+
+================================================================================
+2. CONFIGURAR FIREBASE AUTHENTICATION (CORREO Y CONTRASEÑA)
+================================================================================
+
+1. En el menu lateral izquierdo, hacer clic en "Authentication".
+
+2. Hacer clic en el boton "Empezar" (Get started).
+
+3. En la lista de proveedores, hacer clic en "Correo electrónico/Contraseña"
+   (Email/Password).
+
+4. Activar el interruptor "Habilitar" (Enable).
+
+5. Hacer clic en "Guardar" (Save).
+
+Esto permite que los usuarios inicien sesion con correo y contraseña.
+
+
+================================================================================
+3. CREAR LA BASE DE DATOS FIRESTORE
+================================================================================
+
+1. En el menu lateral, hacer clic en "Firestore Database".
+
+2. Hacer clic en "Crear base de datos" (Create database).
+
+3. IMPORTANTE - Elegir la ubicacion:
+   - Seleccionar "modo de prueba" (Start in test mode) para desarrollo.
+   - Despues se pueden configurar reglas de seguridad mas estrictas.
+   - Elegir una region cercana geograficamente (ej: "us-central1" o
+     "southamerica-east1" para Sudamerica).
+
+4. Hacer clic en "Listo" (Done).
+
+5. Esperar unos segundos mientras Firebase provisiona la base de datos.
+
+6. IMPORTANTE: Configurar las reglas de seguridad:
+   - Ir a la pestana "Reglas" (Rules).
+   - Reemplazar el contenido con:
+
+     rules_version = '2';
+     service cloud.firestore {
+       match /databases/{database}/documents {
+         match /{document=**} {
+           allow read, write: if request.auth != null;
+         }
+       }
+     }
+
+   - Esta regla permite leer y escribir solo a usuarios autenticados.
+   - Hacer clic en "Publicar" (Publish).
+
+
+================================================================================
+4. ESTRUCTURA COMPLETA DE LA BASE DE DATOS
+================================================================================
+
+La aplicacion crea las colecciones automaticamente al guardar datos, pero es
+importante conocer la estructura para entender como funciona.
+
+COLECCION PRINCIPAL: ingresos
+  ├── Documento: {idIngreso} (ID generado automaticamente)
+  │   ├── Campos del documento:
+  │   │   ├── nombrePaciente: String
+  │   │   ├── identificacionPaciente: String
+  │   │   ├── fechaNacimientoPaciente: Timestamp
+  │   │   ├── fechaIngreso: Timestamp
+  │   │   ├── fechaFin: Timestamp (null si el ingreso esta activo)
+  │   │   ├── diagnosticoIngreso: String
+  │   │   ├── diagnosticoActual: String
+  │   │   ├── peso: number (double)
+  │   │   ├── talla: number (int)
+  │   │   ├── cama: String
+  │   │   ├── sala: String ("A", "B", "C" o "D")
+  │   │   ├── epsOArl: String
+  │   │   ├── nombreFamiliar: String
+  │   │   ├── parentescoFamiliar: String
+  │   │   ├── telefonoFamiliar: String
+  │   │   ├── alergias: String (opcional)
+  │   │   ├── activo: boolean
+  │   │   └── carpeta: String
+  │   │
+  │   ├── SUBSOLECCION: registrosDiarios/{idRegistroDiario}
+  │   │   ├── turno: String ("Manana", "Tarde", "Noche")
+  │   │   ├── fecha: Timestamp
+  │   │   ├── observaciones: String
+  │   │   ├── firmaNecesidades: Map (opcional)
+  │   │   └── firmaIntervenciones: Map (opcional)
+  │   │   │
+  │   │   ├── SUBSOLECCION: monitoriasHemodinamicas/{id}
+  │   │   │   ├── hora: number (8-24, 1-7)
+  │   │   │   ├── pas: number? (presion arterial sistolica)
+  │   │   │   ├── pad: number? (presion arterial diastolica)
+  │   │   │   ├── pam: number? (presion arterial media)
+  │   │   │   ├── fc: number? (frecuencia cardiaca)
+  │   │   │   ├── fr: number? (frecuencia respiratoria)
+  │   │   │   ├── t: number? (temperatura)
+  │   │   │   ├── pvc: number? (presion venosa central)
+  │   │   │   ├── gc: number? (gasto cardiaco)
+  │   │   │   ├── ic: number? (indice cardiaco)
+  │   │   │   ├── rvs: number? (resistencia vascular sistemica)
+  │   │   │   ├── irvs: number? (indice RVS)
+  │   │   │   ├── fio2: number?
+  │   │   │   ├── pia: number? (presion intraabdominal)
+  │   │   │   ├── ppa: number? (presion perfusion abdominal)
+  │   │   │   ├── pic: number? (presion intracraneal)
+  │   │   │   ├── ppc: number? (presion perfusion cerebral)
+  │   │   │   ├── glucometria: number?
+  │   │   │   ├── insulina: number?
+  │   │   │   └── saturacion: number?
+  │   │   │
+  │   │   ├── SUBSOLECCION: controlDeRiesgos/{id}
+  │   │   │   ├── tieneUPP: boolean
+  │   │   │   ├── fechaRegistroUlcera: String (ISO date, opcional)
+  │   │   │   ├── numeroReporteEA: String? (opcional)
+  │   │   │   ├── sitioUPP: String? (opcional)
+  │   │   │   ├── uppResuelta: boolean
+  │   │   │   ├── fechaResolucion: String? (ISO date)
+  │   │   │   ├── diasConUlceras: number?
+  │   │   │   ├── riesgoCaida: String ("Alto" o "Bajo")
+  │   │   │   ├── riesgoUPP: String ("Alto", "Medio" o "Bajo")
+  │   │   │   ├── numeroReporteCaida: String?
+  │   │   │   ├── usaAnticoagulantes: boolean
+  │   │   │   ├── anticoagulanteSeleccionado: String?
+  │   │   │   ├── enAislamiento: boolean
+  │   │   │   ├── fechaInicioAislamiento: String?
+  │   │   │   ├── tipoAislamiento: String?
+  │   │   │   ├── agenteAislamiento: String?
+  │   │   │   ├── fechaFinAislamiento: String?
+  │   │   │   ├── diasDeAislamiento: number?
+  │   │   │   ├── fechaRegistro: String?
+  │   │   │   ├── alergicoAMedicacion: boolean
+  │   │   │   ├── medicamentoAlergico: String?
+  │   │   │   ├── controlUPPManana: number?
+  │   │   │   ├── controlUPPTarde: number?
+  │   │   │   ├── controlUPPNoche: number?
+  │   │   │   ├── controlCaidaManana: number?
+  │   │   │   ├── controlCaidaTarde: number?
+  │   │   │   └── controlCaidaNoche: number?
+  │   │   │
+  │   │   ├── SUBSOLECCION: controlesSedacion/{id}
+  │   │   │   ├── hora: number
+  │   │   │   └── rass: number (-5 a +4)
+  │   │   │
+  │   │   ├── SUBSOLECCION: cambiosPosicion/{id}
+  │   │   │   ├── hora: number
+  │   │   │   └── posicion: String
+  │   │   │
+  │   │   ├── SUBSOLECCION: glasgow/{id}
+  │   │   │   ├── horaRegistro: Timestamp
+  │   │   │   ├── aperturaOcular: number (1-4)
+  │   │   │   ├── respuestaVerbal: number (1-5)
+  │   │   │   ├── respuestaMotora: number (1-6)
+  │   │   │   └── puntajeTotal: number
+  │   │   │
+  │   │   ├── SUBSOLECCION: balancesDeLiquidos/{idBalance}
+  │   │   │   │
+  │   │   │   ├── SUBSOLECCION: administrados/{id}
+  │   │   │   │   ├── hora: Timestamp
+  │   │   │   │   ├── medicamento: String
+  │   │   │   │   ├── cantidad: number
+  │   │   │   │   ├── esTratamiento: boolean
+  │   │   │   │   └── via: String (opcional)
+  │   │   │   │
+  │   │   │   └── SUBSOLECCION: eliminados/{id}
+  │   │   │       ├── hora: Timestamp
+  │   │   │       ├── orina: number
+  │   │   │       ├── perdidasInsensibles: number
+  │   │   │       ├── sondaGastrica: number
+  │   │   │       ├── residuoGastrico: number
+  │   │   │       ├── tuboTorax1: number
+  │   │   │       ├── tuboTorax2: number
+  │   │   │       ├── tuboMediastino: number
+  │   │   │       ├── drenAbdominal: number
+  │   │   │       ├── ileostomia: number
+  │   │   │       ├── fistulaEnterocutanea: number
+  │   │   │       ├── deposicion: number
+  │   │   │       ├── dialisis: number
+  │   │   │       ├── ventriculosTomaExterna: number
+  │   │   │       ├── otros: number
+  │   │   │       ├── campoLibre1: number
+  │   │   │       └── campoLibre2: number
+  │   │   │
+  │   │   ├── SUBSOLECCION: listaTratamientos/{id}
+  │   │   │   ├── medicamento: String
+  │   │   │   ├── cantidad: number
+  │   │   │   ├── unidad: String
+  │   │   │   ├── frecuencia: number
+  │   │   │   ├── fechaInicio: Timestamp
+  │   │   │   └── observaciones: String?
+  │   │   │
+  │   │   ├── SUBSOLECCION: necesidades/
+  │   │   │   └── Documento: "reporte"
+  │   │   │       ├── necesidadesDetectadas: String
+  │   │   │       ├── objetivosEnfermeria: String
+  │   │   │       ├── intervencionesRealizadas: String
+  │   │   │       └── revistaMedica: String
+  │   │   │
+  │   │   └── SUBSOLECCION: controlDeRiesgos (ver arriba)
+  │   │
+  │   ├── SUBSOLECCION: cateteres/{id}
+  │   │   ├── tipo: String
+  │   │   ├── via: String
+  │   │   ├── fechaInsercion: Timestamp
+  │   │   ├── fechaCuracionOCambio: Timestamp?
+  │   │   └── caracteristicasSitioInsercion: String
+  │   │
+  │   ├── SUBSOLECCION: marcapasos/{id}
+  │   │   ├── modo: String
+  │   │   ├── via: String
+  │   │   ├── frecuencia: String
+  │   │   ├── sensibilidad: String
+  │   │   ├── salida: String
+  │   │   └── fechaColocacion: String
+  │   │
+  │   ├── SUBSOLECCION: sondas/{id}
+  │   │   ├── tipo: String
+  │   │   ├── regionAnatomica: String
+  │   │   ├── fechaColocacion: Timestamp
+  │   │   └── fechaRetiro: Timestamp?
+  │   │
+  │   ├── SUBSOLECCION: nutricion/{id}
+  │   │   ├── peso: number
+  │   │   ├── talla: number
+  │   │   ├── imc: number
+  │   │   ├── requerimientoCalorico: number
+  │   │   ├── hora: Timestamp
+  │   │   ├── via: String
+  │   │   ├── total: number?
+  │   │   ├── proteinas: number?
+  │   │   ├── lipidos: number?
+  │   │   ├── carbohidratos: number?
+  │   │   └── observaciones: String?
+  │   │
+  │   ├── SUBSOLECCION: procedimientosEspeciales/{id}
+  │   │   ├── nombreProcedimiento: String
+  │   │   ├── estado: String ("Por realizar", "Realizado", "Reportado")
+  │   │   ├── medicamentoInfusion: String?
+  │   │   └── dosisInfusion: String?
+  │   │
+  │   ├── SUBSOLECCION: tratamientosAntibioticos/{id}
+  │   │   ├── antibiotico: String
+  │   │   ├── dosis: String
+  │   │   ├── cantidad: number
+  │   │   ├── frecuenciaEn24h: number
+  │   │   ├── fechaInicio: Timestamp
+  │   │   └── fechaFin: Timestamp?
+  │   │
+  │   ├── SUBSOLECCION: observaciones_extras/
+  │   │   └── Documento: "data"
+  │   │       ├── solicitudes: Array (lista de mapas)
+  │   │       │   └── cada mapa: { fecha, solicitud, resultados }
+  │   │       ├── grams: Array
+  │   │       │   └── cada mapa: { fecha, cultivo, resultados }
+  │   │       ├── ordenes: Array
+  │   │       │   └── cada mapa: { fecha, hora, globulosRojos, plaquetas, plasma }
+  │   │       ├── observaciones: String
+  │   │       └── firmas: Array
+  │   │           └── cada mapa: { tipoPersonal, turno, firmaBase64, fechaFirma }
+  │   │
+  │   └── SUBSOLECCION: pagina6/ (OBSOLETO, reemplazado por observaciones_extras)
+  │       └── Documento: "data" (misma estructura que observaciones_extras)
+
+
+NOTAS IMPORTANTES SOBRE LA BASE DE DATOS:
+
+- La coleccion "ingresos" es la raiz de todos los datos.
+- Cada ingreso representa la hospitalizacion de un paciente.
+- Los "registrosDiarios" son los registros por turno (Manana, Tarde, Noche).
+- La mayoria de subcolecciones estan dentro de registrosDiarios.
+- Algunas colecciones (cateteres, marcapasos, sondas, nutricion, etc.)
+  estan directamente dentro del ingreso, NO dentro de registrosDiarios.
+- La coleccion "pagina6" quedo obsoleta y fue renombrada a
+  "observaciones_extras". Si existen datos en "pagina6", la app los
+  seguira mostrando en el PDF si se migran manualmente.
+
+
+================================================================================
+5. CREAR LOS USUARIOS (FIREBASE AUTHENTICATION)
+================================================================================
+
+1. En Firebase Console, ir a "Authentication" > "Users".
+
+2. Hacer clic en "Agregar usuario" (Add user).
+
+3. Crear los siguientes usuarios UNO POR UNO:
+
+   ------------------------------------------------------------------
+   USUARIO 1: Jefe de Enfermeria
+   ------------------------------------------------------------------
+   Correo:     enfermerojefe@sabana.com
+   Contrasena: enfermerojefe123456
+
+   ------------------------------------------------------------------
+   USUARIO 2: Auxiliar de Enfermeria
+   ------------------------------------------------------------------
+   Correo:     auxiliar@sabana.com
+   Contrasena: auxiliar123456
+
+   ------------------------------------------------------------------
+   USUARIO 3: Medico
+   ------------------------------------------------------------------
+   Correo:     medico@sabana.com
+   Contrasena: medico123456
+
+   ------------------------------------------------------------------
+   USUARIO 4: Nutricionista
+   ------------------------------------------------------------------
+   Correo:     nutri@sabana.com
+   Contrasena: nutri123456
+
+   ------------------------------------------------------------------
+   USUARIO 5: Administrador
+   ------------------------------------------------------------------
+   Correo:     admin@sabana.com
+   Contrasena: admin123456
+
+4. Despues de crear los 5 usuarios, la lista en Authentication deberia
+   mostrar los 5 correos.
+
+
+================================================================================
+6. ASIGNAR ROLES A LOS USUARIOS
+================================================================================
+
+La aplicacion usa Firestore para almacenar los roles de cada usuario.
+Los roles NO se guardan en Authentication, sino en una coleccion especial
+llamada "roles".
+
+PASOS PARA CREAR LOS ROLES:
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ATENCION A LA CREACION DE ROLES EN EL ARCHIVO 
+"Registro-UCI\lib\features\auth\domain\constants"
+
+
+
+
+import 'package:flutter/foundation.dart';
+
+@immutable
+class Strings {
+  static const String users = 'usuarios';
+  static const String name = 'nombre';
+  static const String role = 'rol';
+  static const String id = 'id';
+
+  static const String headNurse = 'ENFERMERO_JEFE';
+  static const String auxNurse = 'AUXILIAR_ENFERMERIA';
+  static const String nutritionist = 'NUTRICIONISTA';
+  static const String doctor = 'MEDICO';
+  static const String guest = 'INVITADO';
+  static const String admin = 'ADMIN';
+}
+
+
+
+
+
+
+1. En Firebase Console, ir a "Firestore Database".
+
+2. Hacer clic en "Iniciar coleccion" (Start collection).
+
+3. ID de la coleccion: escribir exactamente "roles" (en minusculas).
+
+4. ID del documento: escribir el UID del usuario (NO el correo).
+
+   IMPORTANTE: Para obtener el UID de cada usuario:
+   - Ir a Authentication > Users
+   - Cada usuario tiene un "Identificador" (UID) que es una cadena
+     como "aBcDeFgHiJkLmNoPqRsTuVwXyZ123"
+   - Copiar ese UID para cada usuario
+
+5. Campos del documento:
+
+   Campo: "role"  |  Tipo: string  |  Valor: "enfermero_jefe"
+   (para el primer usuario)
+
+   VALORES POSIBLES PARA EL CAMPO "role":
+   - "admin"            -> Administrador
+   - "enfermero_jefe"   -> Jefe de Enfermeria
+   - "enfermero"        -> Auxiliar de Enfermeria
+   - "medico"           -> Medico
+   - "nutricionista"    -> Nutricionista
+
+6. Repetir para cada usuario creando un documento por cada uno:
+
+   Documento 1: {UID del jefe} -> { "role": "enfermero_jefe" }
+   Documento 2: {UID del auxiliar} -> { "role": "enfermero" }
+   Documento 3: {UID del medico} -> { "role": "medico" }
+   Documento 4: {UID del nutri} -> { "role": "nutricionista" }
+   Documento 5: {UID del admin} -> { "role": "admin" }
+
+7. La coleccion "roles" debe quedar asi en Firestore:
+
+   roles/
+   ├── {UID_enfermero_jefe}/
+   │   └── role: "enfermero_jefe"
+   ├── {UID_auxiliar}/
+   │   └── role: "enfermero"
+   ├── {UID_medico}/
+   │   └── role: "medico"
+   ├── {UID_nutricionista}/
+   │   └── role: "nutricionista"
+   └── {UID_admin}/
+       └── role: "admin"
+
+NOTA: Si prefieres, tambien puedes crear los roles desde la misma app
+registrandote con el correo admin y luego modificando Firestore manualmente.
+La app lee el rol desde la coleccion "roles" al iniciar sesion.
+
+
+================================================================================
+7. CONFIGURAR EL PROYECTO FLUTTER PARA USAR EL NUEVO FIREBASE
+================================================================================
+
+Una vez creado el nuevo proyecto en Firebase, hay que conectar la app
+Flutter a ese nuevo proyecto.
+
+METODO 1: Usando FlutterFire CLI (RECOMENDADO)
+
+1. Abrir una terminal en la carpeta del proyecto:
+
+   cd C:\Users\esney\OneDrive\Documentos\Registro-UCI
+
+2. Iniciar sesion en Firebase CLI (si no se ha hecho antes):
+
+   firebase login
+
+   Esto abrira el navegador. Iniciar sesion con la cuenta de Google
+   que sea duena del nuevo proyecto de Firebase.
+
+3. Ejecutar el comando de configuracion:
+
+   flutterfire configure --project=NombreDelNuevoProyecto
+
+   Reemplazar "NombreDelNuevoProyecto" por el ID real del proyecto
+   (se encuentra en Configuracion del proyecto > General > ID del proyecto).
+
+4. El comando hara lo siguiente AUTOMATICAMENTE:
+   - Creara/actualizara el archivo lib/firebase_options.dart
+   - Creara/actualizara el archivo android/app/google-services.json
+   - Creara/actualizara el archivo firebase.json
+   - Preguntara que plataformas configurar (seleccionar Android y Web)
+
+5. Responder las preguntas:
+   - "Which platforms should your configuration support?" -> Seleccionar
+     Android y Web (usar espacio para seleccionar, Enter para continuar)
+   - "Which Android package name?" -> Dejar el que aparece (com.example...)
+     o escribir: com.registro_uci.app
+   - "Which iOS bundle identifier?" -> Dejar por defecto (no aplica)
+
+6. Una vez terminado, los archivos de configuracion estaran actualizados
+   para apuntar al nuevo proyecto de Firebase.
+
+
+METODO 2: Manual (sin FlutterFire CLI)
+
+Si FlutterFire CLI falla, se puede hacer manualmente:
+
+1. En Firebase Console, ir a: Configuracion del proyecto > General >
+   "Tus apps" > Agregar app > Android
+
+2. Seguir los pasos para registrar la app Android:
+   - Nombre del paquete Android: buscar en android/app/build.gradle
+     la linea: namespace = "com.registro_uci.app" (o similar)
+   - Descargar google-services.json
+   - Reemplazar el archivo android/app/google-services.json con el nuevo
+
+3. Agregar app Web:
+   - Ir a: Agregar app > Web
+   - Copiar el objeto "firebaseConfig" que aparece
+   - Editar lib/firebase_options.dart y reemplazar los valores
+     (apiKey, appId, projectId, etc.) con los del nuevo proyecto
+
+4. Actualizar firebase.json:
+   - Editar el archivo firebase.json en la raiz del proyecto
+   - Reemplazar "sabana-digital-prueba" por el ID del nuevo proyecto
+     en todas las ocurrencias
+
+
+================================================================================
+8. CONFIGURAR FIREBASE HOSTING (OPCIONAL - SOLO PARA WEB)
+================================================================================
+
+Si se desea desplegar la aplicacion web en el nuevo proyecto:
+
+1. En Firebase Console, ir a "Hosting" > "Empezar".
+
+2. Instalar Firebase CLI (si no esta instalado):
+
+   npm install -g firebase-tools
+
+3. En la terminal, en la carpeta del proyecto:
+
+   firebase init hosting
+
+4. Responder las preguntas:
+   - "What do you want to use as your public directory?" -> escribir:
+     build/web
+   - "Configure as a single-page app?" -> Si (y)
+   - "Set up automatic builds?" -> No (N)
+   - "File for Firebase Hosting configuration?" -> firebase.json
+
+5. El asistente configurara el hosting automaticamente.
+
+6. Para desplegar la app web:
+
+   flutter build web --release
+   firebase deploy --only hosting
+
+7. La app web quedara disponible en:
+   https://NombreDelNuevoProyecto.web.app
+
+
+================================================================================
+9. COMPILAR Y DESPLEGAR LA APP
+================================================================================
+
+COMPILAR APK PARA ANDROID:
+
+1. En la terminal, dentro de la carpeta del proyecto:
+
+   flutter build apk --release
+
+2. El archivo APK se genera en:
+   build/app/outputs/flutter-apk/app-release.apk
+
+3. Ese archivo se puede compartir por Drive, WhatsApp, correo, etc.
+
+
+COMPILAR PARA WEB Y DESPLEGAR:
+
+1. flutter build web --release
+
+2. firebase deploy --only hosting
+
+3. La web queda disponible en: https://NuevoProyecto.web.app
+
+
+EJECUTAR EN MODO DESARROLLO:
+
+- En Android (con telefono conectado por USB):
+  flutter run
+
+- En Web (navegador):
+  flutter run -d chrome
+
+
+================================================================================
+10. VERIFICACION FINAL
+================================================================================
+
+Despues de completar todos los pasos, verificar que todo funcione:
+
+1. ABRIR LA APP:
+   - Ejecutar: flutter run
+   - O abrir la web: https://NuevoProyecto.web.app
+
+2. INICIAR SESION con cada uno de los 5 usuarios de prueba.
+
+3. VERIFICAR ROLES:
+   - Cada usuario debe ver las opciones correspondientes a su rol.
+   - Por ejemplo, el admin debe ver iconos de eliminar, el auxiliar no.
+
+4. CREAR UN PACIENTE DE PRUEBA:
+   - Presionar el boton "+" en la lista de pacientes.
+   - Llenar todos los campos y guardar.
+
+5. VERIFICAR CADA MODULO:
+   - Entrar al paciente creado.
+   - Probar cada modulo (nutricion, procedimientos, etc.).
+   - Guardar datos y verificar que aparezcan.
+
+6. GENERAR PDF:
+   - Presionar "Generar Reporte PDF".
+   - Verificar que el PDF se genere y muestre todos los datos.
+
+7. VERIFICAR FIRESTORE:
+   - En Firebase Console, ir a Firestore Database.
+   - Verificar que aparezcan los datos guardados en las colecciones
+     correspondientes.
+
+
+================================================================================
+RESUMEN DE ARCHIVOS QUE CAMBIAN CON LA MIGRACION
+================================================================================
+
+Al cambiar a un nuevo proyecto de Firebase, estos archivos se modifican:
+
+1. lib/firebase_options.dart  -  Configuracion principal de Firebase
+2. android/app/google-services.json  -  Credenciales Android
+3. firebase.json  -  ID del proyecto y configuracion de hosting
+4. .firebaserc  -  Alias del proyecto (si existe)
+
+Los demas archivos del proyecto NO necesitan modificacion.
+La logica de la aplicacion, los modelos, las pantallas, etc. permanecen
+iguales porque solo cambia el destino de los datos (el proyecto de
+Firebase), no la estructura de la app.
+
+
+================================================================================
+PROBLEMAS COMUNES Y SOLUCIONES
+================================================================================
+
+PROBLEMA: "flutterfire configure" no encuentra el proyecto
+SOLUCION: Ejecutar primero "firebase login" y asegurar que la cuenta
+tiene acceso al proyecto.
+
+PROBLEMA: Error "Project ID XXXX not found"
+SOLUCION: Verificar el ID del proyecto en Firebase Console >
+Configuracion del proyecto > General. Usar ese ID exacto.
+
+PROBLEMA: La app se cierra al iniciar
+SOLUCION: Verificar que google-services.json existe en
+android/app/ y que firebase_options.dart tiene los datos correctos.
+
+PROBLEMA: Los usuarios no pueden iniciar sesion
+SOLUCION: Verificar en Authentication que el metodo "Correo/Contrasena"
+esta habilitado. Verificar que los usuarios fueron creados.
+
+PROBLEMA: Error "PERMISSION_DENIED" al guardar datos
+SOLUCION: Verificar las reglas de seguridad en Firestore. Deben permitir
+lectura/escritura a usuarios autenticados (request.auth != null).
+
+PROBLEMA: El rol del usuario no se reconoce
+SOLUCION: Verificar que el documento del rol existe en Firestore en la
+coleccion "roles" con el UID correcto y el campo "role" bien escrito.
+
+================================================================================
+  FIN DEL DOCUMENTO
+================================================================================

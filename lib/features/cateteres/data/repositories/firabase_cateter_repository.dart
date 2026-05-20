@@ -28,12 +28,15 @@ class FirebaseCateterRepository implements CateteresRepository {
           .collection('cateteres')
           .add({
         "tipo": dto.tipo,
-        "sitio": dto.sitio,
+        "via": dto.via,
         "fechaInsercion": Timestamp.fromDate(dto.fechaInsercion),
         "fechaRetiro": dto.fechaRetiro != null
             ? Timestamp.fromDate(dto.fechaRetiro!)
             : null,
-        "lugarProcedencia": dto.lugarProcedencia,
+        "fechaCuracionOCambio": dto.fechaCuracionOCambio != null
+            ? Timestamp.fromDate(dto.fechaCuracionOCambio!)
+            : null,
+        "caracteristicasSitioInsercion": dto.caracteristicasSitioInsercion,
       });
 
       log("✅ Catéter agregado correctamente");

@@ -22,12 +22,12 @@ Cateter _$CateterFromJson(Map<String, dynamic> json) {
 mixin _$Cateter {
   String get id => throw _privateConstructorUsedError;
   String get tipo => throw _privateConstructorUsedError;
-  String get sitio => throw _privateConstructorUsedError;
-  DateTime get fechaInsercion =>
-      throw _privateConstructorUsedError; // ✅ Ahora es DateTime
-  DateTime? get fechaRetiro =>
-      throw _privateConstructorUsedError; // ✅ Ahora es DateTime opcional
-  String get lugarProcedencia => throw _privateConstructorUsedError;
+  String get via => throw _privateConstructorUsedError;
+  DateTime get fechaInsercion => throw _privateConstructorUsedError;
+  DateTime? get fechaRetiro => throw _privateConstructorUsedError;
+  DateTime? get fechaCuracionOCambio => throw _privateConstructorUsedError;
+  String get caracteristicasSitioInsercion =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this Cateter to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,10 +46,11 @@ abstract class $CateterCopyWith<$Res> {
   $Res call(
       {String id,
       String tipo,
-      String sitio,
+      String via,
       DateTime fechaInsercion,
       DateTime? fechaRetiro,
-      String lugarProcedencia});
+      DateTime? fechaCuracionOCambio,
+      String caracteristicasSitioInsercion});
 }
 
 /// @nodoc
@@ -69,10 +70,11 @@ class _$CateterCopyWithImpl<$Res, $Val extends Cateter>
   $Res call({
     Object? id = null,
     Object? tipo = null,
-    Object? sitio = null,
+    Object? via = null,
     Object? fechaInsercion = null,
     Object? fechaRetiro = freezed,
-    Object? lugarProcedencia = null,
+    Object? fechaCuracionOCambio = freezed,
+    Object? caracteristicasSitioInsercion = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -83,9 +85,9 @@ class _$CateterCopyWithImpl<$Res, $Val extends Cateter>
           ? _value.tipo
           : tipo // ignore: cast_nullable_to_non_nullable
               as String,
-      sitio: null == sitio
-          ? _value.sitio
-          : sitio // ignore: cast_nullable_to_non_nullable
+      via: null == via
+          ? _value.via
+          : via // ignore: cast_nullable_to_non_nullable
               as String,
       fechaInsercion: null == fechaInsercion
           ? _value.fechaInsercion
@@ -95,9 +97,13 @@ class _$CateterCopyWithImpl<$Res, $Val extends Cateter>
           ? _value.fechaRetiro
           : fechaRetiro // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      lugarProcedencia: null == lugarProcedencia
-          ? _value.lugarProcedencia
-          : lugarProcedencia // ignore: cast_nullable_to_non_nullable
+      fechaCuracionOCambio: freezed == fechaCuracionOCambio
+          ? _value.fechaCuracionOCambio
+          : fechaCuracionOCambio // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      caracteristicasSitioInsercion: null == caracteristicasSitioInsercion
+          ? _value.caracteristicasSitioInsercion
+          : caracteristicasSitioInsercion // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -113,10 +119,11 @@ abstract class _$$CateterImplCopyWith<$Res> implements $CateterCopyWith<$Res> {
   $Res call(
       {String id,
       String tipo,
-      String sitio,
+      String via,
       DateTime fechaInsercion,
       DateTime? fechaRetiro,
-      String lugarProcedencia});
+      DateTime? fechaCuracionOCambio,
+      String caracteristicasSitioInsercion});
 }
 
 /// @nodoc
@@ -134,10 +141,11 @@ class __$$CateterImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? tipo = null,
-    Object? sitio = null,
+    Object? via = null,
     Object? fechaInsercion = null,
     Object? fechaRetiro = freezed,
-    Object? lugarProcedencia = null,
+    Object? fechaCuracionOCambio = freezed,
+    Object? caracteristicasSitioInsercion = null,
   }) {
     return _then(_$CateterImpl(
       id: null == id
@@ -148,9 +156,9 @@ class __$$CateterImplCopyWithImpl<$Res>
           ? _value.tipo
           : tipo // ignore: cast_nullable_to_non_nullable
               as String,
-      sitio: null == sitio
-          ? _value.sitio
-          : sitio // ignore: cast_nullable_to_non_nullable
+      via: null == via
+          ? _value.via
+          : via // ignore: cast_nullable_to_non_nullable
               as String,
       fechaInsercion: null == fechaInsercion
           ? _value.fechaInsercion
@@ -160,9 +168,13 @@ class __$$CateterImplCopyWithImpl<$Res>
           ? _value.fechaRetiro
           : fechaRetiro // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      lugarProcedencia: null == lugarProcedencia
-          ? _value.lugarProcedencia
-          : lugarProcedencia // ignore: cast_nullable_to_non_nullable
+      fechaCuracionOCambio: freezed == fechaCuracionOCambio
+          ? _value.fechaCuracionOCambio
+          : fechaCuracionOCambio // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      caracteristicasSitioInsercion: null == caracteristicasSitioInsercion
+          ? _value.caracteristicasSitioInsercion
+          : caracteristicasSitioInsercion // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -174,10 +186,11 @@ class _$CateterImpl implements _Cateter {
   const _$CateterImpl(
       {required this.id,
       required this.tipo,
-      required this.sitio,
+      required this.via,
       required this.fechaInsercion,
       this.fechaRetiro,
-      required this.lugarProcedencia});
+      this.fechaCuracionOCambio,
+      required this.caracteristicasSitioInsercion});
 
   factory _$CateterImpl.fromJson(Map<String, dynamic> json) =>
       _$$CateterImplFromJson(json);
@@ -187,19 +200,19 @@ class _$CateterImpl implements _Cateter {
   @override
   final String tipo;
   @override
-  final String sitio;
+  final String via;
   @override
   final DateTime fechaInsercion;
-// ✅ Ahora es DateTime
   @override
   final DateTime? fechaRetiro;
-// ✅ Ahora es DateTime opcional
   @override
-  final String lugarProcedencia;
+  final DateTime? fechaCuracionOCambio;
+  @override
+  final String caracteristicasSitioInsercion;
 
   @override
   String toString() {
-    return 'Cateter(id: $id, tipo: $tipo, sitio: $sitio, fechaInsercion: $fechaInsercion, fechaRetiro: $fechaRetiro, lugarProcedencia: $lugarProcedencia)';
+    return 'Cateter(id: $id, tipo: $tipo, via: $via, fechaInsercion: $fechaInsercion, fechaRetiro: $fechaRetiro, fechaCuracionOCambio: $fechaCuracionOCambio, caracteristicasSitioInsercion: $caracteristicasSitioInsercion)';
   }
 
   @override
@@ -209,19 +222,23 @@ class _$CateterImpl implements _Cateter {
             other is _$CateterImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.tipo, tipo) || other.tipo == tipo) &&
-            (identical(other.sitio, sitio) || other.sitio == sitio) &&
+            (identical(other.via, via) || other.via == via) &&
             (identical(other.fechaInsercion, fechaInsercion) ||
                 other.fechaInsercion == fechaInsercion) &&
             (identical(other.fechaRetiro, fechaRetiro) ||
                 other.fechaRetiro == fechaRetiro) &&
-            (identical(other.lugarProcedencia, lugarProcedencia) ||
-                other.lugarProcedencia == lugarProcedencia));
+            (identical(other.fechaCuracionOCambio, fechaCuracionOCambio) ||
+                other.fechaCuracionOCambio == fechaCuracionOCambio) &&
+            (identical(other.caracteristicasSitioInsercion,
+                    caracteristicasSitioInsercion) ||
+                other.caracteristicasSitioInsercion ==
+                    caracteristicasSitioInsercion));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, tipo, sitio, fechaInsercion,
-      fechaRetiro, lugarProcedencia);
+  int get hashCode => Object.hash(runtimeType, id, tipo, via, fechaInsercion,
+      fechaRetiro, fechaCuracionOCambio, caracteristicasSitioInsercion);
 
   /// Create a copy of Cateter
   /// with the given fields replaced by the non-null parameter values.
@@ -243,10 +260,11 @@ abstract class _Cateter implements Cateter {
   const factory _Cateter(
       {required final String id,
       required final String tipo,
-      required final String sitio,
+      required final String via,
       required final DateTime fechaInsercion,
       final DateTime? fechaRetiro,
-      required final String lugarProcedencia}) = _$CateterImpl;
+      final DateTime? fechaCuracionOCambio,
+      required final String caracteristicasSitioInsercion}) = _$CateterImpl;
 
   factory _Cateter.fromJson(Map<String, dynamic> json) = _$CateterImpl.fromJson;
 
@@ -255,13 +273,15 @@ abstract class _Cateter implements Cateter {
   @override
   String get tipo;
   @override
-  String get sitio;
+  String get via;
   @override
-  DateTime get fechaInsercion; // ✅ Ahora es DateTime
+  DateTime get fechaInsercion;
   @override
-  DateTime? get fechaRetiro; // ✅ Ahora es DateTime opcional
+  DateTime? get fechaRetiro;
   @override
-  String get lugarProcedencia;
+  DateTime? get fechaCuracionOCambio;
+  @override
+  String get caracteristicasSitioInsercion;
 
   /// Create a copy of Cateter
   /// with the given fields replaced by the non-null parameter values.

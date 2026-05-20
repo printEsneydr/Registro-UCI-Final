@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:registro_uci/features/auth/data/providers/user_role_provider.dart';
+import 'package:registro_uci/features/auth/domain/enums/user_role.dart';
 import 'package:registro_uci/features/sondas/presentation/widgets/components/create_sonda_floating_button.dart';
 import 'package:registro_uci/features/sondas/data/providers/sonda_provider.dart';
 import 'package:registro_uci/features/sondas/presentation/controllers/delete_sonda_controller.dart';
@@ -14,6 +16,8 @@ class SondasPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final role = ref.watch(roleProvider);
+    final isAdmin = role == UserRole.admin;
     final sondasAsync = ref.watch(sondasProvider(idIngreso));
     final dateFormat = DateFormat('dd/MM/yyyy HH:mm');
 
@@ -37,8 +41,8 @@ class SondasPage extends ConsumerWidget {
                 final fechaColocacion = sonda.fechaColocacion;
                 final fechaRetiro = sonda.fechaRetiro;
                 final diasEnUso = fechaRetiro == null
-                    ? DateTime.now().difference(fechaColocacion).inDays
-                    : fechaRetiro.difference(fechaColocacion).inDays;
+                    ? DateTime.now().difference(fechaColocacion).inDays + 1
+                    : fechaRetiro.difference(fechaColocacion).inDays + 1;
                 final isActive = fechaRetiro == null;
 
                 return Card(
@@ -110,27 +114,29 @@ class SondasPage extends ConsumerWidget {
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        IconButton(
-                          icon: const Icon(Icons.edit,
-                              color: Colors.blue, size: 20),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => UpdateSondasPage(
-                                  sonda: sonda,
-                                  idIngreso: idIngreso,
+                        if (isAdmin)
+                          IconButton(
+                            icon: const Icon(Icons.edit,
+                                color: Colors.blue, size: 20),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => UpdateSondasPage(
+                                    sonda: sonda,
+                                    idIngreso: idIngreso,
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.delete,
-                              color: Colors.red, size: 20),
-                          onPressed: () => _showDeleteDialog(
-                              context, ref, sonda.id, idIngreso),
-                        ),
+                              );
+                            },
+                          ),
+                        if (isAdmin)
+                          IconButton(
+                            icon: const Icon(Icons.delete,
+                                color: Colors.red, size: 20),
+                            onPressed: () => _showDeleteDialog(
+                                context, ref, sonda.id, idIngreso),
+                          ),
                       ],
                     ),
                     children: [

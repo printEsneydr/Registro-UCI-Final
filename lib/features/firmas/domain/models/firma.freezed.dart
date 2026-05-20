@@ -18,6 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Firma {
   String get nombreFirma => throw _privateConstructorUsedError;
   DateTime get fechaFirma => throw _privateConstructorUsedError;
+  String get tipoPersonal => throw _privateConstructorUsedError;
+  String get turno => throw _privateConstructorUsedError;
 
   /// Create a copy of Firma
   /// with the given fields replaced by the non-null parameter values.
@@ -30,7 +32,11 @@ abstract class $FirmaCopyWith<$Res> {
   factory $FirmaCopyWith(Firma value, $Res Function(Firma) then) =
       _$FirmaCopyWithImpl<$Res, Firma>;
   @useResult
-  $Res call({String nombreFirma, DateTime fechaFirma});
+  $Res call(
+      {String nombreFirma,
+      DateTime fechaFirma,
+      String tipoPersonal,
+      String turno});
 }
 
 /// @nodoc
@@ -50,6 +56,8 @@ class _$FirmaCopyWithImpl<$Res, $Val extends Firma>
   $Res call({
     Object? nombreFirma = null,
     Object? fechaFirma = null,
+    Object? tipoPersonal = null,
+    Object? turno = null,
   }) {
     return _then(_value.copyWith(
       nombreFirma: null == nombreFirma
@@ -60,6 +68,14 @@ class _$FirmaCopyWithImpl<$Res, $Val extends Firma>
           ? _value.fechaFirma
           : fechaFirma // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      tipoPersonal: null == tipoPersonal
+          ? _value.tipoPersonal
+          : tipoPersonal // ignore: cast_nullable_to_non_nullable
+              as String,
+      turno: null == turno
+          ? _value.turno
+          : turno // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -71,7 +87,11 @@ abstract class _$$FirmaImplCopyWith<$Res> implements $FirmaCopyWith<$Res> {
       __$$FirmaImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String nombreFirma, DateTime fechaFirma});
+  $Res call(
+      {String nombreFirma,
+      DateTime fechaFirma,
+      String tipoPersonal,
+      String turno});
 }
 
 /// @nodoc
@@ -89,6 +109,8 @@ class __$$FirmaImplCopyWithImpl<$Res>
   $Res call({
     Object? nombreFirma = null,
     Object? fechaFirma = null,
+    Object? tipoPersonal = null,
+    Object? turno = null,
   }) {
     return _then(_$FirmaImpl(
       nombreFirma: null == nombreFirma
@@ -99,6 +121,14 @@ class __$$FirmaImplCopyWithImpl<$Res>
           ? _value.fechaFirma
           : fechaFirma // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      tipoPersonal: null == tipoPersonal
+          ? _value.tipoPersonal
+          : tipoPersonal // ignore: cast_nullable_to_non_nullable
+              as String,
+      turno: null == turno
+          ? _value.turno
+          : turno // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -106,16 +136,26 @@ class __$$FirmaImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$FirmaImpl implements _Firma {
-  const _$FirmaImpl({required this.nombreFirma, required this.fechaFirma});
+  const _$FirmaImpl(
+      {required this.nombreFirma,
+      required this.fechaFirma,
+      this.tipoPersonal = 'ENFERMERA',
+      this.turno = ''});
 
   @override
   final String nombreFirma;
   @override
   final DateTime fechaFirma;
+  @override
+  @JsonKey()
+  final String tipoPersonal;
+  @override
+  @JsonKey()
+  final String turno;
 
   @override
   String toString() {
-    return 'Firma(nombreFirma: $nombreFirma, fechaFirma: $fechaFirma)';
+    return 'Firma(nombreFirma: $nombreFirma, fechaFirma: $fechaFirma, tipoPersonal: $tipoPersonal, turno: $turno)';
   }
 
   @override
@@ -126,11 +166,15 @@ class _$FirmaImpl implements _Firma {
             (identical(other.nombreFirma, nombreFirma) ||
                 other.nombreFirma == nombreFirma) &&
             (identical(other.fechaFirma, fechaFirma) ||
-                other.fechaFirma == fechaFirma));
+                other.fechaFirma == fechaFirma) &&
+            (identical(other.tipoPersonal, tipoPersonal) ||
+                other.tipoPersonal == tipoPersonal) &&
+            (identical(other.turno, turno) || other.turno == turno));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, nombreFirma, fechaFirma);
+  int get hashCode =>
+      Object.hash(runtimeType, nombreFirma, fechaFirma, tipoPersonal, turno);
 
   /// Create a copy of Firma
   /// with the given fields replaced by the non-null parameter values.
@@ -144,12 +188,18 @@ class _$FirmaImpl implements _Firma {
 abstract class _Firma implements Firma {
   const factory _Firma(
       {required final String nombreFirma,
-      required final DateTime fechaFirma}) = _$FirmaImpl;
+      required final DateTime fechaFirma,
+      final String tipoPersonal,
+      final String turno}) = _$FirmaImpl;
 
   @override
   String get nombreFirma;
   @override
   DateTime get fechaFirma;
+  @override
+  String get tipoPersonal;
+  @override
+  String get turno;
 
   /// Create a copy of Firma
   /// with the given fields replaced by the non-null parameter values.

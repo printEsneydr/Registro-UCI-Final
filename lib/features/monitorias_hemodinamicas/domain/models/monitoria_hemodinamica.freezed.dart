@@ -19,34 +19,24 @@ mixin _$MonitoriaHemodinamica {
   String get idMonitoria => throw _privateConstructorUsedError;
   int get hora => throw _privateConstructorUsedError;
   int get orden => throw _privateConstructorUsedError;
-  int? get pas =>
-      throw _privateConstructorUsedError; // Presión arterial sistólica
-  int? get pad =>
-      throw _privateConstructorUsedError; // Presión arterial diastólica
-  int? get pam =>
-      throw _privateConstructorUsedError; // Presión arterial media (Fórmula: (2pad + 1pas)/3)
-  int? get fc =>
-      throw _privateConstructorUsedError; // Frecuencia cardiaca (ppm)
-  int? get fr =>
-      throw _privateConstructorUsedError; // Frecuencia respiratoria (rpm)
-  double? get t => throw _privateConstructorUsedError; // Temperatura (°C)
-  int? get pvc => throw _privateConstructorUsedError; // presion venosa central
-  int? get rvc =>
-      throw _privateConstructorUsedError; // Resistencia vascular sistemica
-  int? get fio2 =>
-      throw _privateConstructorUsedError; // Fracción de Oxígeno Inspirado (%)
-  int? get pia =>
-      throw _privateConstructorUsedError; // Presión intraabdominal (mm H2O)
-  int? get ppa =>
-      throw _privateConstructorUsedError; // Presión de Perfusión arterial (mm Hg)
-  int? get pic =>
-      throw _privateConstructorUsedError; // Presión intracraneal (mm Hg)
-  int? get ppc =>
-      throw _privateConstructorUsedError; // Presión de Perfusión cerebral (mm Hg)
-  int? get glucometria =>
-      throw _privateConstructorUsedError; // Glucometría (mg/dL)
-  int? get insulina =>
-      throw _privateConstructorUsedError; // Insulina (Unidades)
+  int? get pas => throw _privateConstructorUsedError;
+  int? get pad => throw _privateConstructorUsedError;
+  int? get pam => throw _privateConstructorUsedError;
+  int? get fc => throw _privateConstructorUsedError;
+  int? get fr => throw _privateConstructorUsedError;
+  double? get t => throw _privateConstructorUsedError;
+  int? get pvc => throw _privateConstructorUsedError;
+  int? get gc => throw _privateConstructorUsedError;
+  int? get ic => throw _privateConstructorUsedError;
+  int? get rvs => throw _privateConstructorUsedError;
+  int? get irvs => throw _privateConstructorUsedError;
+  int? get fio2 => throw _privateConstructorUsedError;
+  int? get pia => throw _privateConstructorUsedError;
+  int? get ppa => throw _privateConstructorUsedError;
+  int? get pic => throw _privateConstructorUsedError;
+  int? get ppc => throw _privateConstructorUsedError;
+  int? get glucometria => throw _privateConstructorUsedError;
+  int? get insulina => throw _privateConstructorUsedError;
   int? get saturacion => throw _privateConstructorUsedError;
 
   /// Create a copy of MonitoriaHemodinamica
@@ -73,7 +63,10 @@ abstract class $MonitoriaHemodinamicaCopyWith<$Res> {
       int? fr,
       double? t,
       int? pvc,
-      int? rvc,
+      int? gc,
+      int? ic,
+      int? rvs,
+      int? irvs,
       int? fio2,
       int? pia,
       int? ppa,
@@ -110,7 +103,10 @@ class _$MonitoriaHemodinamicaCopyWithImpl<$Res,
     Object? fr = freezed,
     Object? t = freezed,
     Object? pvc = freezed,
-    Object? rvc = freezed,
+    Object? gc = freezed,
+    Object? ic = freezed,
+    Object? rvs = freezed,
+    Object? irvs = freezed,
     Object? fio2 = freezed,
     Object? pia = freezed,
     Object? ppa = freezed,
@@ -161,9 +157,21 @@ class _$MonitoriaHemodinamicaCopyWithImpl<$Res,
           ? _value.pvc
           : pvc // ignore: cast_nullable_to_non_nullable
               as int?,
-      rvc: freezed == rvc
-          ? _value.rvc
-          : rvc // ignore: cast_nullable_to_non_nullable
+      gc: freezed == gc
+          ? _value.gc
+          : gc // ignore: cast_nullable_to_non_nullable
+              as int?,
+      ic: freezed == ic
+          ? _value.ic
+          : ic // ignore: cast_nullable_to_non_nullable
+              as int?,
+      rvs: freezed == rvs
+          ? _value.rvs
+          : rvs // ignore: cast_nullable_to_non_nullable
+              as int?,
+      irvs: freezed == irvs
+          ? _value.irvs
+          : irvs // ignore: cast_nullable_to_non_nullable
               as int?,
       fio2: freezed == fio2
           ? _value.fio2
@@ -221,7 +229,10 @@ abstract class _$$MonitoriaHemodinamicaImplCopyWith<$Res>
       int? fr,
       double? t,
       int? pvc,
-      int? rvc,
+      int? gc,
+      int? ic,
+      int? rvs,
+      int? irvs,
       int? fio2,
       int? pia,
       int? ppa,
@@ -256,7 +267,10 @@ class __$$MonitoriaHemodinamicaImplCopyWithImpl<$Res>
     Object? fr = freezed,
     Object? t = freezed,
     Object? pvc = freezed,
-    Object? rvc = freezed,
+    Object? gc = freezed,
+    Object? ic = freezed,
+    Object? rvs = freezed,
+    Object? irvs = freezed,
     Object? fio2 = freezed,
     Object? pia = freezed,
     Object? ppa = freezed,
@@ -307,9 +321,21 @@ class __$$MonitoriaHemodinamicaImplCopyWithImpl<$Res>
           ? _value.pvc
           : pvc // ignore: cast_nullable_to_non_nullable
               as int?,
-      rvc: freezed == rvc
-          ? _value.rvc
-          : rvc // ignore: cast_nullable_to_non_nullable
+      gc: freezed == gc
+          ? _value.gc
+          : gc // ignore: cast_nullable_to_non_nullable
+              as int?,
+      ic: freezed == ic
+          ? _value.ic
+          : ic // ignore: cast_nullable_to_non_nullable
+              as int?,
+      rvs: freezed == rvs
+          ? _value.rvs
+          : rvs // ignore: cast_nullable_to_non_nullable
+              as int?,
+      irvs: freezed == irvs
+          ? _value.irvs
+          : irvs // ignore: cast_nullable_to_non_nullable
               as int?,
       fio2: freezed == fio2
           ? _value.fio2
@@ -361,7 +387,10 @@ class _$MonitoriaHemodinamicaImpl implements _MonitoriaHemodinamica {
       this.fr,
       this.t,
       this.pvc,
-      this.rvc,
+      this.gc,
+      this.ic,
+      this.rvs,
+      this.irvs,
       this.fio2,
       this.pia,
       this.ppa,
@@ -379,55 +408,46 @@ class _$MonitoriaHemodinamicaImpl implements _MonitoriaHemodinamica {
   final int orden;
   @override
   final int? pas;
-// Presión arterial sistólica
   @override
   final int? pad;
-// Presión arterial diastólica
   @override
   final int? pam;
-// Presión arterial media (Fórmula: (2pad + 1pas)/3)
   @override
   final int? fc;
-// Frecuencia cardiaca (ppm)
   @override
   final int? fr;
-// Frecuencia respiratoria (rpm)
   @override
   final double? t;
-// Temperatura (°C)
   @override
   final int? pvc;
-// presion venosa central
   @override
-  final int? rvc;
-// Resistencia vascular sistemica
+  final int? gc;
+  @override
+  final int? ic;
+  @override
+  final int? rvs;
+  @override
+  final int? irvs;
   @override
   final int? fio2;
-// Fracción de Oxígeno Inspirado (%)
   @override
   final int? pia;
-// Presión intraabdominal (mm H2O)
   @override
   final int? ppa;
-// Presión de Perfusión arterial (mm Hg)
   @override
   final int? pic;
-// Presión intracraneal (mm Hg)
   @override
   final int? ppc;
-// Presión de Perfusión cerebral (mm Hg)
   @override
   final int? glucometria;
-// Glucometría (mg/dL)
   @override
   final int? insulina;
-// Insulina (Unidades)
   @override
   final int? saturacion;
 
   @override
   String toString() {
-    return 'MonitoriaHemodinamica(idMonitoria: $idMonitoria, hora: $hora, orden: $orden, pas: $pas, pad: $pad, pam: $pam, fc: $fc, fr: $fr, t: $t, pvc: $pvc, rvc: $rvc, fio2: $fio2, pia: $pia, ppa: $ppa, pic: $pic, ppc: $ppc, glucometria: $glucometria, insulina: $insulina, saturacion: $saturacion)';
+    return 'MonitoriaHemodinamica(idMonitoria: $idMonitoria, hora: $hora, orden: $orden, pas: $pas, pad: $pad, pam: $pam, fc: $fc, fr: $fr, t: $t, pvc: $pvc, gc: $gc, ic: $ic, rvs: $rvs, irvs: $irvs, fio2: $fio2, pia: $pia, ppa: $ppa, pic: $pic, ppc: $ppc, glucometria: $glucometria, insulina: $insulina, saturacion: $saturacion)';
   }
 
   @override
@@ -446,7 +466,10 @@ class _$MonitoriaHemodinamicaImpl implements _MonitoriaHemodinamica {
             (identical(other.fr, fr) || other.fr == fr) &&
             (identical(other.t, t) || other.t == t) &&
             (identical(other.pvc, pvc) || other.pvc == pvc) &&
-            (identical(other.rvc, rvc) || other.rvc == rvc) &&
+            (identical(other.gc, gc) || other.gc == gc) &&
+            (identical(other.ic, ic) || other.ic == ic) &&
+            (identical(other.rvs, rvs) || other.rvs == rvs) &&
+            (identical(other.irvs, irvs) || other.irvs == irvs) &&
             (identical(other.fio2, fio2) || other.fio2 == fio2) &&
             (identical(other.pia, pia) || other.pia == pia) &&
             (identical(other.ppa, ppa) || other.ppa == ppa) &&
@@ -473,7 +496,10 @@ class _$MonitoriaHemodinamicaImpl implements _MonitoriaHemodinamica {
         fr,
         t,
         pvc,
-        rvc,
+        gc,
+        ic,
+        rvs,
+        irvs,
         fio2,
         pia,
         ppa,
@@ -506,7 +532,10 @@ abstract class _MonitoriaHemodinamica implements MonitoriaHemodinamica {
       final int? fr,
       final double? t,
       final int? pvc,
-      final int? rvc,
+      final int? gc,
+      final int? ic,
+      final int? rvs,
+      final int? irvs,
       final int? fio2,
       final int? pia,
       final int? ppa,
@@ -523,35 +552,41 @@ abstract class _MonitoriaHemodinamica implements MonitoriaHemodinamica {
   @override
   int get orden;
   @override
-  int? get pas; // Presión arterial sistólica
+  int? get pas;
   @override
-  int? get pad; // Presión arterial diastólica
+  int? get pad;
   @override
-  int? get pam; // Presión arterial media (Fórmula: (2pad + 1pas)/3)
+  int? get pam;
   @override
-  int? get fc; // Frecuencia cardiaca (ppm)
+  int? get fc;
   @override
-  int? get fr; // Frecuencia respiratoria (rpm)
+  int? get fr;
   @override
-  double? get t; // Temperatura (°C)
+  double? get t;
   @override
-  int? get pvc; // presion venosa central
+  int? get pvc;
   @override
-  int? get rvc; // Resistencia vascular sistemica
+  int? get gc;
   @override
-  int? get fio2; // Fracción de Oxígeno Inspirado (%)
+  int? get ic;
   @override
-  int? get pia; // Presión intraabdominal (mm H2O)
+  int? get rvs;
   @override
-  int? get ppa; // Presión de Perfusión arterial (mm Hg)
+  int? get irvs;
   @override
-  int? get pic; // Presión intracraneal (mm Hg)
+  int? get fio2;
   @override
-  int? get ppc; // Presión de Perfusión cerebral (mm Hg)
+  int? get pia;
   @override
-  int? get glucometria; // Glucometría (mg/dL)
+  int? get ppa;
   @override
-  int? get insulina; // Insulina (Unidades)
+  int? get pic;
+  @override
+  int? get ppc;
+  @override
+  int? get glucometria;
+  @override
+  int? get insulina;
   @override
   int? get saturacion;
 

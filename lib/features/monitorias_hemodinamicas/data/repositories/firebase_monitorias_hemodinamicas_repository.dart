@@ -10,7 +10,6 @@ class FirebaseMonitoriaHemodinamicaRepository
   FirebaseMonitoriaHemodinamicaRepository({FirebaseFirestore? firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
-  // Método helper para obtener referencia a la colección
   CollectionReference<Map<String, dynamic>> _obtenerColeccion(
       {required String idIngreso, required String idRegistroDiario}) {
     return _firestore
@@ -87,7 +86,10 @@ class FirebaseMonitoriaHemodinamicaRepository
     int? fr,
     double? t,
     int? pvc,
-    int? rvc,
+    int? gc,
+    int? ic,
+    int? rvs,
+    int? irvs,
     int? fio2,
     int? pia,
     int? ppa,
@@ -103,10 +105,7 @@ class FirebaseMonitoriaHemodinamicaRepository
         idRegistroDiario: idRegistroDiario,
       );
 
-      // Calcular PAM si no está definida
       final pamCalculada = pam ?? _calcularPAM(pas, pad);
-
-      // Obtener siguiente orden
       final ultimoQuery =
           await coleccion.orderBy('orden', descending: true).limit(1).get();
       final nuevoOrden = ultimoQuery.docs.isEmpty
@@ -123,7 +122,10 @@ class FirebaseMonitoriaHemodinamicaRepository
         'fr': fr,
         't': t,
         'pvc': pvc,
-        'rvc': rvc,
+        'gc': gc,
+        'ic': ic,
+        'rvs': rvs,
+        'irvs': irvs,
         'fio2': fio2,
         'pia': pia,
         'ppa': ppa,
@@ -151,7 +153,10 @@ class FirebaseMonitoriaHemodinamicaRepository
     int? fr,
     double? t,
     int? pvc,
-    int? rvc,
+    int? gc,
+    int? ic,
+    int? rvs,
+    int? irvs,
     int? fio2,
     int? pia,
     int? ppa,
@@ -172,7 +177,10 @@ class FirebaseMonitoriaHemodinamicaRepository
         'fr': fr,
         't': t,
         'pvc': pvc,
-        'rvc': rvc,
+        'gc': gc,
+        'ic': ic,
+        'rvs': rvs,
+        'irvs': irvs,
         'fio2': fio2,
         'pia': pia,
         'ppa': ppa,
@@ -235,7 +243,6 @@ class FirebaseMonitoriaHemodinamicaRepository
     }
   }
 
-  // Método privado para calcular PAM
   int? _calcularPAM(int? pas, int? pad) {
     if (pas == null || pad == null) return null;
     return ((2 * pad + pas) / 3).round();

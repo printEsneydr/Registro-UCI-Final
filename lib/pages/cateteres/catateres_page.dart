@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:registro_uci/features/auth/data/providers/user_role_provider.dart';
+import 'package:registro_uci/features/auth/domain/enums/user_role.dart';
 import 'package:registro_uci/features/cateteres/presentation/widgets/components/buttons/create_cateter_floating_button.dart';
 import 'package:registro_uci/features/cateteres/presentation/controllers/delete_cateter_controller.dart';
 import 'package:registro_uci/features/cateteres/data/providers/cateteres_providers.dart';
@@ -14,6 +16,8 @@ class ListadoCateteresPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final role = ref.watch(roleProvider);
+    final isAdmin = role == UserRole.admin;
     final cateteresAsync = ref.watch(cateteresByIngresoProvider(idIngreso));
     final dateFormat = DateFormat('dd/MM/yyyy HH:mm');
 
@@ -143,24 +147,26 @@ class ListadoCateteresPage extends ConsumerWidget {
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      IconButton(
-                        icon: const Icon(Icons.edit,
-                            color: Colors.blue, size: 20),
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditCateterPage(
-                              idIngreso: idIngreso,
-                              cateter: cateter,
+                      if (isAdmin)
+                        IconButton(
+                          icon: const Icon(Icons.edit,
+                              color: Colors.blue, size: 20),
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditCateterPage(
+                                idIngreso: idIngreso,
+                                cateter: cateter,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.delete,
-                            color: Colors.red, size: 20),
-                        onPressed: () => _confirmDelete(context, ref, cateter),
-                      ),
+                      if (isAdmin)
+                        IconButton(
+                          icon: const Icon(Icons.delete,
+                              color: Colors.red, size: 20),
+                          onPressed: () => _confirmDelete(context, ref, cateter),
+                        ),
                     ],
                   ),
                   children: [
@@ -173,16 +179,26 @@ class ListadoCateteresPage extends ConsumerWidget {
                     ),
                     const SizedBox(height: 12),
                     _buildInfoRow(
-                      icon: Icons.location_on,
-                      label: 'Sitio',
-                      value: cateter.sitio,
+                      icon: Icons.route,
+                      label: 'Vía',
+                      value: cateter.via,
                     ),
                     const SizedBox(height: 12),
                     _buildInfoRow(
-                      icon: Icons.place,
-                      label: 'Procedencia',
-                      value: cateter.lugarProcedencia,
+                      icon: Icons.info,
+                      label: 'Características sitio',
+                      value: cateter.caracteristicasSitioInsercion.isNotEmpty
+                          ? cateter.caracteristicasSitioInsercion
+                          : 'Sin especificar',
                     ),
+                    if (cateter.fechaCuracionOCambio != null) ...[
+                      const SizedBox(height: 12),
+                      _buildInfoRow(
+                        icon: Icons.calendar_month,
+                        label: 'Fecha curación / cambio',
+                        value: dateFormat.format(cateter.fechaCuracionOCambio!),
+                      ),
+                    ],
                     if (fechaRetiro != null) ...[
                       const SizedBox(height: 12),
                       _buildInfoRow(

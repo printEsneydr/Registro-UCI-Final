@@ -10,9 +10,7 @@ class RegistroDiario with _$RegistroDiario {
     required String idRegistroDiario,
     required DateTime fechaRegistro,
     Firma? firmaNecesidades,
-    // Firma? firmaX,
-    // Firma? firmaY,
-    // etc
+    @Default('') String observaciones,
   }) = _RegistroDiario;
 
   factory RegistroDiario.fromJson(
@@ -24,7 +22,8 @@ class RegistroDiario with _$RegistroDiario {
       fechaRegistro: (json[Strings.fechaRegistro] as Timestamp).toDate(),
       firmaNecesidades: json[Strings.firmaNecesidades] != null
           ? Firma.fromJson(json[Strings.firmaNecesidades])
-          : null, // Handle nullability
+          : null,
+      observaciones: (json[Strings.observaciones] as String?) ?? '',
     );
   }
 }

@@ -19,6 +19,8 @@ class _CreateSondaFormState extends ConsumerState<CreateSondaForm> {
   final _formKey = GlobalKey<FormState>();
   String? _regionSeleccionada;
   String? _tipoSondaSeleccionado;
+  String _otroTipo = '';
+  bool get _esOtro => _tipoSondaSeleccionado == 'Otro';
   DateTime _fechaColocacion = DateTime.now();
   final _dateFormat = DateFormat('dd/MM/yyyy HH:mm');
 
@@ -66,21 +68,39 @@ class _CreateSondaFormState extends ConsumerState<CreateSondaForm> {
               ),
               value: _tipoSondaSeleccionado,
               isExpanded: true,
-              items: (sondasPorRegion[_regionSeleccionada] ?? [])
-                  .map((sonda) => DropdownMenuItem(
-                        value: sonda,
-                        child: Text(
-                          sonda,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                      ))
-                  .toList(),
+              items: [
+                ...(sondasPorRegion[_regionSeleccionada] ?? [])
+                    .map((sonda) => DropdownMenuItem(
+                          value: sonda,
+                          child: Text(
+                            sonda,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        )),
+                const DropdownMenuItem(
+                  value: 'Otro',
+                  child: Text('Otro...'),
+                ),
+              ],
               onChanged: (value) =>
                   setState(() => _tipoSondaSeleccionado = value),
               validator: (value) =>
                   value == null ? 'Seleccione un tipo de sonda' : null,
             ),
+          if (_esOtro) ...[
+            const SizedBox(height: 12),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: "Especifique el tipo de sonda",
+                prefixIcon: Icon(Icons.edit),
+              ),
+              onChanged: (v) => _otroTipo = v,
+              validator: (v) => (v == null || v.trim().isEmpty)
+                  ? 'Ingrese el tipo de sonda'
+                  : null,
+            ),
+          ],
           const SizedBox(height: 16),
           InkWell(
             onTap: () => _selectDate(context),
@@ -147,7 +167,7 @@ class _CreateSondaFormState extends ConsumerState<CreateSondaForm> {
   void _createSonda(AsyncValue<void> createSondaState) {
     if (_formKey.currentState!.validate()) {
       final dto = CreateSondaDto(
-        tipo: _tipoSondaSeleccionado!,
+        tipo: _esOtro ? _otroTipo.trim() : _tipoSondaSeleccionado!,
         regionAnatomica: _regionSeleccionada!,
         fechaColocacion: _fechaColocacion,
         idIngreso: widget.idIngreso,

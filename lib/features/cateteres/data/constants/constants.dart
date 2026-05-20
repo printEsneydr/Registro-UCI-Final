@@ -5,8 +5,8 @@ const List<String> tiposCateter = [
   'Arterial',
 ];
 
-/// 🔹 **Sitios de Inserción**
-const List<String> sitiosCateter = [
+/// 🔹 **Vías de Acceso**
+const List<String> viasCateter = [
   'Yugular derecho',
   'Yugular izquierdo',
   'Subclavia derecho',
@@ -21,12 +21,4 @@ const List<String> sitiosCateter = [
   'Pedial izquierdo',
   'Femoral derecho',
   'Femoral izquierdo',
-];
-
-/// 🔹 **Lugares de Procedencia**
-const List<String> lugaresProcedenciaCateter = [
-  'Hospitalización',
-  'Urgencias',
-  'Quirófano',
-  'Cuidados intesivos'
 ];

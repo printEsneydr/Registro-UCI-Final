@@ -19,7 +19,8 @@ class ControlDeRiesgos {
   final DateTime? fechaFinAislamiento;
   final int? diasDeAislamiento;
   final DateTime? fechaRegistro;
-  // Agrega estos nuevos campos
+  final bool alergicoAMedicacion;
+  final String? medicamentoAlergico;
   final int? controlUPPManana;
   final int? controlUPPTarde;
   final int? controlUPPNoche;
@@ -48,7 +49,8 @@ class ControlDeRiesgos {
     this.fechaFinAislamiento,
     this.diasDeAislamiento,
     this.fechaRegistro,
-    // Agrega estos nuevos parámetros al constructor
+    this.alergicoAMedicacion = false,
+    this.medicamentoAlergico,
     this.controlUPPManana,
     this.controlUPPTarde,
     this.controlUPPNoche,
@@ -79,7 +81,8 @@ class ControlDeRiesgos {
       'fechaFinAislamiento': fechaFinAislamiento?.toIso8601String(),
       'diasDeAislamiento': diasDeAislamiento,
       'fechaRegistro': fechaRegistro?.toIso8601String(),
-      // Agrega los nuevos campos al JSON
+      'alergicoAMedicacion': alergicoAMedicacion,
+      'medicamentoAlergico': medicamentoAlergico,
       'controlUPPManana': controlUPPManana,
       'controlUPPTarde': controlUPPTarde,
       'controlUPPNoche': controlUPPNoche,
@@ -122,7 +125,8 @@ class ControlDeRiesgos {
       fechaRegistro: json['fechaRegistro'] != null
           ? DateTime.parse(json['fechaRegistro'])
           : null,
-      // Agrega los nuevos campos al fromJson
+      alergicoAMedicacion: json['alergicoAMedicacion'] as bool? ?? false,
+      medicamentoAlergico: json['medicamentoAlergico'] as String?,
       controlUPPManana: json['controlUPPManana'] as int?,
       controlUPPTarde: json['controlUPPTarde'] as int?,
       controlUPPNoche: json['controlUPPNoche'] as int?,

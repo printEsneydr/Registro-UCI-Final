@@ -7,7 +7,9 @@ part 'create_procedimiento_dto.g.dart';
 class CreateProcedimientoDto with _$CreateProcedimientoDto {
   const factory CreateProcedimientoDto({
     required String nombreProcedimiento,
-    required String estado, // "Pendiente", "Realizado", "Reportado"
+    @Default("Por realizar") String estado,
+    String? medicamentoInfusion,
+    String? dosisInfusion,
   }) = _CreateProcedimientoDto;
 
   factory CreateProcedimientoDto.fromJson(Map<String, dynamic> json) =>

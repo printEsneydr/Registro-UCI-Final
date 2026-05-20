@@ -25,35 +25,41 @@ class _EditCateterPageState extends ConsumerState<EditCateterPage> {
 
   late TextEditingController fechaInsercionController;
   late TextEditingController fechaRetiroController;
+  late TextEditingController fechaCuracionController;
+  late TextEditingController caracteristicasController;
   String? selectedTipo;
-  String? selectedSitio;
-  String? selectedLugarProcedencia;
+  String? selectedVia;
 
   @override
   void initState() {
     super.initState();
+    final df = DateFormat('dd/MM/yyyy');
     fechaInsercionController = TextEditingController(
-        text: DateFormat('yyyy-MM-dd').format(widget.cateter.fechaInsercion));
+        text: df.format(widget.cateter.fechaInsercion));
     fechaRetiroController = TextEditingController(
         text: widget.cateter.fechaRetiro != null
-            ? DateFormat('yyyy-MM-dd').format(widget.cateter.fechaRetiro!)
+            ? df.format(widget.cateter.fechaRetiro!)
             : "");
+    fechaCuracionController = TextEditingController(
+        text: widget.cateter.fechaCuracionOCambio != null
+            ? df.format(widget.cateter.fechaCuracionOCambio!)
+            : "");
+    caracteristicasController = TextEditingController(
+        text: widget.cateter.caracteristicasSitioInsercion);
 
     selectedTipo =
         tiposCateter.contains(widget.cateter.tipo) ? widget.cateter.tipo : null;
-    selectedSitio = sitiosCateter.contains(widget.cateter.sitio)
-        ? widget.cateter.sitio
+    selectedVia = viasCateter.contains(widget.cateter.via)
+        ? widget.cateter.via
         : null;
-    selectedLugarProcedencia =
-        lugaresProcedenciaCateter.contains(widget.cateter.lugarProcedencia)
-            ? widget.cateter.lugarProcedencia
-            : null;
   }
 
   @override
   void dispose() {
     fechaInsercionController.dispose();
     fechaRetiroController.dispose();
+    fechaCuracionController.dispose();
+    caracteristicasController.dispose();
     super.dispose();
   }
 
@@ -67,7 +73,7 @@ class _EditCateterPageState extends ConsumerState<EditCateterPage> {
 
     if (picked != null) {
       setState(() {
-        controller.text = DateFormat('yyyy-MM-dd').format(picked);
+        controller.text = DateFormat('dd/MM/yyyy').format(picked);
       });
     }
   }
@@ -83,7 +89,6 @@ class _EditCateterPageState extends ConsumerState<EditCateterPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // **Tipo de catéter**
               DropdownButtonFormField<String>(
                 initialValue: selectedTipo,
                 onChanged: (value) => setState(() => selectedTipo = value),
@@ -96,40 +101,21 @@ class _EditCateterPageState extends ConsumerState<EditCateterPage> {
               ),
               const SizedBox(height: 16),
 
-              // **Sitio de inserción**
               DropdownButtonFormField<String>(
-                initialValue: selectedSitio,
-                onChanged: (value) => setState(() => selectedSitio = value),
-                items: sitiosCateter.map((sitio) {
-                  return DropdownMenuItem(value: sitio, child: Text(sitio));
+                initialValue: selectedVia,
+                onChanged: (value) => setState(() => selectedVia = value),
+                items: viasCateter.map((via) {
+                  return DropdownMenuItem(value: via, child: Text(via));
                 }).toList(),
-                decoration:
-                    const InputDecoration(labelText: "Sitio de Inserción"),
+                decoration: const InputDecoration(labelText: "Vía"),
                 validator: (value) =>
-                    value == null ? "Seleccione un sitio de inserción" : null,
+                    value == null ? "Seleccione una vía" : null,
               ),
               const SizedBox(height: 16),
 
-              // **Lugar de procedencia**
-              DropdownButtonFormField<String>(
-                initialValue: selectedLugarProcedencia,
-                onChanged: (value) =>
-                    setState(() => selectedLugarProcedencia = value),
-                items: lugaresProcedenciaCateter.map((lugar) {
-                  return DropdownMenuItem(value: lugar, child: Text(lugar));
-                }).toList(),
-                decoration:
-                    const InputDecoration(labelText: "Lugar de Procedencia"),
-                validator: (value) =>
-                    value == null ? "Seleccione un lugar de procedencia" : null,
-              ),
-              const SizedBox(height: 16),
-
-              // **Fecha de inserción**
               TextFormField(
                 controller: fechaInsercionController,
-                decoration:
-                    const InputDecoration(labelText: "Fecha de Inserción"),
+                decoration: const InputDecoration(labelText: "Fecha de Inserción"),
                 readOnly: true,
                 onTap: () => _seleccionarFecha(fechaInsercionController),
                 validator: (value) =>
@@ -137,29 +123,50 @@ class _EditCateterPageState extends ConsumerState<EditCateterPage> {
               ),
               const SizedBox(height: 16),
 
-              // **Fecha de retiro**
+              TextFormField(
+                controller: fechaCuracionController,
+                decoration: const InputDecoration(labelText: "Fecha de curación / cambio (opcional)"),
+                readOnly: true,
+                onTap: () => _seleccionarFecha(fechaCuracionController),
+              ),
+              const SizedBox(height: 16),
+
+              TextFormField(
+                controller: caracteristicasController,
+                decoration: const InputDecoration(
+                  labelText: "Características sitio de inserción",
+                  hintText: "Ej: limpio, enrojecido, secreción",
+                ),
+                maxLines: 2,
+              ),
+              const SizedBox(height: 16),
+
               TextFormField(
                 controller: fechaRetiroController,
-                decoration: const InputDecoration(labelText: "Fecha de Retiro"),
+                decoration: const InputDecoration(labelText: "Fecha de Retiro (opcional)"),
                 readOnly: true,
                 onTap: () => _seleccionarFecha(fechaRetiroController),
               ),
               const SizedBox(height: 16),
 
-              // **Botón de actualizar**
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     final dto = UpdateCateterDto(
                       tipo: selectedTipo,
-                      sitio: selectedSitio,
+                      via: selectedVia,
                       fechaInsercion: fechaInsercionController.text.isNotEmpty
-                          ? DateTime.parse(fechaInsercionController.text)
+                          ? DateFormat('dd/MM/yyyy').parse(fechaInsercionController.text)
+                          : null,
+                      fechaCuracionOCambio: fechaCuracionController.text.isNotEmpty
+                          ? DateFormat('dd/MM/yyyy').parse(fechaCuracionController.text)
+                          : null,
+                      caracteristicasSitioInsercion: caracteristicasController.text.isNotEmpty
+                          ? caracteristicasController.text
                           : null,
                       fechaRetiro: fechaRetiroController.text.isNotEmpty
-                          ? DateTime.parse(fechaRetiroController.text)
+                          ? DateFormat('dd/MM/yyyy').parse(fechaRetiroController.text)
                           : null,
-                      lugarProcedencia: selectedLugarProcedencia,
                     );
 
                     await ref.read(actualizarCateterProvider((

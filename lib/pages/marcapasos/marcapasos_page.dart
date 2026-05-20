@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:registro_uci/features/auth/data/providers/user_role_provider.dart';
+import 'package:registro_uci/features/auth/domain/enums/user_role.dart';
 import 'package:registro_uci/features/marcapasos/data/providers/marcapasos_provider.dart';
 import 'package:registro_uci/features/marcapasos/presentation/controllers/delete_marcapaso_controller.dart';
 import 'update_marcapasos_page.dart';
@@ -12,6 +14,8 @@ class ListadoMarcapasosPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final role = ref.watch(roleProvider);
+    final isAdmin = role == UserRole.admin;
     final marcapasosAsync = ref.watch(marcapasosByIngresoProvider(idIngreso));
 
     return Scaffold(
@@ -103,25 +107,27 @@ class ListadoMarcapasosPage extends ConsumerWidget {
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      IconButton(
-                        icon: const Icon(Icons.edit,
-                            color: Colors.blue, size: 20),
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditMarcapasoPage(
-                              idIngreso: idIngreso,
-                              marcapaso: marcapaso,
+                      if (isAdmin)
+                        IconButton(
+                          icon: const Icon(Icons.edit,
+                              color: Colors.blue, size: 20),
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditMarcapasoPage(
+                                idIngreso: idIngreso,
+                                marcapaso: marcapaso,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.delete,
-                            color: Colors.red, size: 20),
-                        onPressed: () =>
-                            _confirmDelete(context, ref, marcapaso),
-                      ),
+                      if (isAdmin)
+                        IconButton(
+                          icon: const Icon(Icons.delete,
+                              color: Colors.red, size: 20),
+                          onPressed: () =>
+                              _confirmDelete(context, ref, marcapaso),
+                        ),
                     ],
                   ),
                   children: [

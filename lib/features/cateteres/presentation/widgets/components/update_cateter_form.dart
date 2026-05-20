@@ -9,10 +9,10 @@ class UpdateCateterFormButton extends ConsumerWidget {
   final String idIngreso;
   final String idCateter;
   final TextEditingController tipoController;
-  final TextEditingController sitioController;
+  final TextEditingController viaController;
   final TextEditingController fechaInsercionController;
   final TextEditingController fechaRetiroController;
-  final TextEditingController lugarProcedenciaController;
+  final TextEditingController caracteristicasController;
 
   const UpdateCateterFormButton({
     super.key,
@@ -20,10 +20,10 @@ class UpdateCateterFormButton extends ConsumerWidget {
     required this.idIngreso,
     required this.idCateter,
     required this.tipoController,
-    required this.sitioController,
+    required this.viaController,
     required this.fechaInsercionController,
     required this.fechaRetiroController,
-    required this.lugarProcedenciaController,
+    required this.caracteristicasController,
   });
 
   @override
@@ -34,15 +34,15 @@ class UpdateCateterFormButton extends ConsumerWidget {
       idCateter: idCateter,
       dto: UpdateCateterDto(
         tipo: tipoController.text.isNotEmpty ? tipoController.text : null,
-        sitio: sitioController.text.isNotEmpty ? sitioController.text : null,
+        via: viaController.text.isNotEmpty ? viaController.text : null,
         fechaInsercion: fechaInsercionController.text.isNotEmpty
             ? _parseFecha(fechaInsercionController.text)
             : null,
         fechaRetiro: fechaRetiroController.text.isNotEmpty
             ? _parseFecha(fechaRetiroController.text)
             : null,
-        lugarProcedencia: lugarProcedenciaController.text.isNotEmpty
-            ? lugarProcedenciaController.text
+        caracteristicasSitioInsercion: caracteristicasController.text.isNotEmpty
+            ? caracteristicasController.text
             : null,
       ),
     ));

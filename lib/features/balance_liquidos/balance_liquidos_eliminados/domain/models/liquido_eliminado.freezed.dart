@@ -16,14 +16,23 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$LiquidoEliminado {
-  String get idLiquidoEliminado =>
-      throw _privateConstructorUsedError; // Campos de eliminados (según imagen de sábana)
+  String get idLiquidoEliminado => throw _privateConstructorUsedError;
   double get orina => throw _privateConstructorUsedError;
-  double get drenajes => throw _privateConstructorUsedError;
-  double get diarreas => throw _privateConstructorUsedError;
-  double get vomito => throw _privateConstructorUsedError;
   double get perdidasInsensibles => throw _privateConstructorUsedError;
-  double get otros => throw _privateConstructorUsedError; // Metadatos
+  double get sondaGastrica => throw _privateConstructorUsedError;
+  double get residuoGastrico => throw _privateConstructorUsedError;
+  double get tuboTorax1 => throw _privateConstructorUsedError;
+  double get tuboTorax2 => throw _privateConstructorUsedError;
+  double get tuboMediastino => throw _privateConstructorUsedError;
+  double get drenAbdominal => throw _privateConstructorUsedError;
+  double get ileostomia => throw _privateConstructorUsedError;
+  double get fistulaEnterocutanea => throw _privateConstructorUsedError;
+  double get deposicion => throw _privateConstructorUsedError;
+  double get dialisis => throw _privateConstructorUsedError;
+  double get ventriculosTomaExterna => throw _privateConstructorUsedError;
+  double get otros => throw _privateConstructorUsedError;
+  double get campoLibre1 => throw _privateConstructorUsedError;
+  double get campoLibre2 => throw _privateConstructorUsedError;
   DateTime get hora => throw _privateConstructorUsedError;
   String? get comentario => throw _privateConstructorUsedError;
 
@@ -43,11 +52,21 @@ abstract class $LiquidoEliminadoCopyWith<$Res> {
   $Res call(
       {String idLiquidoEliminado,
       double orina,
-      double drenajes,
-      double diarreas,
-      double vomito,
       double perdidasInsensibles,
+      double sondaGastrica,
+      double residuoGastrico,
+      double tuboTorax1,
+      double tuboTorax2,
+      double tuboMediastino,
+      double drenAbdominal,
+      double ileostomia,
+      double fistulaEnterocutanea,
+      double deposicion,
+      double dialisis,
+      double ventriculosTomaExterna,
       double otros,
+      double campoLibre1,
+      double campoLibre2,
       DateTime hora,
       String? comentario});
 }
@@ -69,11 +88,21 @@ class _$LiquidoEliminadoCopyWithImpl<$Res, $Val extends LiquidoEliminado>
   $Res call({
     Object? idLiquidoEliminado = null,
     Object? orina = null,
-    Object? drenajes = null,
-    Object? diarreas = null,
-    Object? vomito = null,
     Object? perdidasInsensibles = null,
+    Object? sondaGastrica = null,
+    Object? residuoGastrico = null,
+    Object? tuboTorax1 = null,
+    Object? tuboTorax2 = null,
+    Object? tuboMediastino = null,
+    Object? drenAbdominal = null,
+    Object? ileostomia = null,
+    Object? fistulaEnterocutanea = null,
+    Object? deposicion = null,
+    Object? dialisis = null,
+    Object? ventriculosTomaExterna = null,
     Object? otros = null,
+    Object? campoLibre1 = null,
+    Object? campoLibre2 = null,
     Object? hora = null,
     Object? comentario = freezed,
   }) {
@@ -86,25 +115,65 @@ class _$LiquidoEliminadoCopyWithImpl<$Res, $Val extends LiquidoEliminado>
           ? _value.orina
           : orina // ignore: cast_nullable_to_non_nullable
               as double,
-      drenajes: null == drenajes
-          ? _value.drenajes
-          : drenajes // ignore: cast_nullable_to_non_nullable
-              as double,
-      diarreas: null == diarreas
-          ? _value.diarreas
-          : diarreas // ignore: cast_nullable_to_non_nullable
-              as double,
-      vomito: null == vomito
-          ? _value.vomito
-          : vomito // ignore: cast_nullable_to_non_nullable
-              as double,
       perdidasInsensibles: null == perdidasInsensibles
           ? _value.perdidasInsensibles
           : perdidasInsensibles // ignore: cast_nullable_to_non_nullable
               as double,
+      sondaGastrica: null == sondaGastrica
+          ? _value.sondaGastrica
+          : sondaGastrica // ignore: cast_nullable_to_non_nullable
+              as double,
+      residuoGastrico: null == residuoGastrico
+          ? _value.residuoGastrico
+          : residuoGastrico // ignore: cast_nullable_to_non_nullable
+              as double,
+      tuboTorax1: null == tuboTorax1
+          ? _value.tuboTorax1
+          : tuboTorax1 // ignore: cast_nullable_to_non_nullable
+              as double,
+      tuboTorax2: null == tuboTorax2
+          ? _value.tuboTorax2
+          : tuboTorax2 // ignore: cast_nullable_to_non_nullable
+              as double,
+      tuboMediastino: null == tuboMediastino
+          ? _value.tuboMediastino
+          : tuboMediastino // ignore: cast_nullable_to_non_nullable
+              as double,
+      drenAbdominal: null == drenAbdominal
+          ? _value.drenAbdominal
+          : drenAbdominal // ignore: cast_nullable_to_non_nullable
+              as double,
+      ileostomia: null == ileostomia
+          ? _value.ileostomia
+          : ileostomia // ignore: cast_nullable_to_non_nullable
+              as double,
+      fistulaEnterocutanea: null == fistulaEnterocutanea
+          ? _value.fistulaEnterocutanea
+          : fistulaEnterocutanea // ignore: cast_nullable_to_non_nullable
+              as double,
+      deposicion: null == deposicion
+          ? _value.deposicion
+          : deposicion // ignore: cast_nullable_to_non_nullable
+              as double,
+      dialisis: null == dialisis
+          ? _value.dialisis
+          : dialisis // ignore: cast_nullable_to_non_nullable
+              as double,
+      ventriculosTomaExterna: null == ventriculosTomaExterna
+          ? _value.ventriculosTomaExterna
+          : ventriculosTomaExterna // ignore: cast_nullable_to_non_nullable
+              as double,
       otros: null == otros
           ? _value.otros
           : otros // ignore: cast_nullable_to_non_nullable
+              as double,
+      campoLibre1: null == campoLibre1
+          ? _value.campoLibre1
+          : campoLibre1 // ignore: cast_nullable_to_non_nullable
+              as double,
+      campoLibre2: null == campoLibre2
+          ? _value.campoLibre2
+          : campoLibre2 // ignore: cast_nullable_to_non_nullable
               as double,
       hora: null == hora
           ? _value.hora
@@ -129,11 +198,21 @@ abstract class _$$LiquidoEliminadoImplCopyWith<$Res>
   $Res call(
       {String idLiquidoEliminado,
       double orina,
-      double drenajes,
-      double diarreas,
-      double vomito,
       double perdidasInsensibles,
+      double sondaGastrica,
+      double residuoGastrico,
+      double tuboTorax1,
+      double tuboTorax2,
+      double tuboMediastino,
+      double drenAbdominal,
+      double ileostomia,
+      double fistulaEnterocutanea,
+      double deposicion,
+      double dialisis,
+      double ventriculosTomaExterna,
       double otros,
+      double campoLibre1,
+      double campoLibre2,
       DateTime hora,
       String? comentario});
 }
@@ -153,11 +232,21 @@ class __$$LiquidoEliminadoImplCopyWithImpl<$Res>
   $Res call({
     Object? idLiquidoEliminado = null,
     Object? orina = null,
-    Object? drenajes = null,
-    Object? diarreas = null,
-    Object? vomito = null,
     Object? perdidasInsensibles = null,
+    Object? sondaGastrica = null,
+    Object? residuoGastrico = null,
+    Object? tuboTorax1 = null,
+    Object? tuboTorax2 = null,
+    Object? tuboMediastino = null,
+    Object? drenAbdominal = null,
+    Object? ileostomia = null,
+    Object? fistulaEnterocutanea = null,
+    Object? deposicion = null,
+    Object? dialisis = null,
+    Object? ventriculosTomaExterna = null,
     Object? otros = null,
+    Object? campoLibre1 = null,
+    Object? campoLibre2 = null,
     Object? hora = null,
     Object? comentario = freezed,
   }) {
@@ -170,25 +259,65 @@ class __$$LiquidoEliminadoImplCopyWithImpl<$Res>
           ? _value.orina
           : orina // ignore: cast_nullable_to_non_nullable
               as double,
-      drenajes: null == drenajes
-          ? _value.drenajes
-          : drenajes // ignore: cast_nullable_to_non_nullable
-              as double,
-      diarreas: null == diarreas
-          ? _value.diarreas
-          : diarreas // ignore: cast_nullable_to_non_nullable
-              as double,
-      vomito: null == vomito
-          ? _value.vomito
-          : vomito // ignore: cast_nullable_to_non_nullable
-              as double,
       perdidasInsensibles: null == perdidasInsensibles
           ? _value.perdidasInsensibles
           : perdidasInsensibles // ignore: cast_nullable_to_non_nullable
               as double,
+      sondaGastrica: null == sondaGastrica
+          ? _value.sondaGastrica
+          : sondaGastrica // ignore: cast_nullable_to_non_nullable
+              as double,
+      residuoGastrico: null == residuoGastrico
+          ? _value.residuoGastrico
+          : residuoGastrico // ignore: cast_nullable_to_non_nullable
+              as double,
+      tuboTorax1: null == tuboTorax1
+          ? _value.tuboTorax1
+          : tuboTorax1 // ignore: cast_nullable_to_non_nullable
+              as double,
+      tuboTorax2: null == tuboTorax2
+          ? _value.tuboTorax2
+          : tuboTorax2 // ignore: cast_nullable_to_non_nullable
+              as double,
+      tuboMediastino: null == tuboMediastino
+          ? _value.tuboMediastino
+          : tuboMediastino // ignore: cast_nullable_to_non_nullable
+              as double,
+      drenAbdominal: null == drenAbdominal
+          ? _value.drenAbdominal
+          : drenAbdominal // ignore: cast_nullable_to_non_nullable
+              as double,
+      ileostomia: null == ileostomia
+          ? _value.ileostomia
+          : ileostomia // ignore: cast_nullable_to_non_nullable
+              as double,
+      fistulaEnterocutanea: null == fistulaEnterocutanea
+          ? _value.fistulaEnterocutanea
+          : fistulaEnterocutanea // ignore: cast_nullable_to_non_nullable
+              as double,
+      deposicion: null == deposicion
+          ? _value.deposicion
+          : deposicion // ignore: cast_nullable_to_non_nullable
+              as double,
+      dialisis: null == dialisis
+          ? _value.dialisis
+          : dialisis // ignore: cast_nullable_to_non_nullable
+              as double,
+      ventriculosTomaExterna: null == ventriculosTomaExterna
+          ? _value.ventriculosTomaExterna
+          : ventriculosTomaExterna // ignore: cast_nullable_to_non_nullable
+              as double,
       otros: null == otros
           ? _value.otros
           : otros // ignore: cast_nullable_to_non_nullable
+              as double,
+      campoLibre1: null == campoLibre1
+          ? _value.campoLibre1
+          : campoLibre1 // ignore: cast_nullable_to_non_nullable
+              as double,
+      campoLibre2: null == campoLibre2
+          ? _value.campoLibre2
+          : campoLibre2 // ignore: cast_nullable_to_non_nullable
               as double,
       hora: null == hora
           ? _value.hora
@@ -208,30 +337,58 @@ class _$LiquidoEliminadoImpl implements _LiquidoEliminado {
   const _$LiquidoEliminadoImpl(
       {required this.idLiquidoEliminado,
       required this.orina,
-      required this.drenajes,
-      required this.diarreas,
-      required this.vomito,
       required this.perdidasInsensibles,
+      required this.sondaGastrica,
+      required this.residuoGastrico,
+      required this.tuboTorax1,
+      required this.tuboTorax2,
+      required this.tuboMediastino,
+      required this.drenAbdominal,
+      required this.ileostomia,
+      required this.fistulaEnterocutanea,
+      required this.deposicion,
+      required this.dialisis,
+      required this.ventriculosTomaExterna,
       required this.otros,
+      required this.campoLibre1,
+      required this.campoLibre2,
       required this.hora,
       this.comentario});
 
   @override
   final String idLiquidoEliminado;
-// Campos de eliminados (según imagen de sábana)
   @override
   final double orina;
   @override
-  final double drenajes;
-  @override
-  final double diarreas;
-  @override
-  final double vomito;
-  @override
   final double perdidasInsensibles;
   @override
+  final double sondaGastrica;
+  @override
+  final double residuoGastrico;
+  @override
+  final double tuboTorax1;
+  @override
+  final double tuboTorax2;
+  @override
+  final double tuboMediastino;
+  @override
+  final double drenAbdominal;
+  @override
+  final double ileostomia;
+  @override
+  final double fistulaEnterocutanea;
+  @override
+  final double deposicion;
+  @override
+  final double dialisis;
+  @override
+  final double ventriculosTomaExterna;
+  @override
   final double otros;
-// Metadatos
+  @override
+  final double campoLibre1;
+  @override
+  final double campoLibre2;
   @override
   final DateTime hora;
   @override
@@ -239,7 +396,7 @@ class _$LiquidoEliminadoImpl implements _LiquidoEliminado {
 
   @override
   String toString() {
-    return 'LiquidoEliminado(idLiquidoEliminado: $idLiquidoEliminado, orina: $orina, drenajes: $drenajes, diarreas: $diarreas, vomito: $vomito, perdidasInsensibles: $perdidasInsensibles, otros: $otros, hora: $hora, comentario: $comentario)';
+    return 'LiquidoEliminado(idLiquidoEliminado: $idLiquidoEliminado, orina: $orina, perdidasInsensibles: $perdidasInsensibles, sondaGastrica: $sondaGastrica, residuoGastrico: $residuoGastrico, tuboTorax1: $tuboTorax1, tuboTorax2: $tuboTorax2, tuboMediastino: $tuboMediastino, drenAbdominal: $drenAbdominal, ileostomia: $ileostomia, fistulaEnterocutanea: $fistulaEnterocutanea, deposicion: $deposicion, dialisis: $dialisis, ventriculosTomaExterna: $ventriculosTomaExterna, otros: $otros, campoLibre1: $campoLibre1, campoLibre2: $campoLibre2, hora: $hora, comentario: $comentario)';
   }
 
   @override
@@ -250,22 +407,63 @@ class _$LiquidoEliminadoImpl implements _LiquidoEliminado {
             (identical(other.idLiquidoEliminado, idLiquidoEliminado) ||
                 other.idLiquidoEliminado == idLiquidoEliminado) &&
             (identical(other.orina, orina) || other.orina == orina) &&
-            (identical(other.drenajes, drenajes) ||
-                other.drenajes == drenajes) &&
-            (identical(other.diarreas, diarreas) ||
-                other.diarreas == diarreas) &&
-            (identical(other.vomito, vomito) || other.vomito == vomito) &&
             (identical(other.perdidasInsensibles, perdidasInsensibles) ||
                 other.perdidasInsensibles == perdidasInsensibles) &&
+            (identical(other.sondaGastrica, sondaGastrica) ||
+                other.sondaGastrica == sondaGastrica) &&
+            (identical(other.residuoGastrico, residuoGastrico) ||
+                other.residuoGastrico == residuoGastrico) &&
+            (identical(other.tuboTorax1, tuboTorax1) ||
+                other.tuboTorax1 == tuboTorax1) &&
+            (identical(other.tuboTorax2, tuboTorax2) ||
+                other.tuboTorax2 == tuboTorax2) &&
+            (identical(other.tuboMediastino, tuboMediastino) ||
+                other.tuboMediastino == tuboMediastino) &&
+            (identical(other.drenAbdominal, drenAbdominal) ||
+                other.drenAbdominal == drenAbdominal) &&
+            (identical(other.ileostomia, ileostomia) ||
+                other.ileostomia == ileostomia) &&
+            (identical(other.fistulaEnterocutanea, fistulaEnterocutanea) ||
+                other.fistulaEnterocutanea == fistulaEnterocutanea) &&
+            (identical(other.deposicion, deposicion) ||
+                other.deposicion == deposicion) &&
+            (identical(other.dialisis, dialisis) ||
+                other.dialisis == dialisis) &&
+            (identical(other.ventriculosTomaExterna, ventriculosTomaExterna) ||
+                other.ventriculosTomaExterna == ventriculosTomaExterna) &&
             (identical(other.otros, otros) || other.otros == otros) &&
+            (identical(other.campoLibre1, campoLibre1) ||
+                other.campoLibre1 == campoLibre1) &&
+            (identical(other.campoLibre2, campoLibre2) ||
+                other.campoLibre2 == campoLibre2) &&
             (identical(other.hora, hora) || other.hora == hora) &&
             (identical(other.comentario, comentario) ||
                 other.comentario == comentario));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, idLiquidoEliminado, orina,
-      drenajes, diarreas, vomito, perdidasInsensibles, otros, hora, comentario);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        idLiquidoEliminado,
+        orina,
+        perdidasInsensibles,
+        sondaGastrica,
+        residuoGastrico,
+        tuboTorax1,
+        tuboTorax2,
+        tuboMediastino,
+        drenAbdominal,
+        ileostomia,
+        fistulaEnterocutanea,
+        deposicion,
+        dialisis,
+        ventriculosTomaExterna,
+        otros,
+        campoLibre1,
+        campoLibre2,
+        hora,
+        comentario
+      ]);
 
   /// Create a copy of LiquidoEliminado
   /// with the given fields replaced by the non-null parameter values.
@@ -281,29 +479,58 @@ abstract class _LiquidoEliminado implements LiquidoEliminado {
   const factory _LiquidoEliminado(
       {required final String idLiquidoEliminado,
       required final double orina,
-      required final double drenajes,
-      required final double diarreas,
-      required final double vomito,
       required final double perdidasInsensibles,
+      required final double sondaGastrica,
+      required final double residuoGastrico,
+      required final double tuboTorax1,
+      required final double tuboTorax2,
+      required final double tuboMediastino,
+      required final double drenAbdominal,
+      required final double ileostomia,
+      required final double fistulaEnterocutanea,
+      required final double deposicion,
+      required final double dialisis,
+      required final double ventriculosTomaExterna,
       required final double otros,
+      required final double campoLibre1,
+      required final double campoLibre2,
       required final DateTime hora,
       final String? comentario}) = _$LiquidoEliminadoImpl;
 
   @override
-  String
-      get idLiquidoEliminado; // Campos de eliminados (según imagen de sábana)
+  String get idLiquidoEliminado;
   @override
   double get orina;
   @override
-  double get drenajes;
-  @override
-  double get diarreas;
-  @override
-  double get vomito;
-  @override
   double get perdidasInsensibles;
   @override
-  double get otros; // Metadatos
+  double get sondaGastrica;
+  @override
+  double get residuoGastrico;
+  @override
+  double get tuboTorax1;
+  @override
+  double get tuboTorax2;
+  @override
+  double get tuboMediastino;
+  @override
+  double get drenAbdominal;
+  @override
+  double get ileostomia;
+  @override
+  double get fistulaEnterocutanea;
+  @override
+  double get deposicion;
+  @override
+  double get dialisis;
+  @override
+  double get ventriculosTomaExterna;
+  @override
+  double get otros;
+  @override
+  double get campoLibre1;
+  @override
+  double get campoLibre2;
   @override
   DateTime get hora;
   @override

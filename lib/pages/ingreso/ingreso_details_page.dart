@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:registro_uci/common/components/buttons/secondary_button.dart';
+import 'package:registro_uci/features/auth/data/providers/user_role_provider.dart';
+import 'package:registro_uci/features/auth/domain/enums/user_role.dart';
 import 'package:registro_uci/features/ingresos/data/providers/ingreso_by_id_provider.dart';
 import 'package:registro_uci/features/ingresos/domain/models/ingreso.dart';
 import 'package:registro_uci/pages/ingreso/update_ingreso_page.dart';
@@ -16,6 +18,8 @@ class IngresoDetailsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final role = ref.watch(roleProvider);
+    final isAdmin = role == UserRole.admin;
     final ingreso = ref.watch(ingresoByIdProvider(idIngreso));
 
     return ingreso.when(
@@ -71,28 +75,29 @@ class IngresoDetailsPage extends ConsumerWidget {
               ),
               const SizedBox(height: 20),
               // Action Button (Edit Ingreso)
-              Row(
-                children: [
-                  SecondaryButton(
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.edit,
-                          size: 18,
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                        const SizedBox(width: 10),
-                        const Text("Editar ingreso"),
-                      ],
+              if (isAdmin)
+                Row(
+                  children: [
+                    SecondaryButton(
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.edit,
+                            size: 18,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          const SizedBox(width: 10),
+                          const Text("Editar ingreso"),
+                        ],
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => UpdateIngresoPage(ingreso: data),
+                        ));
+                      },
                     ),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => UpdateIngresoPage(ingreso: data),
-                      ));
-                    },
-                  ),
-                ],
-              ),
+                  ],
+                ),
               const SizedBox(height: 20),
               // Details List with Icons
               _buildDetailTile(

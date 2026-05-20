@@ -28,12 +28,20 @@ class ProcedimientoActions {
 
   ProcedimientoActions(this._repository);
 
-  Future<void> addProcedimiento(String idIngreso, String nombre) async {
+  Future<void> addProcedimiento(String idIngreso, String nombre,
+      {String? medicamentoInfusion, String? dosisInfusion, String estado = "Por realizar"}) async {
     final nuevoProcedimiento = CreateProcedimientoDto(
       nombreProcedimiento: nombre,
-      estado: "Pendiente",
+      estado: estado,
+      medicamentoInfusion: medicamentoInfusion,
+      dosisInfusion: dosisInfusion,
     );
     await _repository.addProcedimientoToRegistro(idIngreso, nuevoProcedimiento);
+  }
+
+  Future<void> addProcedimientoWithDto(
+      String idIngreso, CreateProcedimientoDto dto) async {
+    await _repository.addProcedimientoToRegistro(idIngreso, dto);
   }
 
   Future<void> updateProcedimiento(
@@ -41,6 +49,20 @@ class ProcedimientoActions {
     final updateDto = UpdateProcedimientoDto(estado: nuevoEstado);
     await _repository.updateProcedimientoDeRegistro(
         idIngreso, idProcedimiento, updateDto);
+  }
+
+  Future<void> editProcedimientoInfusion(
+    String idIngreso,
+    String idProcedimiento,
+    String? medicamentoInfusion,
+    String? dosisInfusion,
+  ) async {
+    final data = <String, dynamic>{};
+    if (medicamentoInfusion != null) data['medicamentoInfusion'] = medicamentoInfusion;
+    if (dosisInfusion != null) data['dosisInfusion'] = dosisInfusion;
+    if (data.isNotEmpty) {
+      await _repository.updateProcedimientoFields(idIngreso, idProcedimiento, data);
+    }
   }
 
   Future<void> deleteProcedimiento(

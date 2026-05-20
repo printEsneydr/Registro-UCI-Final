@@ -23,6 +23,8 @@ CreateProcedimientoDto _$CreateProcedimientoDtoFromJson(
 mixin _$CreateProcedimientoDto {
   String get nombreProcedimiento => throw _privateConstructorUsedError;
   String get estado => throw _privateConstructorUsedError;
+  String? get medicamentoInfusion => throw _privateConstructorUsedError;
+  String? get dosisInfusion => throw _privateConstructorUsedError;
 
   /// Serializes this CreateProcedimientoDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +42,11 @@ abstract class $CreateProcedimientoDtoCopyWith<$Res> {
           $Res Function(CreateProcedimientoDto) then) =
       _$CreateProcedimientoDtoCopyWithImpl<$Res, CreateProcedimientoDto>;
   @useResult
-  $Res call({String nombreProcedimiento, String estado});
+  $Res call(
+      {String nombreProcedimiento,
+      String estado,
+      String? medicamentoInfusion,
+      String? dosisInfusion});
 }
 
 /// @nodoc
@@ -61,6 +67,8 @@ class _$CreateProcedimientoDtoCopyWithImpl<$Res,
   $Res call({
     Object? nombreProcedimiento = null,
     Object? estado = null,
+    Object? medicamentoInfusion = freezed,
+    Object? dosisInfusion = freezed,
   }) {
     return _then(_value.copyWith(
       nombreProcedimiento: null == nombreProcedimiento
@@ -71,6 +79,14 @@ class _$CreateProcedimientoDtoCopyWithImpl<$Res,
           ? _value.estado
           : estado // ignore: cast_nullable_to_non_nullable
               as String,
+      medicamentoInfusion: freezed == medicamentoInfusion
+          ? _value.medicamentoInfusion
+          : medicamentoInfusion // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dosisInfusion: freezed == dosisInfusion
+          ? _value.dosisInfusion
+          : dosisInfusion // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -84,7 +100,11 @@ abstract class _$$CreateProcedimientoDtoImplCopyWith<$Res>
       __$$CreateProcedimientoDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String nombreProcedimiento, String estado});
+  $Res call(
+      {String nombreProcedimiento,
+      String estado,
+      String? medicamentoInfusion,
+      String? dosisInfusion});
 }
 
 /// @nodoc
@@ -104,6 +124,8 @@ class __$$CreateProcedimientoDtoImplCopyWithImpl<$Res>
   $Res call({
     Object? nombreProcedimiento = null,
     Object? estado = null,
+    Object? medicamentoInfusion = freezed,
+    Object? dosisInfusion = freezed,
   }) {
     return _then(_$CreateProcedimientoDtoImpl(
       nombreProcedimiento: null == nombreProcedimiento
@@ -114,6 +136,14 @@ class __$$CreateProcedimientoDtoImplCopyWithImpl<$Res>
           ? _value.estado
           : estado // ignore: cast_nullable_to_non_nullable
               as String,
+      medicamentoInfusion: freezed == medicamentoInfusion
+          ? _value.medicamentoInfusion
+          : medicamentoInfusion // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dosisInfusion: freezed == dosisInfusion
+          ? _value.dosisInfusion
+          : dosisInfusion // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -122,7 +152,10 @@ class __$$CreateProcedimientoDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CreateProcedimientoDtoImpl implements _CreateProcedimientoDto {
   const _$CreateProcedimientoDtoImpl(
-      {required this.nombreProcedimiento, required this.estado});
+      {required this.nombreProcedimiento,
+      this.estado = "Por realizar",
+      this.medicamentoInfusion,
+      this.dosisInfusion});
 
   factory _$CreateProcedimientoDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreateProcedimientoDtoImplFromJson(json);
@@ -130,11 +163,16 @@ class _$CreateProcedimientoDtoImpl implements _CreateProcedimientoDto {
   @override
   final String nombreProcedimiento;
   @override
+  @JsonKey()
   final String estado;
+  @override
+  final String? medicamentoInfusion;
+  @override
+  final String? dosisInfusion;
 
   @override
   String toString() {
-    return 'CreateProcedimientoDto(nombreProcedimiento: $nombreProcedimiento, estado: $estado)';
+    return 'CreateProcedimientoDto(nombreProcedimiento: $nombreProcedimiento, estado: $estado, medicamentoInfusion: $medicamentoInfusion, dosisInfusion: $dosisInfusion)';
   }
 
   @override
@@ -144,12 +182,17 @@ class _$CreateProcedimientoDtoImpl implements _CreateProcedimientoDto {
             other is _$CreateProcedimientoDtoImpl &&
             (identical(other.nombreProcedimiento, nombreProcedimiento) ||
                 other.nombreProcedimiento == nombreProcedimiento) &&
-            (identical(other.estado, estado) || other.estado == estado));
+            (identical(other.estado, estado) || other.estado == estado) &&
+            (identical(other.medicamentoInfusion, medicamentoInfusion) ||
+                other.medicamentoInfusion == medicamentoInfusion) &&
+            (identical(other.dosisInfusion, dosisInfusion) ||
+                other.dosisInfusion == dosisInfusion));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, nombreProcedimiento, estado);
+  int get hashCode => Object.hash(runtimeType, nombreProcedimiento, estado,
+      medicamentoInfusion, dosisInfusion);
 
   /// Create a copy of CreateProcedimientoDto
   /// with the given fields replaced by the non-null parameter values.
@@ -171,7 +214,9 @@ class _$CreateProcedimientoDtoImpl implements _CreateProcedimientoDto {
 abstract class _CreateProcedimientoDto implements CreateProcedimientoDto {
   const factory _CreateProcedimientoDto(
       {required final String nombreProcedimiento,
-      required final String estado}) = _$CreateProcedimientoDtoImpl;
+      final String estado,
+      final String? medicamentoInfusion,
+      final String? dosisInfusion}) = _$CreateProcedimientoDtoImpl;
 
   factory _CreateProcedimientoDto.fromJson(Map<String, dynamic> json) =
       _$CreateProcedimientoDtoImpl.fromJson;
@@ -180,6 +225,10 @@ abstract class _CreateProcedimientoDto implements CreateProcedimientoDto {
   String get nombreProcedimiento;
   @override
   String get estado;
+  @override
+  String? get medicamentoInfusion;
+  @override
+  String? get dosisInfusion;
 
   /// Create a copy of CreateProcedimientoDto
   /// with the given fields replaced by the non-null parameter values.

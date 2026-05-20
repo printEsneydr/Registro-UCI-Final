@@ -21,6 +21,7 @@ class UpdateIngresoFormButton extends ConsumerWidget {
     required TextEditingController otherEpsArlController,
     required TextEditingController telefonoFamiliarController,
     required TextEditingController diagnosticoIngresoController,
+    required TextEditingController diagnosticoActualController,
     required TextEditingController pesoController,
     required TextEditingController tallaController,
     required TextEditingController camaController,
@@ -37,6 +38,7 @@ class UpdateIngresoFormButton extends ConsumerWidget {
         _otherEpsArlController = otherEpsArlController,
         _telefonoFamiliarController = telefonoFamiliarController,
         _diagnosticoIngresoController = diagnosticoIngresoController,
+        _diagnosticoActualController = diagnosticoActualController,
         _pesoController = pesoController,
         _tallaController = tallaController,
         _camaController = camaController,
@@ -54,6 +56,7 @@ class UpdateIngresoFormButton extends ConsumerWidget {
   final TextEditingController _otherParentescoFamiliarController;
   final TextEditingController _telefonoFamiliarController;
   final TextEditingController _diagnosticoIngresoController;
+  final TextEditingController _diagnosticoActualController;
   final TextEditingController _pesoController;
   final TextEditingController _tallaController;
   final TextEditingController _camaController;
@@ -98,7 +101,7 @@ class UpdateIngresoFormButton extends ConsumerWidget {
                 : selectedParentescoFamiliar!,
             telefonoFamiliar: _telefonoFamiliarController.text,
             diagnosticoIngreso: _diagnosticoIngresoController.text,
-            diagnosticoActual: _diagnosticoIngresoController.text,
+            diagnosticoActual: _diagnosticoActualController.text,
             peso: int.parse(_pesoController.text),
             talla: int.parse(_tallaController.text),
             cama: _camaController.text,

@@ -68,4 +68,19 @@ const Map<String, List<String>> sondasPorRegion = {
     "Drenaje de abscesos en extremidades",
     "Drenaje de síndrome compartimental",
   ],
+  "Región Lumbar y Espinal": [
+    "Drenaje lumbar externo (DLE)",
+    "Catéter epidural",
+    "Drenaje de abscesos espinales",
+    "Drenaje postquirúrgico de columna",
+    "Derivación ventrículo-peritoneal (DVP)",
+    "Catéter de estimulación medular",
+  ],
+  "Región Genital": [
+    "Sonda vesical de Foley",
+    "Sonda de cistostomía",
+    "Drenaje de abscesos escrotales",
+    "Drenaje postquirúrgico peneano",
+    "Drenaje de herida quirúrgica ginecológica",
+  ],
 };

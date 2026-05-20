@@ -27,7 +27,7 @@ class NecesidadesPage extends ConsumerWidget {
 
     final role = ref.watch(roleProvider);
 
-    final canSign = firma == null && role == UserRole.headNurse;
+    final canSign = firma == null && role == UserRole.admin;
 
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +50,7 @@ class NecesidadesPage extends ConsumerWidget {
           NecesidadesList(
             idIngreso: idIngreso,
             idRegistro: idRegistro,
-            readOnly: firma != null || role != UserRole.headNurse,
+            readOnly: firma != null,
           ),
           canSign
               ? FirmarReporteButton(

@@ -42,6 +42,10 @@ dependencies:
   flutter_riverpod: ^2.4.0
   json_annotation: ^4.9.0
   fl_chart: ^0.69.0
+  pdf: ^3.11.1
+  printing: ^5.13.4
+  path_provider: ^2.1.4
+  signature: ^6.3.0
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +70,8 @@ flutter:
     - assets/images/logo.png
     - assets/images/logo_sabana_UCI.png
     - assets/images/background.jpg
+    - fonts/Plus_Jakarta/PlusJakartaSans-Regular.ttf
+    - fonts/Plus_Jakarta/PlusJakartaSans-Bold.ttf
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -82,20 +88,20 @@ flutter:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/images/logo_sabana_UCI.png"
+  image_path: "assets/images/logo.png"
   adaptive_icon_background: "#FFFFFF"
-  adaptive_icon_foreground: "assets/images/logo_sabana_UCI.png"
+  adaptive_icon_foreground: "assets/images/logo.png"
   remove_alpha_ios: true
   web:
     generate: true
-    image_path: "assets/images/logo_sabana_UCI.png"
+    image_path: "assets/images/logo.png"
   windows:
     generate: true
-    image_path: "assets/images/logo_sabana_UCI.png"
+    image_path: "assets/images/logo.png"
     icon_size: 48
   macos:
     generate: true
-    image_path: "assets/images/logo_sabana_UCI.png"
+    image_path: "assets/images/logo.png"
 
 fonts:
     - family: Sacramento

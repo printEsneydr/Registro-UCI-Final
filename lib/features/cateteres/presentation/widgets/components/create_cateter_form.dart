@@ -17,11 +17,13 @@ class CreateCateterForm extends ConsumerStatefulWidget {
 class _CreateCateterFormState extends ConsumerState<CreateCateterForm> {
   final _formKey = GlobalKey<FormState>();
   String? _tipo;
-  String? _sitio;
-  String? _lugarProcedencia;
+  String? _via;
   DateTime _fechaInsercion = DateTime.now();
+  DateTime? _fechaCuracion;
+  final _caracteristicasController = TextEditingController();
   final _dateFormat = DateFormat('dd/MM/yyyy');
   late TextEditingController _fechaController;
+  late TextEditingController _fechaCuracionController;
 
   @override
   void initState() {
@@ -29,11 +31,14 @@ class _CreateCateterFormState extends ConsumerState<CreateCateterForm> {
     _fechaController = TextEditingController(
       text: _dateFormat.format(_fechaInsercion),
     );
+    _fechaCuracionController = TextEditingController();
   }
 
   @override
   void dispose() {
     _fechaController.dispose();
+    _fechaCuracionController.dispose();
+    _caracteristicasController.dispose();
     super.dispose();
   }
 
@@ -49,6 +54,22 @@ class _CreateCateterFormState extends ConsumerState<CreateCateterForm> {
       setState(() {
         _fechaInsercion = picked;
         _fechaController.text = _dateFormat.format(picked);
+      });
+    }
+  }
+
+  Future<void> _seleccionarFechaCuracion() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _fechaCuracion ?? DateTime.now(),
+      firstDate: _fechaInsercion,
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    );
+
+    if (picked != null) {
+      setState(() {
+        _fechaCuracion = picked;
+        _fechaCuracionController.text = _dateFormat.format(picked);
       });
     }
   }
@@ -70,13 +91,35 @@ class _CreateCateterFormState extends ConsumerState<CreateCateterForm> {
                 onTap: _seleccionarFecha,
                 child: InputDecorator(
                   decoration: const InputDecoration(
-                    labelText: "Fecha de colocación",
+                    labelText: "Fecha de inserción",
                     prefixIcon: Icon(Icons.calendar_today),
                     border: OutlineInputBorder(),
                   ),
                   child: Text(
                     _fechaController.text,
                     style: const TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              InkWell(
+                onTap: _seleccionarFechaCuracion,
+                child: InputDecorator(
+                  decoration: const InputDecoration(
+                    labelText: "Fecha de curación o cambio (opcional)",
+                    prefixIcon: Icon(Icons.calendar_month),
+                    border: OutlineInputBorder(),
+                  ),
+                  child: Text(
+                    _fechaCuracionController.text.isEmpty
+                        ? 'Seleccionar fecha'
+                        : _fechaCuracionController.text,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: _fechaCuracionController.text.isEmpty
+                          ? Colors.grey
+                          : Colors.black,
+                    ),
                   ),
                 ),
               ),
@@ -99,37 +142,31 @@ class _CreateCateterFormState extends ConsumerState<CreateCateterForm> {
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
-                value: _sitio,
-                items: sitiosCateter
-                    .map((sitio) => DropdownMenuItem(
-                          value: sitio,
-                          child: Text(sitio),
+                value: _via,
+                items: viasCateter
+                    .map((via) => DropdownMenuItem(
+                          value: via,
+                          child: Text(via),
                         ))
                     .toList(),
-                onChanged: (value) => setState(() => _sitio = value),
+                onChanged: (value) => setState(() => _via = value),
                 decoration: const InputDecoration(
-                  labelText: "Sitio",
-                  prefixIcon: Icon(Icons.location_on),
+                  labelText: "Vía",
+                  prefixIcon: Icon(Icons.route),
                 ),
                 validator: (value) =>
-                    value == null ? 'Seleccione un sitio' : null,
+                    value == null ? 'Seleccione una vía' : null,
               ),
               const SizedBox(height: 16),
-              DropdownButtonFormField<String>(
-                value: _lugarProcedencia,
-                items: lugaresProcedenciaCateter
-                    .map((lugar) => DropdownMenuItem(
-                          value: lugar,
-                          child: Text(lugar),
-                        ))
-                    .toList(),
-                onChanged: (value) => setState(() => _lugarProcedencia = value),
+              TextFormField(
+                controller: _caracteristicasController,
                 decoration: const InputDecoration(
-                  labelText: "Lugar de Procedencia",
-                  prefixIcon: Icon(Icons.place),
+                  labelText: "Características sitio de inserción",
+                  hintText: "Ej: limpio, enrojecido, secreción, etc.",
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.info),
                 ),
-                validator: (value) =>
-                    value == null ? 'Seleccione un lugar' : null,
+                maxLines: 2,
               ),
               const SizedBox(height: 24),
               ElevatedButton(
@@ -157,9 +194,10 @@ class _CreateCateterFormState extends ConsumerState<CreateCateterForm> {
       final nuevoCateter = CreateCateterDto(
         idIngreso: widget.idIngreso,
         tipo: _tipo!,
-        sitio: _sitio!,
+        via: _via!,
         fechaInsercion: _fechaInsercion,
-        lugarProcedencia: _lugarProcedencia!,
+        fechaCuracionOCambio: _fechaCuracion,
+        caracteristicasSitioInsercion: _caracteristicasController.text,
       );
 
       ref

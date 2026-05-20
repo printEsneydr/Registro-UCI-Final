@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:registro_uci/features/auth/data/providers/user_role_provider.dart';
+import 'package:registro_uci/features/auth/domain/enums/user_role.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/data/providers/monitoria_hemodinamica_provider.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/domain/models/monitoria_hemodinamica.dart';
 import 'package:registro_uci/pages/monitoria_hemodinamica/monitoria_hemodinamica_form_page.dart';
@@ -277,6 +279,9 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
     bool hasRecord,
     String idMonitoria,
   ) {
+    final role = ref.watch(roleProvider);
+    final isAdmin = role == UserRole.admin;
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -291,34 +296,36 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
           padding: const EdgeInsets.all(8),
           constraints: const BoxConstraints(),
         ),
-        const SizedBox(width: 4),
-        IconButton(
-          icon: Icon(
-            Icons.edit_outlined,
-            color: hasRecord ? Colors.blue : Colors.grey,
+        if (isAdmin) const SizedBox(width: 4),
+        if (isAdmin)
+          IconButton(
+            icon: Icon(
+              Icons.edit_outlined,
+              color: hasRecord ? Colors.blue : Colors.grey,
+            ),
+            onPressed: hasRecord
+                ? () => _editForm(context, hour: hour, idMonitoria: idMonitoria)
+                : null,
+            tooltip: 'Editar registro',
+            iconSize: 22,
+            padding: const EdgeInsets.all(8),
+            constraints: const BoxConstraints(),
           ),
-          onPressed: hasRecord
-              ? () => _editForm(context, hour: hour, idMonitoria: idMonitoria)
-              : null,
-          tooltip: 'Editar registro',
-          iconSize: 22,
-          padding: const EdgeInsets.all(8),
-          constraints: const BoxConstraints(),
-        ),
-        const SizedBox(width: 4),
-        IconButton(
-          icon: Icon(
-            Icons.delete_outline,
-            color: hasRecord ? Colors.red : Colors.grey,
+        if (isAdmin) const SizedBox(width: 4),
+        if (isAdmin)
+          IconButton(
+            icon: Icon(
+              Icons.delete_outline,
+              color: hasRecord ? Colors.red : Colors.grey,
+            ),
+            onPressed: hasRecord
+                ? () => _confirmDelete(context, ref, idMonitoria, hour)
+                : null,
+            tooltip: 'Eliminar registro',
+            iconSize: 22,
+            padding: const EdgeInsets.all(8),
+            constraints: const BoxConstraints(),
           ),
-          onPressed: hasRecord
-              ? () => _confirmDelete(context, ref, idMonitoria, hour)
-              : null,
-          tooltip: 'Eliminar registro',
-          iconSize: 22,
-          padding: const EdgeInsets.all(8),
-          constraints: const BoxConstraints(),
-        ),
       ],
     );
   }
@@ -348,10 +355,18 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
               _buildDetailItem('Temperatura', '${record.t}°C'),
               if (record.pvc != null)
                 _buildDetailItem('PVC', '${record.pvc} mmHg'),
-              if (record.saturacion != null)
-                _buildDetailItem('Sat O₂', '${record.saturacion}%'),
+              if (record.gc != null)
+                _buildDetailItem('GC', '${record.gc} L/min'),
+              if (record.ic != null)
+                _buildDetailItem('IC', '${record.ic} L/min/m²'),
+              if (record.rvs != null)
+                _buildDetailItem('RVS', '${record.rvs} dyn·s/cm⁵'),
+              if (record.irvs != null)
+                _buildDetailItem('IRVS', '${record.irvs} dyn·s/cm⁵/m²'),
               if (record.fio2 != null)
                 _buildDetailItem('FiO₂', '${record.fio2}%'),
+              if (record.saturacion != null)
+                _buildDetailItem('Sat O₂', '${record.saturacion}%'),
               if (record.glucometria != null)
                 _buildDetailItem('Glucemia', '${record.glucometria} mg/dL'),
               if (record.insulina != null)

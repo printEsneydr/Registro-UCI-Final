@@ -31,6 +31,7 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
   bool enAislamiento = false;
   bool usaAnticoagulantes = false;
   bool tieneEventoAdversoCaida = false;
+  bool alergicoAMedicacion = false;
 
   DateTime? fechaRegistroUlcera;
   DateTime? fechaResolucion;
@@ -43,6 +44,7 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
   TextEditingController numeroReporteEAController = TextEditingController();
   TextEditingController numeroReporteCaidaController = TextEditingController();
   TextEditingController agenteAislamientoController = TextEditingController();
+  TextEditingController medicamentoAlergicoController = TextEditingController();
   TextEditingController fechaRegistroController = TextEditingController();
 
   // Controladores para UPP
@@ -91,6 +93,10 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
         widget.controlDeRiesgos.numeroReporteCaida ?? '';
     agenteAislamientoController.text =
         widget.controlDeRiesgos.agenteAislamiento ?? '';
+
+    alergicoAMedicacion = widget.controlDeRiesgos.alergicoAMedicacion;
+    medicamentoAlergicoController.text =
+        widget.controlDeRiesgos.medicamentoAlergico ?? '';
 
     // Validar que el sitio UPP exista en las opciones
     _selectedSitioUPP = widget.controlDeRiesgos.sitioUPP != null &&
@@ -143,6 +149,7 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
     numeroReporteEAController.dispose();
     numeroReporteCaidaController.dispose();
     agenteAislamientoController.dispose();
+    medicamentoAlergicoController.dispose();
     fechaRegistroController.dispose();
     super.dispose();
   }
@@ -235,6 +242,11 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
           enAislamiento ? agenteAislamientoController.text : null,
       fechaFinAislamiento: enAislamiento ? fechaFinAislamiento : null,
       fechaRegistro: fechaRegistro,
+      alergicoAMedicacion: alergicoAMedicacion,
+      medicamentoAlergico:
+          alergicoAMedicacion && medicamentoAlergicoController.text.isNotEmpty
+              ? medicamentoAlergicoController.text
+              : null,
       controlUPPManana: int.tryParse(uppMananaController.text),
       controlUPPTarde: int.tryParse(uppTardeController.text),
       controlUPPNoche: int.tryParse(uppNocheController.text),
@@ -298,6 +310,50 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
             fechaReferencia.difference(fechaInicioAislamiento!).inDays + 1;
       });
     }
+  }
+
+  Widget _buildAlergias() {
+    return Card(
+      elevation: 5,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Alergias Medicamentosas',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            CheckboxListTile(
+              title: const Text('¿Es alérgico a algún medicamento?'),
+              value: alergicoAMedicacion,
+              onChanged: (value) {
+                setState(() {
+                  alergicoAMedicacion = value!;
+                  if (!alergicoAMedicacion) {
+                    medicamentoAlergicoController.clear();
+                  }
+                });
+              },
+              controlAffinity: ListTileControlAffinity.leading,
+            ),
+            if (alergicoAMedicacion) ...[
+              const SizedBox(height: 10),
+              const Text('Medicamento al que es alérgico'),
+              TextField(
+                controller: medicamentoAlergicoController,
+                decoration: const InputDecoration(
+                  hintText: 'Ingrese el medicamento',
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 1.0),
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildCampoNumerico({
@@ -397,6 +453,8 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
               _buildAnticoagulantes(),
               const SizedBox(height: 20),
               _buildAislamiento(),
+              const SizedBox(height: 20),
+              _buildAlergias(),
               const SizedBox(height: 20),
 
               // Botón de actualizar

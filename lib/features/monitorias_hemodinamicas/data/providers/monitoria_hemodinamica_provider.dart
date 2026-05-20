@@ -40,7 +40,10 @@ class ParametrosGuardarMonitoria {
   final int? fr;
   final double? t;
   final int? pvc;
-  final int? rvc;
+  final int? gc;
+  final int? ic;
+  final int? rvs;
+  final int? irvs;
   final int? fio2;
   final int? pia;
   final int? ppa;
@@ -63,7 +66,10 @@ class ParametrosGuardarMonitoria {
     this.fr,
     this.t,
     this.pvc,
-    this.rvc,
+    this.gc,
+    this.ic,
+    this.rvs,
+    this.irvs,
     this.fio2,
     this.pia,
     this.ppa,
@@ -120,7 +126,10 @@ final guardarMonitoriaHemodinamicaProvider =
           fr: params.fr,
           t: params.t,
           pvc: params.pvc,
-          rvc: params.rvc,
+          gc: params.gc,
+          ic: params.ic,
+          rvs: params.rvs,
+          irvs: params.irvs,
           fio2: params.fio2,
           pia: params.pia,
           ppa: params.ppa,
@@ -143,7 +152,10 @@ final guardarMonitoriaHemodinamicaProvider =
           fr: params.fr,
           t: params.t,
           pvc: params.pvc,
-          rvc: params.rvc,
+          gc: params.gc,
+          ic: params.ic,
+          rvs: params.rvs,
+          irvs: params.irvs,
           fio2: params.fio2,
           pia: params.pia,
           ppa: params.ppa,

@@ -7,22 +7,25 @@ class MonitoriaHemodinamica with _$MonitoriaHemodinamica {
     required String idMonitoria,
     required int hora,
     required int orden,
-    int? pas, // Presión arterial sistólica
-    int? pad, // Presión arterial diastólica
-    int? pam, // Presión arterial media (Fórmula: (2pad + 1pas)/3)
-    int? fc, // Frecuencia cardiaca (ppm)
-    int? fr, // Frecuencia respiratoria (rpm)
-    double? t, // Temperatura (°C)
-    int? pvc, // presion venosa central
-    int? rvc, // Resistencia vascular sistemica
-    int? fio2, // Fracción de Oxígeno Inspirado (%)
-    int? pia, // Presión intraabdominal (mm H2O)
-    int? ppa, // Presión de Perfusión arterial (mm Hg)
-    int? pic, // Presión intracraneal (mm Hg)
-    int? ppc, // Presión de Perfusión cerebral (mm Hg)
-    int? glucometria, // Glucometría (mg/dL)
-    int? insulina, // Insulina (Unidades)
-    int? saturacion, // Saturación (%)
+    int? pas,
+    int? pad,
+    int? pam,
+    int? fc,
+    int? fr,
+    double? t,
+    int? pvc,
+    int? gc,
+    int? ic,
+    int? rvs,
+    int? irvs,
+    int? fio2,
+    int? pia,
+    int? ppa,
+    int? pic,
+    int? ppc,
+    int? glucometria,
+    int? insulina,
+    int? saturacion,
   }) = _MonitoriaHemodinamica;
 
   factory MonitoriaHemodinamica.fromJson(Map<String, dynamic> json,
@@ -37,8 +40,12 @@ class MonitoriaHemodinamica with _$MonitoriaHemodinamica {
       fc: json['fc'] as int?,
       fr: json['fr'] as int?,
       t: (json['t'] as num?)?.toDouble(),
-      fio2: json['fio2'] as int?,
       pvc: json['pvc'] as int?,
+      gc: json['gc'] as int?,
+      ic: json['ic'] as int?,
+      rvs: json['rvs'] as int?,
+      irvs: json['irvs'] as int?,
+      fio2: json['fio2'] as int?,
       pia: json['pia'] as int?,
       ppa: json['ppa'] as int?,
       pic: json['pic'] as int?,

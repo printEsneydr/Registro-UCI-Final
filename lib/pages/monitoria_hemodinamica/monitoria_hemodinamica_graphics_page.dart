@@ -165,7 +165,7 @@ class GraphicsPage extends ConsumerWidget {
               _buildLineChartCard(
                 title: 'Resistencia Vascular Sistémica (RVS)',
                 data: monitorias,
-                getValue: (m) => m.rvc?.toDouble(),
+                getValue: (m) => m.rvs?.toDouble(),
                 color: Colors.cyan,
                 unit: 'dinas·s·cm⁻⁵',
                 minY: 0,

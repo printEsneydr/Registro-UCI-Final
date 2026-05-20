@@ -19,6 +19,7 @@ mixin _$RegistroDiario {
   String get idRegistroDiario => throw _privateConstructorUsedError;
   DateTime get fechaRegistro => throw _privateConstructorUsedError;
   Firma? get firmaNecesidades => throw _privateConstructorUsedError;
+  String get observaciones => throw _privateConstructorUsedError;
 
   /// Create a copy of RegistroDiario
   /// with the given fields replaced by the non-null parameter values.
@@ -36,7 +37,8 @@ abstract class $RegistroDiarioCopyWith<$Res> {
   $Res call(
       {String idRegistroDiario,
       DateTime fechaRegistro,
-      Firma? firmaNecesidades});
+      Firma? firmaNecesidades,
+      String observaciones});
 
   $FirmaCopyWith<$Res>? get firmaNecesidades;
 }
@@ -59,6 +61,7 @@ class _$RegistroDiarioCopyWithImpl<$Res, $Val extends RegistroDiario>
     Object? idRegistroDiario = null,
     Object? fechaRegistro = null,
     Object? firmaNecesidades = freezed,
+    Object? observaciones = null,
   }) {
     return _then(_value.copyWith(
       idRegistroDiario: null == idRegistroDiario
@@ -73,6 +76,10 @@ class _$RegistroDiarioCopyWithImpl<$Res, $Val extends RegistroDiario>
           ? _value.firmaNecesidades
           : firmaNecesidades // ignore: cast_nullable_to_non_nullable
               as Firma?,
+      observaciones: null == observaciones
+          ? _value.observaciones
+          : observaciones // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 
@@ -102,7 +109,8 @@ abstract class _$$RegistroDiarioImplCopyWith<$Res>
   $Res call(
       {String idRegistroDiario,
       DateTime fechaRegistro,
-      Firma? firmaNecesidades});
+      Firma? firmaNecesidades,
+      String observaciones});
 
   @override
   $FirmaCopyWith<$Res>? get firmaNecesidades;
@@ -124,6 +132,7 @@ class __$$RegistroDiarioImplCopyWithImpl<$Res>
     Object? idRegistroDiario = null,
     Object? fechaRegistro = null,
     Object? firmaNecesidades = freezed,
+    Object? observaciones = null,
   }) {
     return _then(_$RegistroDiarioImpl(
       idRegistroDiario: null == idRegistroDiario
@@ -138,6 +147,10 @@ class __$$RegistroDiarioImplCopyWithImpl<$Res>
           ? _value.firmaNecesidades
           : firmaNecesidades // ignore: cast_nullable_to_non_nullable
               as Firma?,
+      observaciones: null == observaciones
+          ? _value.observaciones
+          : observaciones // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -148,7 +161,8 @@ class _$RegistroDiarioImpl implements _RegistroDiario {
   const _$RegistroDiarioImpl(
       {required this.idRegistroDiario,
       required this.fechaRegistro,
-      this.firmaNecesidades});
+      this.firmaNecesidades,
+      this.observaciones = ''});
 
   @override
   final String idRegistroDiario;
@@ -156,10 +170,13 @@ class _$RegistroDiarioImpl implements _RegistroDiario {
   final DateTime fechaRegistro;
   @override
   final Firma? firmaNecesidades;
+  @override
+  @JsonKey()
+  final String observaciones;
 
   @override
   String toString() {
-    return 'RegistroDiario(idRegistroDiario: $idRegistroDiario, fechaRegistro: $fechaRegistro, firmaNecesidades: $firmaNecesidades)';
+    return 'RegistroDiario(idRegistroDiario: $idRegistroDiario, fechaRegistro: $fechaRegistro, firmaNecesidades: $firmaNecesidades, observaciones: $observaciones)';
   }
 
   @override
@@ -172,12 +189,14 @@ class _$RegistroDiarioImpl implements _RegistroDiario {
             (identical(other.fechaRegistro, fechaRegistro) ||
                 other.fechaRegistro == fechaRegistro) &&
             (identical(other.firmaNecesidades, firmaNecesidades) ||
-                other.firmaNecesidades == firmaNecesidades));
+                other.firmaNecesidades == firmaNecesidades) &&
+            (identical(other.observaciones, observaciones) ||
+                other.observaciones == observaciones));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, idRegistroDiario, fechaRegistro, firmaNecesidades);
+  int get hashCode => Object.hash(runtimeType, idRegistroDiario, fechaRegistro,
+      firmaNecesidades, observaciones);
 
   /// Create a copy of RegistroDiario
   /// with the given fields replaced by the non-null parameter values.
@@ -193,7 +212,8 @@ abstract class _RegistroDiario implements RegistroDiario {
   const factory _RegistroDiario(
       {required final String idRegistroDiario,
       required final DateTime fechaRegistro,
-      final Firma? firmaNecesidades}) = _$RegistroDiarioImpl;
+      final Firma? firmaNecesidades,
+      final String observaciones}) = _$RegistroDiarioImpl;
 
   @override
   String get idRegistroDiario;
@@ -201,6 +221,8 @@ abstract class _RegistroDiario implements RegistroDiario {
   DateTime get fechaRegistro;
   @override
   Firma? get firmaNecesidades;
+  @override
+  String get observaciones;
 
   /// Create a copy of RegistroDiario
   /// with the given fields replaced by the non-null parameter values.

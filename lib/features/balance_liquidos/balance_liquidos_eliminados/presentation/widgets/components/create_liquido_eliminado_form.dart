@@ -19,11 +19,21 @@ class _CreateLiquidoEliminadoFormState
     extends ConsumerState<CreateLiquidoEliminadoForm> {
   final _formKey = GlobalKey<FormState>();
   final _orinaController = TextEditingController(text: '0');
-  final _drenajesController = TextEditingController(text: '0');
-  final _diarreasController = TextEditingController(text: '0');
-  final _vomitoController = TextEditingController(text: '0');
   final _perdidasInsensiblesController = TextEditingController(text: '0');
+  final _sondaGastricaController = TextEditingController(text: '0');
+  final _residuoGastricoController = TextEditingController(text: '0');
+  final _tuboTorax1Controller = TextEditingController(text: '0');
+  final _tuboTorax2Controller = TextEditingController(text: '0');
+  final _tuboMediastinoController = TextEditingController(text: '0');
+  final _drenAbdominalController = TextEditingController(text: '0');
+  final _ileostomiaController = TextEditingController(text: '0');
+  final _fistulaEnterocutaneaController = TextEditingController(text: '0');
+  final _deposicionController = TextEditingController(text: '0');
+  final _dialisisController = TextEditingController(text: '0');
+  final _ventriculosTomaExternaController = TextEditingController(text: '0');
   final _otrosController = TextEditingController(text: '0');
+  final _campoLibre1Controller = TextEditingController(text: '0');
+  final _campoLibre2Controller = TextEditingController(text: '0');
   final _comentarioController = TextEditingController();
   TimeOfDay _hora = TimeOfDay.now();
   bool _isLoading = false;
@@ -31,11 +41,21 @@ class _CreateLiquidoEliminadoFormState
   @override
   void dispose() {
     _orinaController.dispose();
-    _drenajesController.dispose();
-    _diarreasController.dispose();
-    _vomitoController.dispose();
     _perdidasInsensiblesController.dispose();
+    _sondaGastricaController.dispose();
+    _residuoGastricoController.dispose();
+    _tuboTorax1Controller.dispose();
+    _tuboTorax2Controller.dispose();
+    _tuboMediastinoController.dispose();
+    _drenAbdominalController.dispose();
+    _ileostomiaController.dispose();
+    _fistulaEnterocutaneaController.dispose();
+    _deposicionController.dispose();
+    _dialisisController.dispose();
+    _ventriculosTomaExternaController.dispose();
     _otrosController.dispose();
+    _campoLibre1Controller.dispose();
+    _campoLibre2Controller.dispose();
     _comentarioController.dispose();
     super.dispose();
   }
@@ -47,10 +67,31 @@ class _CreateLiquidoEliminadoFormState
     return null;
   }
 
+  Widget _buildField(String label, IconData icon, TextEditingController controller) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: label,
+          border: const OutlineInputBorder(),
+          prefixIcon: Icon(icon),
+          isDense: true,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        ),
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+        ],
+        validator: _validarNumero,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.9,
+      width: MediaQuery.of(context).size.width * 0.92,
       child: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -62,106 +103,23 @@ class _CreateLiquidoEliminadoFormState
                 'Nuevo Registro de Líquidos Eliminados',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 20),
-              const Text(
-                'ELIMINACIONES',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: Colors.grey,
-                ),
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _orinaController,
-                decoration: const InputDecoration(
-                  labelText: 'Orina (ml)',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.water_drop),
-                ),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
-                ],
-                validator: _validarNumero,
-              ),
               const SizedBox(height: 16),
-              TextFormField(
-                controller: _drenajesController,
-                decoration: const InputDecoration(
-                  labelText: 'Drenajes (ml)',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.plumbing),
-                ),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
-                ],
-                validator: _validarNumero,
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _diarreasController,
-                decoration: const InputDecoration(
-                  labelText: 'Diarreas (ml)',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.sick),
-                ),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
-                ],
-                validator: _validarNumero,
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _vomitoController,
-                decoration: const InputDecoration(
-                  labelText: 'Vómito (ml)',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.warning),
-                ),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
-                ],
-                validator: _validarNumero,
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _perdidasInsensiblesController,
-                decoration: const InputDecoration(
-                  labelText: 'Pérdidas Insensibles (ml)',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.opacity),
-                ),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
-                ],
-                validator: _validarNumero,
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _otrosController,
-                decoration: const InputDecoration(
-                  labelText: 'Otros (ml)',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.more_horiz),
-                ),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
-                ],
-                validator: _validarNumero,
-              ),
-              const SizedBox(height: 16),
+              _buildField('Diuresis / Orina (ml)', Icons.water_drop, _orinaController),
+              _buildField('Pérdidas Insensibles (ml)', Icons.opacity, _perdidasInsensiblesController),
+              _buildField('Sonda Gástrica (ml)', Icons.biotech, _sondaGastricaController),
+              _buildField('Residuo Gástrico (ml)', Icons.science, _residuoGastricoController),
+              _buildField('Tubo Tórax 1 (ml)', Icons.air, _tuboTorax1Controller),
+              _buildField('Tubo Tórax 2 (ml)', Icons.air, _tuboTorax2Controller),
+              _buildField('Tubo Mediastino (ml)', Icons.medical_services, _tuboMediastinoController),
+              _buildField('Dren Abdominal (ml)', Icons.plumbing, _drenAbdominalController),
+              _buildField('Ileostomía (ml)', Icons.healing, _ileostomiaController),
+              _buildField('Fístula Enterocutánea (ml)', Icons.call_split, _fistulaEnterocutaneaController),
+              _buildField('Deposición (ml)', Icons.sick, _deposicionController),
+              _buildField('Diálisis (ml)', Icons.bloodtype, _dialisisController),
+              _buildField('Ventrículos Toma Externa (ml)', Icons.psychology, _ventriculosTomaExternaController),
+              _buildField('Otros (ml)', Icons.more_horiz, _otrosController),
+              _buildField('Campo Libre 1 (ml)', Icons.edit_note, _campoLibre1Controller),
+              _buildField('Campo Libre 2 (ml)', Icons.edit_note, _campoLibre2Controller),
               InkWell(
                 onTap: () async {
                   final time = await showTimePicker(
@@ -227,12 +185,21 @@ class _CreateLiquidoEliminadoFormState
       try {
         final dto = CreateLiquidoEliminadoDto(
           orina: double.parse(_orinaController.text),
-          drenajes: double.parse(_drenajesController.text),
-          diarreas: double.parse(_diarreasController.text),
-          vomito: double.parse(_vomitoController.text),
-          perdidasInsensibles:
-              double.parse(_perdidasInsensiblesController.text),
+          perdidasInsensibles: double.parse(_perdidasInsensiblesController.text),
+          sondaGastrica: double.parse(_sondaGastricaController.text),
+          residuoGastrico: double.parse(_residuoGastricoController.text),
+          tuboTorax1: double.parse(_tuboTorax1Controller.text),
+          tuboTorax2: double.parse(_tuboTorax2Controller.text),
+          tuboMediastino: double.parse(_tuboMediastinoController.text),
+          drenAbdominal: double.parse(_drenAbdominalController.text),
+          ileostomia: double.parse(_ileostomiaController.text),
+          fistulaEnterocutanea: double.parse(_fistulaEnterocutaneaController.text),
+          deposicion: double.parse(_deposicionController.text),
+          dialisis: double.parse(_dialisisController.text),
+          ventriculosTomaExterna: double.parse(_ventriculosTomaExternaController.text),
           otros: double.parse(_otrosController.text),
+          campoLibre1: double.parse(_campoLibre1Controller.text),
+          campoLibre2: double.parse(_campoLibre2Controller.text),
           hora: DateTime(2024, 1, 1, _hora.hour, _hora.minute),
           comentario: _comentarioController.text.isEmpty
               ? null

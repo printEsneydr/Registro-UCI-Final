@@ -28,6 +28,7 @@ class _UpdateIngresoFormState extends State<UpdateIngresoForm> {
   late TextEditingController _otherParentescoFamiliarController;
   late TextEditingController _telefonoFamiliarController;
   late TextEditingController _diagnosticoIngresoController;
+  late TextEditingController _diagnosticoActualController;
   late TextEditingController _pesoController;
   late TextEditingController _tallaController;
   late TextEditingController _camaController;
@@ -103,6 +104,9 @@ class _UpdateIngresoFormState extends State<UpdateIngresoForm> {
     _diagnosticoIngresoController = TextEditingController();
     _diagnosticoIngresoController.text = widget.ingreso.diagnosticoIngreso;
 
+    _diagnosticoActualController = TextEditingController();
+    _diagnosticoActualController.text = widget.ingreso.diagnosticoActual;
+
     _pesoController = TextEditingController();
     _pesoController.text = widget.ingreso.peso.toInt().toString();
 
@@ -127,6 +131,7 @@ class _UpdateIngresoFormState extends State<UpdateIngresoForm> {
     _otherParentescoFamiliarController.dispose();
     _telefonoFamiliarController.dispose();
     _diagnosticoIngresoController.dispose();
+    _diagnosticoActualController.dispose();
     _pesoController.dispose();
     _tallaController.dispose();
     _camaController.dispose();
@@ -308,6 +313,18 @@ class _UpdateIngresoFormState extends State<UpdateIngresoForm> {
                 ),
                 validator: diagnosticoIngresoValidator,
               ),
+              const SizedBox(height: 15),
+              OutlinedTextFormField(
+                controller: _diagnosticoActualController,
+                label: "Diagnóstico Actual",
+                autocorrect: true,
+                maxLines: 3,
+                prefixIcon: const Icon(
+                  Icons.local_hospital_outlined,
+                  size: 25,
+                ),
+                hint: "Ingrese el diagnóstico actual del paciente",
+              ),
             ],
           ),
           const SizedBox(height: 30),
@@ -386,6 +403,7 @@ class _UpdateIngresoFormState extends State<UpdateIngresoForm> {
             otherEpsArlController: _otherEpsArlController,
             telefonoFamiliarController: _telefonoFamiliarController,
             diagnosticoIngresoController: _diagnosticoIngresoController,
+            diagnosticoActualController: _diagnosticoActualController,
             pesoController: _pesoController,
             tallaController: _tallaController,
             camaController: _camaController,

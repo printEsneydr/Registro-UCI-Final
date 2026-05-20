@@ -11,6 +11,8 @@ import 'package:registro_uci/features/ingresos/presentation/widgets/components/t
 import 'package:registro_uci/features/ingresos/presentation/widgets/components/tiles/sondas_tile.dart';
 import 'package:registro_uci/features/ingresos/presentation/widgets/components/tiles/terminar_ingreso_tile.dart';
 import 'package:registro_uci/features/ingresos/presentation/widgets/components/tiles/tratamientos_antibioticos_tile.dart';
+import 'package:registro_uci/features/ingresos/presentation/widgets/components/tiles/observaciones_extras_tile.dart';
+import 'package:registro_uci/features/reportes/presentation/widgets/generar_reporte_pdf_button.dart';
 import 'package:registro_uci/pages/loading_page.dart';
 
 class IngresoPage extends ConsumerWidget {
@@ -64,7 +66,14 @@ class IngresoPage extends ConsumerWidget {
               const SizedBox(height: 10),
               NutricionTile(idIngreso: idIngreso),
               const SizedBox(height: 10),
+              ObservacionesExtrasTile(idIngreso: data.idIngreso),
+              const SizedBox(height: 10),
               TerminarIngresoTile(idIngreso: data.idIngreso),
+              const SizedBox(height: 10),
+              GenerarReportePdfButton(
+                idIngreso: data.idIngreso,
+                nombrePaciente: data.nombrePaciente,
+              ),
             ],
           ),
         );

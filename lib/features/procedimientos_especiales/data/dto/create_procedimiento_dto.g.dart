@@ -10,7 +10,9 @@ _$CreateProcedimientoDtoImpl _$$CreateProcedimientoDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$CreateProcedimientoDtoImpl(
       nombreProcedimiento: json['nombreProcedimiento'] as String,
-      estado: json['estado'] as String,
+      estado: json['estado'] as String? ?? "Por realizar",
+      medicamentoInfusion: json['medicamentoInfusion'] as String?,
+      dosisInfusion: json['dosisInfusion'] as String?,
     );
 
 Map<String, dynamic> _$$CreateProcedimientoDtoImplToJson(
@@ -18,4 +20,6 @@ Map<String, dynamic> _$$CreateProcedimientoDtoImplToJson(
     <String, dynamic>{
       'nombreProcedimiento': instance.nombreProcedimiento,
       'estado': instance.estado,
+      'medicamentoInfusion': instance.medicamentoInfusion,
+      'dosisInfusion': instance.dosisInfusion,
     };

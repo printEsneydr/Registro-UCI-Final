@@ -2,34 +2,63 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CreateLiquidoEliminadoDto {
   final double orina;
-  final double drenajes;
-  final double diarreas;
-  final double vomito;
   final double perdidasInsensibles;
+  final double sondaGastrica;
+  final double residuoGastrico;
+  final double tuboTorax1;
+  final double tuboTorax2;
+  final double tuboMediastino;
+  final double drenAbdominal;
+  final double ileostomia;
+  final double fistulaEnterocutanea;
+  final double deposicion;
+  final double dialisis;
+  final double ventriculosTomaExterna;
   final double otros;
+  final double campoLibre1;
+  final double campoLibre2;
   final DateTime hora;
   final String? comentario;
 
   CreateLiquidoEliminadoDto({
     required this.orina,
-    required this.drenajes,
-    required this.diarreas,
-    required this.vomito,
     required this.perdidasInsensibles,
+    required this.sondaGastrica,
+    required this.residuoGastrico,
+    required this.tuboTorax1,
+    required this.tuboTorax2,
+    required this.tuboMediastino,
+    required this.drenAbdominal,
+    required this.ileostomia,
+    required this.fistulaEnterocutanea,
+    required this.deposicion,
+    required this.dialisis,
+    required this.ventriculosTomaExterna,
     required this.otros,
+    required this.campoLibre1,
+    required this.campoLibre2,
     required this.hora,
     this.comentario,
   });
 
-  // Convertir a Map para Firebase
   Map<String, dynamic> toMap() {
     return {
       'orina': orina,
-      'drenajes': drenajes,
-      'diarreas': diarreas,
-      'vomito': vomito,
       'perdidasInsensibles': perdidasInsensibles,
+      'sondaGastrica': sondaGastrica,
+      'residuoGastrico': residuoGastrico,
+      'tuboTorax1': tuboTorax1,
+      'tuboTorax2': tuboTorax2,
+      'tuboMediastino': tuboMediastino,
+      'drenAbdominal': drenAbdominal,
+      'ileostomia': ileostomia,
+      'fistulaEnterocutanea': fistulaEnterocutanea,
+      'deposicion': deposicion,
+      'dialisis': dialisis,
+      'ventriculosTomaExterna': ventriculosTomaExterna,
       'otros': otros,
+      'campoLibre1': campoLibre1,
+      'campoLibre2': campoLibre2,
       'hora': Timestamp.fromDate(hora),
       'comentario': comentario,
     };

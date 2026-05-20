@@ -18,7 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ProcedimientoEspecial {
   String get idProcedimiento => throw _privateConstructorUsedError;
   String get nombreProcedimiento => throw _privateConstructorUsedError;
-  String get estado => throw _privateConstructorUsedError;
+  String get estado =>
+      throw _privateConstructorUsedError; // "Por realizar", "Realizado", "Reportado"
+  String? get medicamentoInfusion => throw _privateConstructorUsedError;
+  String? get dosisInfusion => throw _privateConstructorUsedError;
 
   /// Create a copy of ProcedimientoEspecial
   /// with the given fields replaced by the non-null parameter values.
@@ -34,7 +37,11 @@ abstract class $ProcedimientoEspecialCopyWith<$Res> {
       _$ProcedimientoEspecialCopyWithImpl<$Res, ProcedimientoEspecial>;
   @useResult
   $Res call(
-      {String idProcedimiento, String nombreProcedimiento, String estado});
+      {String idProcedimiento,
+      String nombreProcedimiento,
+      String estado,
+      String? medicamentoInfusion,
+      String? dosisInfusion});
 }
 
 /// @nodoc
@@ -56,6 +63,8 @@ class _$ProcedimientoEspecialCopyWithImpl<$Res,
     Object? idProcedimiento = null,
     Object? nombreProcedimiento = null,
     Object? estado = null,
+    Object? medicamentoInfusion = freezed,
+    Object? dosisInfusion = freezed,
   }) {
     return _then(_value.copyWith(
       idProcedimiento: null == idProcedimiento
@@ -70,6 +79,14 @@ class _$ProcedimientoEspecialCopyWithImpl<$Res,
           ? _value.estado
           : estado // ignore: cast_nullable_to_non_nullable
               as String,
+      medicamentoInfusion: freezed == medicamentoInfusion
+          ? _value.medicamentoInfusion
+          : medicamentoInfusion // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dosisInfusion: freezed == dosisInfusion
+          ? _value.dosisInfusion
+          : dosisInfusion // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -84,7 +101,11 @@ abstract class _$$ProcedimientoEspecialImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String idProcedimiento, String nombreProcedimiento, String estado});
+      {String idProcedimiento,
+      String nombreProcedimiento,
+      String estado,
+      String? medicamentoInfusion,
+      String? dosisInfusion});
 }
 
 /// @nodoc
@@ -104,6 +125,8 @@ class __$$ProcedimientoEspecialImplCopyWithImpl<$Res>
     Object? idProcedimiento = null,
     Object? nombreProcedimiento = null,
     Object? estado = null,
+    Object? medicamentoInfusion = freezed,
+    Object? dosisInfusion = freezed,
   }) {
     return _then(_$ProcedimientoEspecialImpl(
       idProcedimiento: null == idProcedimiento
@@ -118,6 +141,14 @@ class __$$ProcedimientoEspecialImplCopyWithImpl<$Res>
           ? _value.estado
           : estado // ignore: cast_nullable_to_non_nullable
               as String,
+      medicamentoInfusion: freezed == medicamentoInfusion
+          ? _value.medicamentoInfusion
+          : medicamentoInfusion // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dosisInfusion: freezed == dosisInfusion
+          ? _value.dosisInfusion
+          : dosisInfusion // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -128,7 +159,9 @@ class _$ProcedimientoEspecialImpl implements _ProcedimientoEspecial {
   const _$ProcedimientoEspecialImpl(
       {required this.idProcedimiento,
       required this.nombreProcedimiento,
-      required this.estado});
+      required this.estado,
+      this.medicamentoInfusion,
+      this.dosisInfusion});
 
   @override
   final String idProcedimiento;
@@ -136,10 +169,15 @@ class _$ProcedimientoEspecialImpl implements _ProcedimientoEspecial {
   final String nombreProcedimiento;
   @override
   final String estado;
+// "Por realizar", "Realizado", "Reportado"
+  @override
+  final String? medicamentoInfusion;
+  @override
+  final String? dosisInfusion;
 
   @override
   String toString() {
-    return 'ProcedimientoEspecial(idProcedimiento: $idProcedimiento, nombreProcedimiento: $nombreProcedimiento, estado: $estado)';
+    return 'ProcedimientoEspecial(idProcedimiento: $idProcedimiento, nombreProcedimiento: $nombreProcedimiento, estado: $estado, medicamentoInfusion: $medicamentoInfusion, dosisInfusion: $dosisInfusion)';
   }
 
   @override
@@ -151,12 +189,16 @@ class _$ProcedimientoEspecialImpl implements _ProcedimientoEspecial {
                 other.idProcedimiento == idProcedimiento) &&
             (identical(other.nombreProcedimiento, nombreProcedimiento) ||
                 other.nombreProcedimiento == nombreProcedimiento) &&
-            (identical(other.estado, estado) || other.estado == estado));
+            (identical(other.estado, estado) || other.estado == estado) &&
+            (identical(other.medicamentoInfusion, medicamentoInfusion) ||
+                other.medicamentoInfusion == medicamentoInfusion) &&
+            (identical(other.dosisInfusion, dosisInfusion) ||
+                other.dosisInfusion == dosisInfusion));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, idProcedimiento, nombreProcedimiento, estado);
+  int get hashCode => Object.hash(runtimeType, idProcedimiento,
+      nombreProcedimiento, estado, medicamentoInfusion, dosisInfusion);
 
   /// Create a copy of ProcedimientoEspecial
   /// with the given fields replaced by the non-null parameter values.
@@ -172,14 +214,20 @@ abstract class _ProcedimientoEspecial implements ProcedimientoEspecial {
   const factory _ProcedimientoEspecial(
       {required final String idProcedimiento,
       required final String nombreProcedimiento,
-      required final String estado}) = _$ProcedimientoEspecialImpl;
+      required final String estado,
+      final String? medicamentoInfusion,
+      final String? dosisInfusion}) = _$ProcedimientoEspecialImpl;
 
   @override
   String get idProcedimiento;
   @override
   String get nombreProcedimiento;
   @override
-  String get estado;
+  String get estado; // "Por realizar", "Realizado", "Reportado"
+  @override
+  String? get medicamentoInfusion;
+  @override
+  String? get dosisInfusion;
 
   /// Create a copy of ProcedimientoEspecial
   /// with the given fields replaced by the non-null parameter values.

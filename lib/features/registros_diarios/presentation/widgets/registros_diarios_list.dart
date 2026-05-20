@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:registro_uci/features/registros_diarios/data/providers/registros_diarios_de_ingreso_provider.dart';
 import 'package:registro_uci/features/registros_diarios/presentation/widgets/components/registro_diario_tile.dart';
+import 'package:registro_uci/features/registros_diarios/presentation/widgets/create_registro_diario_form.dart';
 
 class RegistrosDiariosList extends ConsumerWidget {
   final String idIngreso;
@@ -13,6 +14,36 @@ class RegistrosDiariosList extends ConsumerWidget {
         ref.watch(registrosDiariosDeIngresoProvider(idIngreso));
     return registrosDiarios.when(
       data: (data) {
+        if (data.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.calendar_today, size: 80, color: Colors.grey.shade400),
+                const SizedBox(height: 16),
+                Text(
+                  'No hay registros diarios para este ingreso',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Colors.grey.shade600,
+                      ),
+                ),
+                const SizedBox(height: 24),
+                FilledButton.icon(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        content: CreateRegistroDiarioForm(idIngreso: idIngreso),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.add),
+                  label: const Text('Crear Registro Diario'),
+                ),
+              ],
+            ),
+          );
+        }
         return ListView.separated(
           itemCount: data.length,
           itemBuilder: (context, index) => RegistroDiarioTile(
@@ -23,7 +54,16 @@ class RegistrosDiariosList extends ConsumerWidget {
           padding: const EdgeInsets.all(15),
         );
       },
-      error: (error, stackTrace) => Text(error.toString()),
+      error: (error, stackTrace) => Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Text(
+            'Error al cargar registros: $error',
+            style: TextStyle(color: Colors.red.shade700, fontSize: 16),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ),
       loading: () => const Center(
         child: CircularProgressIndicator(),
       ),

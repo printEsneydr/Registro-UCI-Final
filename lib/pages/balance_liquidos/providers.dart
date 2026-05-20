@@ -65,12 +65,21 @@ final totalBalanceProvider =
     for (var eliminadoDoc in eliminadosSnapshot.docs) {
       final Map<String, dynamic> eliminadoData = eliminadoDoc.data();
       totalEliminados += (eliminadoData['orina'] as num?)?.toDouble() ?? 0.0;
-      totalEliminados += (eliminadoData['drenajes'] as num?)?.toDouble() ?? 0.0;
-      totalEliminados += (eliminadoData['diarreas'] as num?)?.toDouble() ?? 0.0;
-      totalEliminados += (eliminadoData['vomito'] as num?)?.toDouble() ?? 0.0;
-      totalEliminados +=
-          (eliminadoData['perdidasInsensibles'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (eliminadoData['perdidasInsensibles'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (eliminadoData['sondaGastrica'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (eliminadoData['residuoGastrico'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (eliminadoData['tuboTorax1'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (eliminadoData['tuboTorax2'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (eliminadoData['tuboMediastino'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (eliminadoData['drenAbdominal'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (eliminadoData['ileostomia'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (eliminadoData['fistulaEnterocutanea'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (eliminadoData['deposicion'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (eliminadoData['dialisis'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (eliminadoData['ventriculosTomaExterna'] as num?)?.toDouble() ?? 0.0;
       totalEliminados += (eliminadoData['otros'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (eliminadoData['campoLibre1'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (eliminadoData['campoLibre2'] as num?)?.toDouble() ?? 0.0;
     }
   }
 
@@ -153,12 +162,21 @@ final balancePorHoraProvider =
     for (var elimDoc in eliminadosSnapshot.docs) {
       final elimData = elimDoc.data();
       totalEliminados += (elimData['orina'] as num?)?.toDouble() ?? 0.0;
-      totalEliminados += (elimData['drenajes'] as num?)?.toDouble() ?? 0.0;
-      totalEliminados += (elimData['diarreas'] as num?)?.toDouble() ?? 0.0;
-      totalEliminados += (elimData['vomito'] as num?)?.toDouble() ?? 0.0;
-      totalEliminados +=
-          (elimData['perdidasInsensibles'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['perdidasInsensibles'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['sondaGastrica'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['residuoGastrico'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['tuboTorax1'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['tuboTorax2'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['tuboMediastino'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['drenAbdominal'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['ileostomia'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['fistulaEnterocutanea'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['deposicion'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['dialisis'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['ventriculosTomaExterna'] as num?)?.toDouble() ?? 0.0;
       totalEliminados += (elimData['otros'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['campoLibre1'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['campoLibre2'] as num?)?.toDouble() ?? 0.0;
     }
 
     // Si llegamos a la hora objetivo, salir
@@ -217,12 +235,21 @@ final balanceAcumuladoProvider =
     for (var elimDoc in eliminadosSnapshot.docs) {
       final Map<String, dynamic> elimData = elimDoc.data();
       totalEliminados += (elimData['orina'] as num?)?.toDouble() ?? 0.0;
-      totalEliminados += (elimData['drenajes'] as num?)?.toDouble() ?? 0.0;
-      totalEliminados += (elimData['diarreas'] as num?)?.toDouble() ?? 0.0;
-      totalEliminados += (elimData['vomito'] as num?)?.toDouble() ?? 0.0;
-      totalEliminados +=
-          (elimData['perdidasInsensibles'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['perdidasInsensibles'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['sondaGastrica'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['residuoGastrico'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['tuboTorax1'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['tuboTorax2'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['tuboMediastino'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['drenAbdominal'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['ileostomia'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['fistulaEnterocutanea'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['deposicion'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['dialisis'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['ventriculosTomaExterna'] as num?)?.toDouble() ?? 0.0;
       totalEliminados += (elimData['otros'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['campoLibre1'] as num?)?.toDouble() ?? 0.0;
+      totalEliminados += (elimData['campoLibre2'] as num?)?.toDouble() ?? 0.0;
     }
 
     if (horaBalance != null && horaBalance == params.hora) {

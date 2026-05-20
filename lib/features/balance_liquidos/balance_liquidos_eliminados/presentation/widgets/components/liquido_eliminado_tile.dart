@@ -14,11 +14,21 @@ class LiquidoEliminadoTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final total = liquido.orina +
-        liquido.drenajes +
-        liquido.diarreas +
-        liquido.vomito +
         liquido.perdidasInsensibles +
-        liquido.otros;
+        liquido.sondaGastrica +
+        liquido.residuoGastrico +
+        liquido.tuboTorax1 +
+        liquido.tuboTorax2 +
+        liquido.tuboMediastino +
+        liquido.drenAbdominal +
+        liquido.ileostomia +
+        liquido.fistulaEnterocutanea +
+        liquido.deposicion +
+        liquido.dialisis +
+        liquido.ventriculosTomaExterna +
+        liquido.otros +
+        liquido.campoLibre1 +
+        liquido.campoLibre2;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -32,12 +42,22 @@ class LiquidoEliminadoTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildRow('Orina', liquido.orina),
-                _buildRow('Drenajes', liquido.drenajes),
-                _buildRow('Diarreas', liquido.diarreas),
-                _buildRow('Vómito', liquido.vomito),
+                _buildRow('Diuresis / Orina', liquido.orina),
                 _buildRow('Pérdidas Insensibles', liquido.perdidasInsensibles),
+                _buildRow('Sonda Gástrica', liquido.sondaGastrica),
+                _buildRow('Residuo Gástrico', liquido.residuoGastrico),
+                _buildRow('Tubo Tórax 1', liquido.tuboTorax1),
+                _buildRow('Tubo Tórax 2', liquido.tuboTorax2),
+                _buildRow('Tubo Mediastino', liquido.tuboMediastino),
+                _buildRow('Dren Abdominal', liquido.drenAbdominal),
+                _buildRow('Ileostomía', liquido.ileostomia),
+                _buildRow('Fístula Enterocutánea', liquido.fistulaEnterocutanea),
+                _buildRow('Deposición', liquido.deposicion),
+                _buildRow('Diálisis', liquido.dialisis),
+                _buildRow('Ventrículos Toma Externa', liquido.ventriculosTomaExterna),
                 _buildRow('Otros', liquido.otros),
+                _buildRow('Campo Libre 1', liquido.campoLibre1),
+                _buildRow('Campo Libre 2', liquido.campoLibre2),
                 if (liquido.comentario != null &&
                     liquido.comentario!.isNotEmpty)
                   Padding(

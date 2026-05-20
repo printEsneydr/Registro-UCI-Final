@@ -2,29 +2,33 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UpdateCateterDto {
   final String? tipo;
-  final String? sitio;
-  final DateTime? fechaInsercion; // ✅ Convertir a DateTime
-  final DateTime? fechaRetiro; // ✅ Convertir a DateTime
-  final String? lugarProcedencia;
+  final String? via;
+  final DateTime? fechaInsercion;
+  final DateTime? fechaRetiro;
+  final DateTime? fechaCuracionOCambio;
+  final String? caracteristicasSitioInsercion;
 
   UpdateCateterDto({
     this.tipo,
-    this.sitio,
+    this.via,
     this.fechaInsercion,
     this.fechaRetiro,
-    this.lugarProcedencia,
+    this.fechaCuracionOCambio,
+    this.caracteristicasSitioInsercion,
   });
 
-  /// 🔥 **Convierte solo los valores que no sean `null` a JSON**
   Map<String, dynamic> toJson() {
     return {
       if (tipo != null) "tipo": tipo,
-      if (sitio != null) "sitio": sitio,
+      if (via != null) "via": via,
       if (fechaInsercion != null)
-        "fechaInsercion": Timestamp.fromDate(fechaInsercion!), // ✅ Cambio
+        "fechaInsercion": Timestamp.fromDate(fechaInsercion!),
       if (fechaRetiro != null)
-        "fechaRetiro": Timestamp.fromDate(fechaRetiro!), // ✅ Cambio
-      if (lugarProcedencia != null) "lugarProcedencia": lugarProcedencia,
+        "fechaRetiro": Timestamp.fromDate(fechaRetiro!),
+      if (fechaCuracionOCambio != null)
+        "fechaCuracionOCambio": Timestamp.fromDate(fechaCuracionOCambio!),
+      if (caracteristicasSitioInsercion != null)
+        "caracteristicasSitioInsercion": caracteristicasSitioInsercion,
     };
   }
 }

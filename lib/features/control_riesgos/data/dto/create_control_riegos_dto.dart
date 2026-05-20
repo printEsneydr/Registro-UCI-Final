@@ -16,6 +16,8 @@ class CreateControlDeRiesgosDto {
   final String? agenteAislamiento;
   final DateTime? fechaFinAislamiento;
   final int? diasDeAislamiento;
+  final bool alergicoAMedicacion;
+  final String? medicamentoAlergico;
 
   CreateControlDeRiesgosDto({
     required this.tieneUPP,
@@ -35,6 +37,8 @@ class CreateControlDeRiesgosDto {
     this.agenteAislamiento,
     this.fechaFinAislamiento,
     this.diasDeAislamiento,
+    this.alergicoAMedicacion = false,
+    this.medicamentoAlergico,
   });
 
   // Método para convertir el DTO a un mapa
@@ -57,6 +61,8 @@ class CreateControlDeRiesgosDto {
       'agenteAislamiento': agenteAislamiento,
       'fechaFinAislamiento': fechaFinAislamiento?.toIso8601String(),
       'diasDeAislamiento': diasDeAislamiento,
+      'alergicoAMedicacion': alergicoAMedicacion,
+      'medicamentoAlergico': medicamentoAlergico,
     };
   }
 }

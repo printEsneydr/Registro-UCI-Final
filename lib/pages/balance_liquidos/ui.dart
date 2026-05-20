@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:registro_uci/features/balance_liquidos/data/providers/balances_de_liquidos_provider.dart';
 import 'package:registro_uci/pages/balance_liquidos/providers.dart';
 
 class BalanceCard extends ConsumerStatefulWidget {
@@ -87,6 +88,10 @@ class _BalanceCardState extends ConsumerState<BalanceCard> {
       idIngreso: widget.idIngreso,
       idRegistroDiario: widget.idRegistroDiario,
       hora: _horaSeleccionada,
+    )));
+    ref.invalidate(balancesDeLiquidosProvider(BalancesDeLiquidosParams(
+      idIngreso: widget.idIngreso,
+      idRegistroDiario: widget.idRegistroDiario,
     )));
   }
 

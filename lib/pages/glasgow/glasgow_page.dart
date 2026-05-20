@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:registro_uci/features/auth/data/providers/user_role_provider.dart';
+import 'package:registro_uci/features/auth/domain/enums/user_role.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/glasgow/data/providers/glasgow_provider.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/glasgow/domain/models/glasgow.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/glasgow/presentation/controllers/glasgow_controller.dart';
@@ -19,6 +21,8 @@ class GlasgowPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final role = ref.watch(roleProvider);
+    final isAdmin = role == UserRole.admin;
     final glasgowAsync = ref.watch(
       glasgowByIngresoProvider(
         (idIngreso: idIngreso, idRegistroDiario: idRegistroDiario),
@@ -133,29 +137,31 @@ Container(
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                IconButton(
-                                  icon: const Icon(Icons.edit,
-                                      color: Colors.blue, size: 20),
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            UpdateGlasgowPage(
-                                          idIngreso: idIngreso,
-                                          idRegistroDiario: idRegistroDiario,
-                                          glasgowId: registro.idGlasgow,
+                                if (isAdmin)
+                                  IconButton(
+                                    icon: const Icon(Icons.edit,
+                                        color: Colors.blue, size: 20),
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              UpdateGlasgowPage(
+                                            idIngreso: idIngreso,
+                                            idRegistroDiario: idRegistroDiario,
+                                            glasgowId: registro.idGlasgow,
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.delete,
-                                      color: Colors.red, size: 20),
-                                  onPressed: () =>
-                                      _confirmDelete(context, ref, registro),
-                                ),
+                                      );
+                                    },
+                                  ),
+                                if (isAdmin)
+                                  IconButton(
+                                    icon: const Icon(Icons.delete,
+                                        color: Colors.red, size: 20),
+                                    onPressed: () =>
+                                        _confirmDelete(context, ref, registro),
+                                  ),
                               ],
                             ),
                           ],

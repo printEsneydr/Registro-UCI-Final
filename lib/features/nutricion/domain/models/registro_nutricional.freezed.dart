@@ -18,34 +18,17 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$RegistroNutricional {
   String get idRegistroNutricional =>
       throw _privateConstructorUsedError; // ANTROPOMETRÍA
-  double get peso => throw _privateConstructorUsedError; // kg
-  double get talla => throw _privateConstructorUsedError; // cm
-  double? get pesoUsual =>
-      throw _privateConstructorUsedError; // kg (antes de enfermar)
-  double get imc =>
-      throw _privateConstructorUsedError; // calculado automáticamente
-// TIPO DE ALIMENTACIÓN
-  TipoAlimentacion get tipoAlimentacion => throw _privateConstructorUsedError;
-  String? get formulaEnteral =>
-      throw _privateConstructorUsedError; // Si es enteral, nombre de fórmula
-// REGISTRO DIARIO
-  double get caloriasAdministradas =>
-      throw _privateConstructorUsedError; // kcal
-  double get caloriasRequeridas =>
-      throw _privateConstructorUsedError; // kcal (calculado)
-  double get balanceNutricional =>
-      throw _privateConstructorUsedError; // calculado
-// MACRONUTRIENTES (opcional)
-  double? get proteinas => throw _privateConstructorUsedError; // gramos
-  double? get carbohidratos => throw _privateConstructorUsedError; // gramos
-  double? get lipidos => throw _privateConstructorUsedError; // gramos
-// TOLERANCIA
-  bool get toleraAlimentacion => throw _privateConstructorUsedError;
-  String? get efectosSecundarios =>
-      throw _privateConstructorUsedError; // náuseas, vómitos, diarrea, etc.
-// METADATOS
-  DateTime get fecha => throw _privateConstructorUsedError;
+  double get peso => throw _privateConstructorUsedError;
+  double get talla => throw _privateConstructorUsedError;
+  double get imc => throw _privateConstructorUsedError;
+  double get requerimientoCalorico =>
+      throw _privateConstructorUsedError; // REGISTRO
   DateTime get hora => throw _privateConstructorUsedError;
+  String get via => throw _privateConstructorUsedError;
+  double? get total => throw _privateConstructorUsedError;
+  double? get proteinas => throw _privateConstructorUsedError;
+  double? get lipidos => throw _privateConstructorUsedError;
+  double? get carbohidratos => throw _privateConstructorUsedError;
   String? get observaciones => throw _privateConstructorUsedError;
 
   /// Create a copy of RegistroNutricional
@@ -65,20 +48,14 @@ abstract class $RegistroNutricionalCopyWith<$Res> {
       {String idRegistroNutricional,
       double peso,
       double talla,
-      double? pesoUsual,
       double imc,
-      TipoAlimentacion tipoAlimentacion,
-      String? formulaEnteral,
-      double caloriasAdministradas,
-      double caloriasRequeridas,
-      double balanceNutricional,
-      double? proteinas,
-      double? carbohidratos,
-      double? lipidos,
-      bool toleraAlimentacion,
-      String? efectosSecundarios,
-      DateTime fecha,
+      double requerimientoCalorico,
       DateTime hora,
+      String via,
+      double? total,
+      double? proteinas,
+      double? lipidos,
+      double? carbohidratos,
       String? observaciones});
 }
 
@@ -100,20 +77,14 @@ class _$RegistroNutricionalCopyWithImpl<$Res, $Val extends RegistroNutricional>
     Object? idRegistroNutricional = null,
     Object? peso = null,
     Object? talla = null,
-    Object? pesoUsual = freezed,
     Object? imc = null,
-    Object? tipoAlimentacion = null,
-    Object? formulaEnteral = freezed,
-    Object? caloriasAdministradas = null,
-    Object? caloriasRequeridas = null,
-    Object? balanceNutricional = null,
-    Object? proteinas = freezed,
-    Object? carbohidratos = freezed,
-    Object? lipidos = freezed,
-    Object? toleraAlimentacion = null,
-    Object? efectosSecundarios = freezed,
-    Object? fecha = null,
+    Object? requerimientoCalorico = null,
     Object? hora = null,
+    Object? via = null,
+    Object? total = freezed,
+    Object? proteinas = freezed,
+    Object? lipidos = freezed,
+    Object? carbohidratos = freezed,
     Object? observaciones = freezed,
   }) {
     return _then(_value.copyWith(
@@ -129,62 +100,38 @@ class _$RegistroNutricionalCopyWithImpl<$Res, $Val extends RegistroNutricional>
           ? _value.talla
           : talla // ignore: cast_nullable_to_non_nullable
               as double,
-      pesoUsual: freezed == pesoUsual
-          ? _value.pesoUsual
-          : pesoUsual // ignore: cast_nullable_to_non_nullable
-              as double?,
       imc: null == imc
           ? _value.imc
           : imc // ignore: cast_nullable_to_non_nullable
               as double,
-      tipoAlimentacion: null == tipoAlimentacion
-          ? _value.tipoAlimentacion
-          : tipoAlimentacion // ignore: cast_nullable_to_non_nullable
-              as TipoAlimentacion,
-      formulaEnteral: freezed == formulaEnteral
-          ? _value.formulaEnteral
-          : formulaEnteral // ignore: cast_nullable_to_non_nullable
-              as String?,
-      caloriasAdministradas: null == caloriasAdministradas
-          ? _value.caloriasAdministradas
-          : caloriasAdministradas // ignore: cast_nullable_to_non_nullable
+      requerimientoCalorico: null == requerimientoCalorico
+          ? _value.requerimientoCalorico
+          : requerimientoCalorico // ignore: cast_nullable_to_non_nullable
               as double,
-      caloriasRequeridas: null == caloriasRequeridas
-          ? _value.caloriasRequeridas
-          : caloriasRequeridas // ignore: cast_nullable_to_non_nullable
-              as double,
-      balanceNutricional: null == balanceNutricional
-          ? _value.balanceNutricional
-          : balanceNutricional // ignore: cast_nullable_to_non_nullable
-              as double,
+      hora: null == hora
+          ? _value.hora
+          : hora // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      via: null == via
+          ? _value.via
+          : via // ignore: cast_nullable_to_non_nullable
+              as String,
+      total: freezed == total
+          ? _value.total
+          : total // ignore: cast_nullable_to_non_nullable
+              as double?,
       proteinas: freezed == proteinas
           ? _value.proteinas
           : proteinas // ignore: cast_nullable_to_non_nullable
-              as double?,
-      carbohidratos: freezed == carbohidratos
-          ? _value.carbohidratos
-          : carbohidratos // ignore: cast_nullable_to_non_nullable
               as double?,
       lipidos: freezed == lipidos
           ? _value.lipidos
           : lipidos // ignore: cast_nullable_to_non_nullable
               as double?,
-      toleraAlimentacion: null == toleraAlimentacion
-          ? _value.toleraAlimentacion
-          : toleraAlimentacion // ignore: cast_nullable_to_non_nullable
-              as bool,
-      efectosSecundarios: freezed == efectosSecundarios
-          ? _value.efectosSecundarios
-          : efectosSecundarios // ignore: cast_nullable_to_non_nullable
-              as String?,
-      fecha: null == fecha
-          ? _value.fecha
-          : fecha // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      hora: null == hora
-          ? _value.hora
-          : hora // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+      carbohidratos: freezed == carbohidratos
+          ? _value.carbohidratos
+          : carbohidratos // ignore: cast_nullable_to_non_nullable
+              as double?,
       observaciones: freezed == observaciones
           ? _value.observaciones
           : observaciones // ignore: cast_nullable_to_non_nullable
@@ -205,20 +152,14 @@ abstract class _$$RegistroNutricionalImplCopyWith<$Res>
       {String idRegistroNutricional,
       double peso,
       double talla,
-      double? pesoUsual,
       double imc,
-      TipoAlimentacion tipoAlimentacion,
-      String? formulaEnteral,
-      double caloriasAdministradas,
-      double caloriasRequeridas,
-      double balanceNutricional,
-      double? proteinas,
-      double? carbohidratos,
-      double? lipidos,
-      bool toleraAlimentacion,
-      String? efectosSecundarios,
-      DateTime fecha,
+      double requerimientoCalorico,
       DateTime hora,
+      String via,
+      double? total,
+      double? proteinas,
+      double? lipidos,
+      double? carbohidratos,
       String? observaciones});
 }
 
@@ -238,20 +179,14 @@ class __$$RegistroNutricionalImplCopyWithImpl<$Res>
     Object? idRegistroNutricional = null,
     Object? peso = null,
     Object? talla = null,
-    Object? pesoUsual = freezed,
     Object? imc = null,
-    Object? tipoAlimentacion = null,
-    Object? formulaEnteral = freezed,
-    Object? caloriasAdministradas = null,
-    Object? caloriasRequeridas = null,
-    Object? balanceNutricional = null,
-    Object? proteinas = freezed,
-    Object? carbohidratos = freezed,
-    Object? lipidos = freezed,
-    Object? toleraAlimentacion = null,
-    Object? efectosSecundarios = freezed,
-    Object? fecha = null,
+    Object? requerimientoCalorico = null,
     Object? hora = null,
+    Object? via = null,
+    Object? total = freezed,
+    Object? proteinas = freezed,
+    Object? lipidos = freezed,
+    Object? carbohidratos = freezed,
     Object? observaciones = freezed,
   }) {
     return _then(_$RegistroNutricionalImpl(
@@ -267,62 +202,38 @@ class __$$RegistroNutricionalImplCopyWithImpl<$Res>
           ? _value.talla
           : talla // ignore: cast_nullable_to_non_nullable
               as double,
-      pesoUsual: freezed == pesoUsual
-          ? _value.pesoUsual
-          : pesoUsual // ignore: cast_nullable_to_non_nullable
-              as double?,
       imc: null == imc
           ? _value.imc
           : imc // ignore: cast_nullable_to_non_nullable
               as double,
-      tipoAlimentacion: null == tipoAlimentacion
-          ? _value.tipoAlimentacion
-          : tipoAlimentacion // ignore: cast_nullable_to_non_nullable
-              as TipoAlimentacion,
-      formulaEnteral: freezed == formulaEnteral
-          ? _value.formulaEnteral
-          : formulaEnteral // ignore: cast_nullable_to_non_nullable
-              as String?,
-      caloriasAdministradas: null == caloriasAdministradas
-          ? _value.caloriasAdministradas
-          : caloriasAdministradas // ignore: cast_nullable_to_non_nullable
+      requerimientoCalorico: null == requerimientoCalorico
+          ? _value.requerimientoCalorico
+          : requerimientoCalorico // ignore: cast_nullable_to_non_nullable
               as double,
-      caloriasRequeridas: null == caloriasRequeridas
-          ? _value.caloriasRequeridas
-          : caloriasRequeridas // ignore: cast_nullable_to_non_nullable
-              as double,
-      balanceNutricional: null == balanceNutricional
-          ? _value.balanceNutricional
-          : balanceNutricional // ignore: cast_nullable_to_non_nullable
-              as double,
+      hora: null == hora
+          ? _value.hora
+          : hora // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      via: null == via
+          ? _value.via
+          : via // ignore: cast_nullable_to_non_nullable
+              as String,
+      total: freezed == total
+          ? _value.total
+          : total // ignore: cast_nullable_to_non_nullable
+              as double?,
       proteinas: freezed == proteinas
           ? _value.proteinas
           : proteinas // ignore: cast_nullable_to_non_nullable
-              as double?,
-      carbohidratos: freezed == carbohidratos
-          ? _value.carbohidratos
-          : carbohidratos // ignore: cast_nullable_to_non_nullable
               as double?,
       lipidos: freezed == lipidos
           ? _value.lipidos
           : lipidos // ignore: cast_nullable_to_non_nullable
               as double?,
-      toleraAlimentacion: null == toleraAlimentacion
-          ? _value.toleraAlimentacion
-          : toleraAlimentacion // ignore: cast_nullable_to_non_nullable
-              as bool,
-      efectosSecundarios: freezed == efectosSecundarios
-          ? _value.efectosSecundarios
-          : efectosSecundarios // ignore: cast_nullable_to_non_nullable
-              as String?,
-      fecha: null == fecha
-          ? _value.fecha
-          : fecha // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      hora: null == hora
-          ? _value.hora
-          : hora // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+      carbohidratos: freezed == carbohidratos
+          ? _value.carbohidratos
+          : carbohidratos // ignore: cast_nullable_to_non_nullable
+              as double?,
       observaciones: freezed == observaciones
           ? _value.observaciones
           : observaciones // ignore: cast_nullable_to_non_nullable
@@ -338,20 +249,14 @@ class _$RegistroNutricionalImpl implements _RegistroNutricional {
       {required this.idRegistroNutricional,
       required this.peso,
       required this.talla,
-      this.pesoUsual,
       required this.imc,
-      required this.tipoAlimentacion,
-      this.formulaEnteral,
-      required this.caloriasAdministradas,
-      required this.caloriasRequeridas,
-      required this.balanceNutricional,
-      this.proteinas,
-      this.carbohidratos,
-      this.lipidos,
-      required this.toleraAlimentacion,
-      this.efectosSecundarios,
-      required this.fecha,
+      required this.requerimientoCalorico,
       required this.hora,
+      required this.via,
+      this.total,
+      this.proteinas,
+      this.lipidos,
+      this.carbohidratos,
       this.observaciones});
 
   @override
@@ -359,59 +264,31 @@ class _$RegistroNutricionalImpl implements _RegistroNutricional {
 // ANTROPOMETRÍA
   @override
   final double peso;
-// kg
   @override
   final double talla;
-// cm
-  @override
-  final double? pesoUsual;
-// kg (antes de enfermar)
   @override
   final double imc;
-// calculado automáticamente
-// TIPO DE ALIMENTACIÓN
   @override
-  final TipoAlimentacion tipoAlimentacion;
-  @override
-  final String? formulaEnteral;
-// Si es enteral, nombre de fórmula
-// REGISTRO DIARIO
-  @override
-  final double caloriasAdministradas;
-// kcal
-  @override
-  final double caloriasRequeridas;
-// kcal (calculado)
-  @override
-  final double balanceNutricional;
-// calculado
-// MACRONUTRIENTES (opcional)
-  @override
-  final double? proteinas;
-// gramos
-  @override
-  final double? carbohidratos;
-// gramos
-  @override
-  final double? lipidos;
-// gramos
-// TOLERANCIA
-  @override
-  final bool toleraAlimentacion;
-  @override
-  final String? efectosSecundarios;
-// náuseas, vómitos, diarrea, etc.
-// METADATOS
-  @override
-  final DateTime fecha;
+  final double requerimientoCalorico;
+// REGISTRO
   @override
   final DateTime hora;
+  @override
+  final String via;
+  @override
+  final double? total;
+  @override
+  final double? proteinas;
+  @override
+  final double? lipidos;
+  @override
+  final double? carbohidratos;
   @override
   final String? observaciones;
 
   @override
   String toString() {
-    return 'RegistroNutricional(idRegistroNutricional: $idRegistroNutricional, peso: $peso, talla: $talla, pesoUsual: $pesoUsual, imc: $imc, tipoAlimentacion: $tipoAlimentacion, formulaEnteral: $formulaEnteral, caloriasAdministradas: $caloriasAdministradas, caloriasRequeridas: $caloriasRequeridas, balanceNutricional: $balanceNutricional, proteinas: $proteinas, carbohidratos: $carbohidratos, lipidos: $lipidos, toleraAlimentacion: $toleraAlimentacion, efectosSecundarios: $efectosSecundarios, fecha: $fecha, hora: $hora, observaciones: $observaciones)';
+    return 'RegistroNutricional(idRegistroNutricional: $idRegistroNutricional, peso: $peso, talla: $talla, imc: $imc, requerimientoCalorico: $requerimientoCalorico, hora: $hora, via: $via, total: $total, proteinas: $proteinas, lipidos: $lipidos, carbohidratos: $carbohidratos, observaciones: $observaciones)';
   }
 
   @override
@@ -423,30 +300,17 @@ class _$RegistroNutricionalImpl implements _RegistroNutricional {
                 other.idRegistroNutricional == idRegistroNutricional) &&
             (identical(other.peso, peso) || other.peso == peso) &&
             (identical(other.talla, talla) || other.talla == talla) &&
-            (identical(other.pesoUsual, pesoUsual) ||
-                other.pesoUsual == pesoUsual) &&
             (identical(other.imc, imc) || other.imc == imc) &&
-            (identical(other.tipoAlimentacion, tipoAlimentacion) ||
-                other.tipoAlimentacion == tipoAlimentacion) &&
-            (identical(other.formulaEnteral, formulaEnteral) ||
-                other.formulaEnteral == formulaEnteral) &&
-            (identical(other.caloriasAdministradas, caloriasAdministradas) ||
-                other.caloriasAdministradas == caloriasAdministradas) &&
-            (identical(other.caloriasRequeridas, caloriasRequeridas) ||
-                other.caloriasRequeridas == caloriasRequeridas) &&
-            (identical(other.balanceNutricional, balanceNutricional) ||
-                other.balanceNutricional == balanceNutricional) &&
+            (identical(other.requerimientoCalorico, requerimientoCalorico) ||
+                other.requerimientoCalorico == requerimientoCalorico) &&
+            (identical(other.hora, hora) || other.hora == hora) &&
+            (identical(other.via, via) || other.via == via) &&
+            (identical(other.total, total) || other.total == total) &&
             (identical(other.proteinas, proteinas) ||
                 other.proteinas == proteinas) &&
+            (identical(other.lipidos, lipidos) || other.lipidos == lipidos) &&
             (identical(other.carbohidratos, carbohidratos) ||
                 other.carbohidratos == carbohidratos) &&
-            (identical(other.lipidos, lipidos) || other.lipidos == lipidos) &&
-            (identical(other.toleraAlimentacion, toleraAlimentacion) ||
-                other.toleraAlimentacion == toleraAlimentacion) &&
-            (identical(other.efectosSecundarios, efectosSecundarios) ||
-                other.efectosSecundarios == efectosSecundarios) &&
-            (identical(other.fecha, fecha) || other.fecha == fecha) &&
-            (identical(other.hora, hora) || other.hora == hora) &&
             (identical(other.observaciones, observaciones) ||
                 other.observaciones == observaciones));
   }
@@ -457,20 +321,14 @@ class _$RegistroNutricionalImpl implements _RegistroNutricional {
       idRegistroNutricional,
       peso,
       talla,
-      pesoUsual,
       imc,
-      tipoAlimentacion,
-      formulaEnteral,
-      caloriasAdministradas,
-      caloriasRequeridas,
-      balanceNutricional,
-      proteinas,
-      carbohidratos,
-      lipidos,
-      toleraAlimentacion,
-      efectosSecundarios,
-      fecha,
+      requerimientoCalorico,
       hora,
+      via,
+      total,
+      proteinas,
+      lipidos,
+      carbohidratos,
       observaciones);
 
   /// Create a copy of RegistroNutricional
@@ -488,61 +346,38 @@ abstract class _RegistroNutricional implements RegistroNutricional {
       {required final String idRegistroNutricional,
       required final double peso,
       required final double talla,
-      final double? pesoUsual,
       required final double imc,
-      required final TipoAlimentacion tipoAlimentacion,
-      final String? formulaEnteral,
-      required final double caloriasAdministradas,
-      required final double caloriasRequeridas,
-      required final double balanceNutricional,
-      final double? proteinas,
-      final double? carbohidratos,
-      final double? lipidos,
-      required final bool toleraAlimentacion,
-      final String? efectosSecundarios,
-      required final DateTime fecha,
+      required final double requerimientoCalorico,
       required final DateTime hora,
+      required final String via,
+      final double? total,
+      final double? proteinas,
+      final double? lipidos,
+      final double? carbohidratos,
       final String? observaciones}) = _$RegistroNutricionalImpl;
 
   @override
   String get idRegistroNutricional; // ANTROPOMETRÍA
   @override
-  double get peso; // kg
+  double get peso;
   @override
-  double get talla; // cm
+  double get talla;
   @override
-  double? get pesoUsual; // kg (antes de enfermar)
+  double get imc;
   @override
-  double get imc; // calculado automáticamente
-// TIPO DE ALIMENTACIÓN
-  @override
-  TipoAlimentacion get tipoAlimentacion;
-  @override
-  String? get formulaEnteral; // Si es enteral, nombre de fórmula
-// REGISTRO DIARIO
-  @override
-  double get caloriasAdministradas; // kcal
-  @override
-  double get caloriasRequeridas; // kcal (calculado)
-  @override
-  double get balanceNutricional; // calculado
-// MACRONUTRIENTES (opcional)
-  @override
-  double? get proteinas; // gramos
-  @override
-  double? get carbohidratos; // gramos
-  @override
-  double? get lipidos; // gramos
-// TOLERANCIA
-  @override
-  bool get toleraAlimentacion;
-  @override
-  String? get efectosSecundarios; // náuseas, vómitos, diarrea, etc.
-// METADATOS
-  @override
-  DateTime get fecha;
+  double get requerimientoCalorico; // REGISTRO
   @override
   DateTime get hora;
+  @override
+  String get via;
+  @override
+  double? get total;
+  @override
+  double? get proteinas;
+  @override
+  double? get lipidos;
+  @override
+  double? get carbohidratos;
   @override
   String? get observaciones;
 

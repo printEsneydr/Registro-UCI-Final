@@ -31,7 +31,7 @@ class IntervencionesPage extends ConsumerWidget {
 
     final role = ref.watch(roleProvider);
 
-    final canSign = firma == null && role == UserRole.headNurse;
+    final canSign = firma == null && role == UserRole.admin;
 
     return Scaffold(
       appBar: AppBar(
@@ -54,7 +54,7 @@ class IntervencionesPage extends ConsumerWidget {
           IntervencionesList(
             idIngreso: idIngreso,
             idRegistro: idRegistro,
-            readOnly: firma != null || role != UserRole.headNurse,
+            readOnly: firma != null || role != UserRole.admin,
           ),
           canSign
               ? FirmarReporteButton(
@@ -67,7 +67,7 @@ class IntervencionesPage extends ConsumerWidget {
         ],
       ),
       floatingActionButton: Visibility(
-        visible: role == UserRole.headNurse && firma == null,
+        visible: role == UserRole.admin && firma == null,
         child: IntervencionesFloatingButton(
           // onCreate: () => showCreateNecesidadDialog(context, params),
           onImport: () => showImportNecesidadDialog(context, params),

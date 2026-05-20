@@ -99,6 +99,24 @@ class FirebaseProcedimientosRepository implements ProcedimientosRepository {
     }
   }
 
+  Future<void> updateProcedimientoFields(
+    String idIngreso,
+    String idProcedimiento,
+    Map<String, dynamic> fields,
+  ) async {
+    try {
+      await _firestore
+          .collection('ingresos')
+          .doc(idIngreso)
+          .collection('procedimientosEspeciales')
+          .doc(idProcedimiento)
+          .update(fields);
+    } catch (e) {
+      log('Error al actualizar campos del procedimiento: $e');
+      throw Exception('Error al actualizar campos del procedimiento');
+    }
+  }
+
   // Método para actualizar el estado del procedimiento
   @override
   Future<void> updateProcedimientoEstado(

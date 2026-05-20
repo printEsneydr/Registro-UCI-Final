@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:registro_uci/features/auth/data/providers/user_role_provider.dart';
+import 'package:registro_uci/features/auth/domain/enums/user_role.dart';
 import 'package:registro_uci/features/control_cambio_posicion/data/providers/cambio_posicion_provider.dart';
 import 'package:registro_uci/features/control_cambio_posicion/domain/models/cambio_posicion.dart';
 
@@ -229,6 +231,9 @@ class CambioPosicionCard extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
+    final role = ref.watch(roleProvider);
+    final isAdmin = role == UserRole.admin;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -245,20 +250,21 @@ class CambioPosicionCard extends ConsumerWidget {
                   )
               : null,
         ),
-        IconButton(
-          icon: Icon(
-            Icons.edit_outlined,
-            color: tieneRegistro ? Colors.blue : Colors.grey,
+        if (isAdmin)
+          IconButton(
+            icon: Icon(
+              Icons.edit_outlined,
+              color: tieneRegistro ? Colors.blue : Colors.grey,
+            ),
+            onPressed: tieneRegistro
+                ? () => _mostrarSelectorPosicion(
+                      context,
+                      ref,
+                      horaInicial: hora,
+                      idCambioExistente: cambio.idCambioDePosicion,
+                    )
+                : null,
           ),
-          onPressed: tieneRegistro
-              ? () => _mostrarSelectorPosicion(
-                    context,
-                    ref,
-                    horaInicial: hora,
-                    idCambioExistente: cambio.idCambioDePosicion,
-                  )
-              : null,
-        ),
       ],
     );
   }

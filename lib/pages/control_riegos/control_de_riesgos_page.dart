@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:registro_uci/features/auth/data/providers/user_role_provider.dart';
+import 'package:registro_uci/features/auth/domain/enums/user_role.dart';
 import 'package:registro_uci/features/control_riesgos/data/providers/control_de_riesgos_provider.dart';
 import 'package:registro_uci/features/control_riesgos/domain/models/control_de_riesgos.dart';
 import 'package:registro_uci/features/control_riesgos/presentation/controllers/create_control_riesgos_controller.dart';
@@ -19,6 +21,8 @@ class ControlDeRiesgosPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final role = ref.watch(roleProvider);
+    final isAdmin = role == UserRole.admin;
     final controlDeRiesgosAsync = ref.watch(
       controlDeRiesgosByIngresoProvider(
         (idIngreso: idIngreso, idRegistroDiario: idRegistroDiario),
@@ -99,30 +103,32 @@ class ControlDeRiesgosPage extends ConsumerWidget {
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                IconButton(
-                                  icon: const Icon(Icons.edit,
-                                      color: Colors.blue, size: 20),
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            UpdateControlRiesgosPage(
-                                          idIngreso: idIngreso,
-                                          idRegistroDiario: idRegistroDiario,
-                                          controlRiesgosId:
-                                              registro.idControlDeRiesgos,
+                                if (isAdmin)
+                                  IconButton(
+                                    icon: const Icon(Icons.edit,
+                                        color: Colors.blue, size: 20),
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              UpdateControlRiesgosPage(
+                                            idIngreso: idIngreso,
+                                            idRegistroDiario: idRegistroDiario,
+                                            controlRiesgosId:
+                                                registro.idControlDeRiesgos,
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.delete,
-                                      color: Colors.red, size: 20),
-                                  onPressed: () =>
-                                      _confirmDelete(context, ref, registro),
-                                ),
+                                      );
+                                    },
+                                  ),
+                                if (isAdmin)
+                                  IconButton(
+                                    icon: const Icon(Icons.delete,
+                                        color: Colors.red, size: 20),
+                                    onPressed: () =>
+                                        _confirmDelete(context, ref, registro),
+                                  ),
                               ],
                             ),
                           ],
@@ -345,6 +351,12 @@ class ControlDeRiesgosPage extends ConsumerWidget {
                 if (registro.usaAnticoagulantes)
                   _buildDetailRow('Tipo',
                       registro.anticoagulanteSeleccionado ?? 'No especificado'),
+                _buildSectionTitle('Alergias Medicamentosas'),
+                _buildDetailRow('Alérgico a medicamento',
+                    registro.alergicoAMedicacion ? 'Sí' : 'No'),
+                if (registro.alergicoAMedicacion)
+                  _buildDetailRow('Medicamento',
+                      registro.medicamentoAlergico ?? 'No especificado'),
                 _buildSectionTitle('Aislamiento'),
                 _buildDetailRow(
                     'En aislamiento', registro.enAislamiento ? 'Sí' : 'No'),

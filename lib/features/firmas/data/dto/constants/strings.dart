@@ -4,4 +4,6 @@ import 'package:flutter/foundation.dart';
 class Strings {
   static const String nombreFirma = 'nombreFirma';
   static const String fechaFirma = 'fechaFirma';
+  static const String tipoPersonal = 'tipoPersonal';
+  static const String turno = 'turno';
 }

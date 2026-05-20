@@ -24,7 +24,10 @@ class _UpdateSondaFormState extends ConsumerState<UpdateSondaForm> {
   late String tipo;
   late String regionAnatomica;
   late DateTime fechaColocacion;
-  DateTime? fechaRetiro; // ✅ Nueva variable para manejar la fecha de retiro
+  DateTime? fechaRetiro;
+  late String _otroTipo;
+  bool get _esOtro => tipo == 'Otro' || _esOtroGuardado;
+  late bool _esOtroGuardado;
 
   @override
   void initState() {
@@ -35,14 +38,21 @@ class _UpdateSondaFormState extends ConsumerState<UpdateSondaForm> {
             ? widget.sonda.regionAnatomica
             : sondasPorRegion.keys.first;
 
-    tipo =
-        sondasPorRegion[regionAnatomica]?.contains(widget.sonda.tipo) ?? false
-            ? widget.sonda.tipo
-            : sondasPorRegion[regionAnatomica]?.first ?? "";
+    final enLista = sondasPorRegion[regionAnatomica]
+            ?.contains(widget.sonda.tipo) ??
+        false;
+    if (enLista) {
+      tipo = widget.sonda.tipo;
+      _otroTipo = '';
+      _esOtroGuardado = false;
+    } else {
+      tipo = 'Otro';
+      _otroTipo = widget.sonda.tipo;
+      _esOtroGuardado = true;
+    }
 
     fechaColocacion = widget.sonda.fechaColocacion;
-    fechaRetiro =
-        widget.sonda.fechaRetiro; // ✅ Se carga la fecha de retiro si existe
+    fechaRetiro = widget.sonda.fechaRetiro;
   }
 
   @override
@@ -80,19 +90,39 @@ class _UpdateSondaFormState extends ConsumerState<UpdateSondaForm> {
               sondasPorRegion[regionAnatomica] != null)
             DropdownButtonFormField<String>(
               decoration: const InputDecoration(labelText: "Tipo de Sonda"),
-              initialValue: sondasPorRegion[regionAnatomica]!.contains(tipo)
-                  ? tipo
-                  : sondasPorRegion[regionAnatomica]!.first,
+              initialValue: _esOtro ? 'Otro' : tipo,
               isExpanded: true,
-              items: sondasPorRegion[regionAnatomica]!
-                  .map((sonda) => DropdownMenuItem(
-                        value: sonda,
-                        child: Text(sonda,
-                            overflow: TextOverflow.ellipsis, maxLines: 1),
-                      ))
-                  .toList(),
-              onChanged: (value) => setState(() => tipo = value!),
+              items: [
+                ...sondasPorRegion[regionAnatomica]!
+                    .map((sonda) => DropdownMenuItem(
+                          value: sonda,
+                          child: Text(sonda,
+                              overflow: TextOverflow.ellipsis, maxLines: 1),
+                        )),
+                const DropdownMenuItem(
+                  value: 'Otro',
+                  child: Text('Otro...'),
+                ),
+              ],
+              onChanged: (value) => setState(() {
+                tipo = value!;
+                if (!_esOtro) _otroTipo = '';
+              }),
             ),
+          if (_esOtro) ...[
+            const SizedBox(height: 10),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: "Especifique el tipo de sonda",
+                prefixIcon: Icon(Icons.edit),
+              ),
+              initialValue: _otroTipo,
+              onChanged: (v) => _otroTipo = v,
+              validator: (v) => (v == null || v.trim().isEmpty)
+                  ? 'Ingrese el tipo de sonda'
+                  : null,
+            ),
+          ],
 
           const SizedBox(height: 10),
 
@@ -142,7 +172,7 @@ class _UpdateSondaFormState extends ConsumerState<UpdateSondaForm> {
                 : () async {
                     if (_formKey.currentState!.validate()) {
                       final dto = UpdateSondaDto(
-                        tipo: tipo,
+                        tipo: _esOtro ? _otroTipo.trim() : tipo,
                         regionAnatomica: regionAnatomica,
                         fechaRetiro:
                             fechaRetiro, // ✅ Se actualiza la fecha de retiro

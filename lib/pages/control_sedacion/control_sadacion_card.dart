@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:registro_uci/features/auth/data/providers/user_role_provider.dart';
+import 'package:registro_uci/features/auth/domain/enums/user_role.dart';
 import 'package:registro_uci/features/control_sedacion/data/providers/control_sedacion_provider.dart';
 import 'package:registro_uci/features/control_sedacion/domain/models/control_sedacion.dart';
 
@@ -230,6 +232,9 @@ class ControlSedacionCard extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
+    final role = ref.watch(roleProvider);
+    final isAdmin = role == UserRole.admin;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -246,20 +251,21 @@ class ControlSedacionCard extends ConsumerWidget {
                   )
               : null,
         ),
-        IconButton(
-          icon: Icon(
-            Icons.edit_outlined,
-            color: tieneRegistro ? Colors.blue : Colors.grey,
+        if (isAdmin)
+          IconButton(
+            icon: Icon(
+              Icons.edit_outlined,
+              color: tieneRegistro ? Colors.blue : Colors.grey,
+            ),
+            onPressed: tieneRegistro
+                ? () => _mostrarSelectorSedacion(
+                      context,
+                      ref,
+                      horaInicial: hora,
+                      idControlExistente: control.id,
+                    )
+                : null,
           ),
-          onPressed: tieneRegistro
-              ? () => _mostrarSelectorSedacion(
-                    context,
-                    ref,
-                    horaInicial: hora,
-                    idControlExistente: control.id,
-                  )
-              : null,
-        ),
       ],
     );
   }
@@ -528,43 +534,43 @@ class _SelectorSedacionDialogState
       items: const [
         DropdownMenuItem(
           value: 4,
-          child: Text('+4 COMBATIVO'),
+          child: Text('+4 Combativo'),
         ),
         DropdownMenuItem(
           value: 3,
-          child: Text('+3 MUY AGITADO'),
+          child: Text('+3 Muy agitado'),
         ),
         DropdownMenuItem(
           value: 2,
-          child: Text('+2 AGITADO'),
+          child: Text('+2 Agitado'),
         ),
         DropdownMenuItem(
           value: 1,
-          child: Text('+1 ANSIOSO'),
+          child: Text('+1 Inquieto'),
         ),
         DropdownMenuItem(
           value: 0,
-          child: Text('0 ALERTA'),
+          child: Text('0 Alerta y calmado'),
         ),
         DropdownMenuItem(
           value: -1,
-          child: Text('-1 ADORMILADO'),
+          child: Text('-1 Somnoliento'),
         ),
         DropdownMenuItem(
           value: -2,
-          child: Text('-2 SED. LIGERA'),
+          child: Text('-2 Sedación leve'),
         ),
         DropdownMenuItem(
           value: -3,
-          child: Text('-3 SED. MODERADA'),
+          child: Text('-3 Sedación moderada'),
         ),
         DropdownMenuItem(
           value: -4,
-          child: Text('-4 SED. PROFUNDA'),
+          child: Text('-4 Sedación profunda'),
         ),
         DropdownMenuItem(
           value: -5,
-          child: Text('-5 SED. M. PROFUNDA'),
+          child: Text('-5 Sin respuesta'),
         ),
       ],
       onChanged: (value) {

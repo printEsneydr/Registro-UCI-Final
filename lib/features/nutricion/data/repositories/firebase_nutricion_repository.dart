@@ -57,7 +57,7 @@ class FirebaseNutricionRepository implements NutricionRepository {
         .collection('ingresos')
         .doc(idIngreso)
         .collection('nutricion')
-        .orderBy('fecha', descending: true)
+        .orderBy('hora', descending: true)
         .get();
 
     return querySnapshot.docs
@@ -73,7 +73,7 @@ class FirebaseNutricionRepository implements NutricionRepository {
         .collection('ingresos')
         .doc(idIngreso)
         .collection('nutricion')
-        .orderBy('fecha', descending: true)
+        .orderBy('hora', descending: true)
         .limit(1)
         .get();
 

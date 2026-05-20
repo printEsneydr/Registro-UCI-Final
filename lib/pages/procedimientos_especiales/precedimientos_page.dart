@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:registro_uci/features/auth/data/providers/user_role_provider.dart';
+import 'package:registro_uci/features/auth/domain/enums/user_role.dart';
 import '../../features/procedimientos_especiales/data/providers/procedimiento_provider.dart';
 import '../../features/procedimientos_especiales/domain/models/procedimientos_especiales.dart';
 
@@ -114,6 +116,8 @@ class ProcedimientosPage extends ConsumerWidget {
     WidgetRef ref,
     ProcedimientoEspecial procedimiento,
   ) {
+    final role = ref.watch(roleProvider);
+    final isAdmin = role == UserRole.admin;
     return Card(
       elevation: 2,
       margin: const EdgeInsets.only(bottom: 12),
@@ -168,17 +172,19 @@ class ProcedimientosPage extends ConsumerWidget {
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            IconButton(
-              icon: const Icon(Icons.edit, size: 20, color: Colors.blue),
-              onPressed: () => _editarNombre(context, ref, procedimiento),
-              tooltip: 'Editar nombre',
-            ),
-            IconButton(
-              icon: const Icon(Icons.delete, size: 20, color: Colors.red),
-              onPressed: () =>
-                  _mostrarConfirmacionEliminar(context, ref, procedimiento),
-              tooltip: 'Eliminar',
-            ),
+            if (isAdmin)
+              IconButton(
+                icon: const Icon(Icons.edit, size: 20, color: Colors.blue),
+                onPressed: () => _editarNombre(context, ref, procedimiento),
+                tooltip: 'Editar nombre',
+              ),
+            if (isAdmin)
+              IconButton(
+                icon: const Icon(Icons.delete, size: 20, color: Colors.red),
+                onPressed: () =>
+                    _mostrarConfirmacionEliminar(context, ref, procedimiento),
+                tooltip: 'Eliminar',
+              ),
           ],
         ),
         children: [
@@ -195,15 +201,34 @@ class ProcedimientosPage extends ConsumerWidget {
             label: 'Estado Actual',
             value: procedimiento.estado,
           ),
-          const SizedBox(height: 12),
-          SizedBox(
-            width: double.infinity,
-            child: OutlinedButton.icon(
-              onPressed: () => _actualizarEstado(context, ref, procedimiento),
-              icon: const Icon(Icons.update),
-              label: const Text("Cambiar Estado"),
+          if (procedimiento.medicamentoInfusion != null &&
+              procedimiento.medicamentoInfusion!.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            _buildInfoRow(
+              icon: Icons.medication,
+              label: 'Medicamento en infusión',
+              value: procedimiento.medicamentoInfusion!,
             ),
-          ),
+          ],
+          if (procedimiento.dosisInfusion != null &&
+              procedimiento.dosisInfusion!.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            _buildInfoRow(
+              icon: Icons.speed,
+              label: 'Dosis / Velocidad',
+              value: procedimiento.dosisInfusion!,
+            ),
+          ],
+          const SizedBox(height: 12),
+          if (isAdmin)
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: () => _actualizarEstado(context, ref, procedimiento),
+                icon: const Icon(Icons.update),
+                label: const Text("Cambiar Estado"),
+              ),
+            ),
         ],
       ),
     );
@@ -246,7 +271,7 @@ class ProcedimientosPage extends ConsumerWidget {
 
   Color _getEstadoColor(String estado) {
     switch (estado) {
-      case 'Pendiente':
+      case 'Por realizar':
         return Colors.orange;
       case 'Realizado':
         return Colors.green;
@@ -259,7 +284,7 @@ class ProcedimientosPage extends ConsumerWidget {
 
   IconData _getEstadoIcon(String estado) {
     switch (estado) {
-      case 'Pendiente':
+      case 'Por realizar':
         return Icons.access_time;
       case 'Realizado':
         return Icons.check_circle;
@@ -271,20 +296,73 @@ class ProcedimientosPage extends ConsumerWidget {
   }
 
   void _mostrarDialogoAgregar(BuildContext context, WidgetRef ref) {
-    final TextEditingController controller = TextEditingController();
+    final nombreCtrl = TextEditingController();
+    final medicamentoCtrl = TextEditingController();
+    final dosisCtrl = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+    String estadoSeleccionado = "Por realizar";
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text("Agregar Procedimiento"),
-        content: TextField(
-          controller: controller,
-          decoration: const InputDecoration(
-            labelText: "Nombre del Procedimiento",
-            border: OutlineInputBorder(),
-            prefixIcon: Icon(Icons.medical_services),
+        content: Form(
+          key: formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  controller: nombreCtrl,
+                  decoration: const InputDecoration(
+                    labelText: "Nombre del Procedimiento",
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.medical_services),
+                  ),
+                  autofocus: true,
+                  textCapitalization: TextCapitalization.sentences,
+                  validator: (v) => (v == null || v.trim().isEmpty)
+                      ? 'Ingrese el nombre'
+                      : null,
+                ),
+                const SizedBox(height: 12),
+                TextFormField(
+                  controller: medicamentoCtrl,
+                  decoration: const InputDecoration(
+                    labelText: "Medicamento en infusión (opcional)",
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.medication),
+                  ),
+                  textCapitalization: TextCapitalization.sentences,
+                ),
+                const SizedBox(height: 12),
+                TextFormField(
+                  controller: dosisCtrl,
+                  decoration: const InputDecoration(
+                    labelText: "Dosis / Velocidad de infusión (opcional)",
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.speed),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                DropdownButtonFormField<String>(
+                  value: estadoSeleccionado,
+                  decoration: const InputDecoration(
+                    labelText: "Estado",
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.info_outline),
+                  ),
+                  items: const [
+                    DropdownMenuItem(value: "Por realizar", child: Text("Por realizar")),
+                    DropdownMenuItem(value: "Realizado", child: Text("Realizado")),
+                    DropdownMenuItem(value: "Reportado", child: Text("Reportado")),
+                  ],
+                  onChanged: (v) {
+                    estadoSeleccionado = v!;
+                  },
+                ),
+              ],
+            ),
           ),
-          autofocus: true,
-          textCapitalization: TextCapitalization.sentences,
         ),
         actions: [
           TextButton(
@@ -297,11 +375,19 @@ class ProcedimientosPage extends ConsumerWidget {
               foregroundColor: Colors.white,
             ),
             onPressed: () async {
-              if (controller.text.isNotEmpty) {
+              if (formKey.currentState!.validate()) {
                 try {
-                  await ref.read(procedimientoActionProvider).addProcedimiento(
+                  final medicamento = medicamentoCtrl.text.trim();
+                  final dosis = dosisCtrl.text.trim();
+                  await ref
+                      .read(procedimientoActionProvider)
+                      .addProcedimiento(
                         idIngreso,
-                        controller.text,
+                        nombreCtrl.text.trim(),
+                        medicamentoInfusion:
+                            medicamento.isNotEmpty ? medicamento : null,
+                        dosisInfusion: dosis.isNotEmpty ? dosis : null,
+                        estado: estadoSeleccionado,
                       );
                   ref.invalidate(procedimientoStreamProvider(idIngreso));
                   if (context.mounted) {
@@ -473,7 +559,7 @@ class ProcedimientosPage extends ConsumerWidget {
               context,
               ref,
               procedimiento,
-              "Pendiente",
+              "Por realizar",
               Colors.orange,
               Icons.access_time,
             ),

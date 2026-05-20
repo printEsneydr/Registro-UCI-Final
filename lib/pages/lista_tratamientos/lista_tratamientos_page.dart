@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:registro_uci/features/auth/data/providers/user_role_provider.dart';
+import 'package:registro_uci/features/auth/domain/enums/user_role.dart';
 import 'package:registro_uci/features/lista_tratamientos/data/providers/lista_tratamientos_provider.dart';
 import 'package:registro_uci/features/lista_tratamientos/domain/models/lista_tratamientos.dart';
 import 'package:registro_uci/features/lista_tratamientos/presentation/controllers/create_lista_tratamientos_controller.dart';
@@ -19,6 +21,8 @@ class ListaTratamientosPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final role = ref.watch(roleProvider);
+    final isAdmin = role == UserRole.admin;
     final listaTratamientosAsync = ref.watch(
       listaTratamientosByIngresoProvider(
         (idIngreso: idIngreso, idRegistroDiario: idRegistroDiario),
@@ -95,30 +99,32 @@ class ListaTratamientosPage extends ConsumerWidget {
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                IconButton(
-                                  icon: const Icon(Icons.edit,
-                                      color: Colors.blue, size: 20),
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            UpdateListaTratamientosPage(
-                                          idIngreso: idIngreso,
-                                          idRegistroDiario: idRegistroDiario,
-                                          listaTratamientosId:
-                                              registro.idListaTratamientos,
+                                if (isAdmin)
+                                  IconButton(
+                                    icon: const Icon(Icons.edit,
+                                        color: Colors.blue, size: 20),
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              UpdateListaTratamientosPage(
+                                            idIngreso: idIngreso,
+                                            idRegistroDiario: idRegistroDiario,
+                                            listaTratamientosId:
+                                                registro.idListaTratamientos,
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.delete,
-                                      color: Colors.red, size: 20),
-                                  onPressed: () =>
-                                      _confirmDelete(context, ref, registro),
-                                ),
+                                      );
+                                    },
+                                  ),
+                                if (isAdmin)
+                                  IconButton(
+                                    icon: const Icon(Icons.delete,
+                                        color: Colors.red, size: 20),
+                                    onPressed: () =>
+                                        _confirmDelete(context, ref, registro),
+                                  ),
                               ],
                             ),
                           ],
