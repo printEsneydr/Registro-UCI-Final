@@ -14,10 +14,15 @@ import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administ
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/presentation/widgets/components/update_liquido_administrado_form.dart';
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/presentation/widgets/liquido_administrado_details_dialog.dart';
 
+// pantalla que lista los liquidos administrados para un balance especifico
 class LiquidosAdministradosScreen extends ConsumerWidget {
+  // parametros que incluyen id de ingreso, registro diario y balance
   final LiquidosAdministradosParams params;
+
+  // constructor requiere los parametros del balance
   const LiquidosAdministradosScreen({super.key, required this.params});
 
+  // construye la pantalla con la lista de liquidos administrados
   @override
   Widget build(BuildContext context, ref) {
     final liquidos = ref.watch(liquidosAdministradosProvider(params));
@@ -99,6 +104,7 @@ class LiquidosAdministradosScreen extends ConsumerWidget {
     );
   }
 
+  // muestra dialogo con los detalles de un liquido administrado
   void _showLiquidoDetails(BuildContext context, LiquidoAdministrado liquido) {
     showDialog(
       context: context,
@@ -106,6 +112,7 @@ class LiquidosAdministradosScreen extends ConsumerWidget {
     );
   }
 
+  // muestra dialogo de confirmacion para eliminar un liquido administrado
   void _showConfirmDelete(
     BuildContext context,
     LiquidosAdministradosParams params,
@@ -124,6 +131,7 @@ class LiquidosAdministradosScreen extends ConsumerWidget {
     );
   }
 
+  // construye el menu flotante con opciones para agregar liquidos o tratamientos
   Widget _buildFabMenu(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {

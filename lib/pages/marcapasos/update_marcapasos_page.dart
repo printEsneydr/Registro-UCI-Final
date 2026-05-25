@@ -6,10 +6,14 @@ import 'package:registro_uci/features/marcapasos/domain/models/marcapaso.dart';
 import 'package:intl/intl.dart';
 import '../../features/marcapasos/data/constants/constants.dart'; // Importación de las constantes
 
+// pagina para editar los datos de un marcapaso existente
 class EditMarcapasoPage extends ConsumerStatefulWidget {
+  // id del ingreso al que pertenece el marcapaso
   final String idIngreso;
+  // marcapaso que se va a editar
   final Marcapaso marcapaso;
 
+  // constructor, requiere el id del ingreso y el marcapaso a editar
   const EditMarcapasoPage({
     super.key,
     required this.idIngreso,
@@ -20,19 +24,23 @@ class EditMarcapasoPage extends ConsumerStatefulWidget {
   _EditMarcapasoPageState createState() => _EditMarcapasoPageState();
 }
 
+// estado del formulario de edicion de marcapaso
 class _EditMarcapasoPageState extends ConsumerState<EditMarcapasoPage> {
+  // clave global para validar el formulario
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  // controladores para los campos de texto
   late TextEditingController fechaController;
   late TextEditingController frecuenciaController;
   late TextEditingController sensibilidadController;
   late TextEditingController salidaController;
+  // valores seleccionados en los dropdowns
   String? selectedModo;
   String? selectedVia;
   int? selectedFrecuencia;
   double? selectedSensibilidad;
   double? selectedSalida;
 
+  // inicializa los controladores con los valores actuales del marcapaso
   @override
   void initState() {
     super.initState();
@@ -65,6 +73,7 @@ class _EditMarcapasoPageState extends ConsumerState<EditMarcapasoPage> {
         : null;
   }
 
+  // libera los controladores al salir de la pantalla
   @override
   void dispose() {
     fechaController.dispose();
@@ -78,6 +87,7 @@ class _EditMarcapasoPageState extends ConsumerState<EditMarcapasoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Editar Marcapaso")),
+      // formulario con campos para editar los datos del marcapaso
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(

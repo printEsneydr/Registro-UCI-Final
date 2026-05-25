@@ -5,7 +5,9 @@ import 'package:registro_uci/features/balance_liquidos/balance_liquidos_eliminad
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_eliminados/data/providers/liquidos_eliminados_provider.dart';
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_eliminados/data/repositories/firebase_liquidos_eliminados_repository.dart';
 
+// widget con formulario para crear un nuevo registro de liquidos eliminados
 class CreateLiquidoEliminadoForm extends ConsumerStatefulWidget {
+  // parametros con ids de ingreso, registro diario y balance de liquidos
   final LiquidosEliminadosParams params;
 
   const CreateLiquidoEliminadoForm({super.key, required this.params});
@@ -15,6 +17,7 @@ class CreateLiquidoEliminadoForm extends ConsumerStatefulWidget {
       _CreateLiquidoEliminadoFormState();
 }
 
+// estado interno del formulario con controladores y logica de guardado
 class _CreateLiquidoEliminadoFormState
     extends ConsumerState<CreateLiquidoEliminadoForm> {
   final _formKey = GlobalKey<FormState>();
@@ -38,6 +41,7 @@ class _CreateLiquidoEliminadoFormState
   TimeOfDay _hora = TimeOfDay.now();
   bool _isLoading = false;
 
+  // libera todos los controladores al destruir el widget
   @override
   void dispose() {
     _orinaController.dispose();
@@ -60,6 +64,7 @@ class _CreateLiquidoEliminadoFormState
     super.dispose();
   }
 
+  // valida que el valor ingresado sea un numero valido no negativo
   String? _validarNumero(String? value) {
     if (value == null || value.isEmpty) return 'Requerido';
     if (double.tryParse(value) == null) return 'Número inválido';
@@ -67,6 +72,7 @@ class _CreateLiquidoEliminadoFormState
     return null;
   }
 
+  // construye un campo de texto numerico con icono y validacion
   Widget _buildField(String label, IconData icon, TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -88,6 +94,7 @@ class _CreateLiquidoEliminadoFormState
     );
   }
 
+  // construye el formulario completo con todos los campos de liquidos eliminados
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -178,6 +185,7 @@ class _CreateLiquidoEliminadoFormState
     );
   }
 
+  // guarda el registro en firebase e invalida el provider para refrescar la lista
   Future<void> _guardar() async {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);

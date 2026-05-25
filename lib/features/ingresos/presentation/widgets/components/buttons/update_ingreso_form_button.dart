@@ -6,7 +6,9 @@ import 'package:registro_uci/common/extensions/string_to_date.dart';
 import 'package:registro_uci/features/ingresos/data/dto/update_ingreso_dto.dart'; // Changed to update DTO
 import 'package:registro_uci/features/ingresos/presentation/controllers/update_ingreso_controller.dart'; // Updated controller
 
+// boton que valida y ejecuta la actualizacion del ingreso existente
 class UpdateIngresoFormButton extends ConsumerWidget {
+  // constructor que recibe el id, los controladores y la sala
   const UpdateIngresoFormButton({
     super.key,
     required GlobalKey<FormState> formKey,

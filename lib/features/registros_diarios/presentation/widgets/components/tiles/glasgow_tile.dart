@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/common/components/form_tile.dart';
 import 'package:registro_uci/pages/glasgow/glasgow_page.dart';
 
+// tile que navega a la pagina de evaluacion de la escala de glasgow
 class GlasgowTile extends StatelessWidget {
   const GlasgowTile({
     super.key,

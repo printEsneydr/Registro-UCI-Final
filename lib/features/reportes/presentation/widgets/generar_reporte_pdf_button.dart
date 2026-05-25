@@ -1,3 +1,4 @@
+// boton que genera y comparte el pdf de la sabana clinica del paciente
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +8,7 @@ import 'package:registro_uci/features/reportes/application/pdf_reporte_service.d
 import 'package:registro_uci/features/reportes/application/reporte_data_collector.dart';
 
 class GenerarReportePdfButton extends ConsumerWidget {
+  // id del ingreso y nombre del paciente para el encabezado del pdf
   final String idIngreso;
   final String nombrePaciente;
 
@@ -16,6 +18,7 @@ class GenerarReportePdfButton extends ConsumerWidget {
     required this.nombrePaciente,
   });
 
+  // construye el boton verde para generar el reporte
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
@@ -43,6 +46,7 @@ class GenerarReportePdfButton extends ConsumerWidget {
     );
   }
 
+  // recopila todos los datos, genera el pdf y lo comparte
   Future<void> _generarYPrevisualizar(
     BuildContext context,
     WidgetRef ref,

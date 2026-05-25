@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../../../pages/sondas/create_sondas_page.dart';
 
+// boton flotante que navega a la pagina de creacion de sonda
 class CreateSondaFloatingButton extends StatelessWidget {
   final String idIngreso; // ✅ Recibe el ID del ingreso
 

@@ -6,6 +6,7 @@ import '../../../data/providers/sonda_provider.dart';
 import '../../controllers/create_sonda_controller.dart';
 import '../../../data/constants/constants.dart';
 
+// formulario para crear una nueva sonda
 class CreateSondaForm extends ConsumerStatefulWidget {
   final String idIngreso;
 
@@ -15,6 +16,7 @@ class CreateSondaForm extends ConsumerStatefulWidget {
   ConsumerState<CreateSondaForm> createState() => _CreateSondaFormState();
 }
 
+// estado del formulario con los campos y selecciones
 class _CreateSondaFormState extends ConsumerState<CreateSondaForm> {
   final _formKey = GlobalKey<FormState>();
   String? _regionSeleccionada;
@@ -136,6 +138,7 @@ class _CreateSondaFormState extends ConsumerState<CreateSondaForm> {
     );
   }
 
+  // abre el selector de fecha y hora para la colocacion
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -164,6 +167,7 @@ class _CreateSondaFormState extends ConsumerState<CreateSondaForm> {
     }
   }
 
+  // crea la sonda usando el controlador y cierra la pantalla
   void _createSonda(AsyncValue<void> createSondaState) {
     if (_formKey.currentState!.validate()) {
       final dto = CreateSondaDto(

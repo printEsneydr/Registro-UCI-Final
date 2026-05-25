@@ -1,8 +1,10 @@
+// controlador para manejar el estado y las operaciones crud de tratamientos
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:registro_uci/features/lista_tratamientos/domain/models/lista_tratamientos.dart';
 import 'package:registro_uci/features/lista_tratamientos/data/abstract_repositories/lista_tratamientos_repository.dart';
 import '../../data/providers/lista_tratamientos_provider.dart';
 
+// proveedor del controlador como statenotifier
 final createListaTratamientosControllerProvider =
     StateNotifierProvider<CreateListaTratamientosController,
         AsyncValue<List<ListaTratamientos>>>(
@@ -17,6 +19,7 @@ class CreateListaTratamientosController
   CreateListaTratamientosController(this._repository)
       : super(const AsyncValue.loading());
 
+  // obtiene la lista de tratamientos del registro diario via stream
   void fetchListaTratamientos(String idIngreso, String idRegistroDiario) {
     state = const AsyncValue.loading();
     _repository.getListaTratamientos(idIngreso, idRegistroDiario).listen(
@@ -29,6 +32,7 @@ class CreateListaTratamientosController
     );
   }
 
+  // agrega un nuevo tratamiento y refresca la lista
   Future<void> addListaTratamientos(String idIngreso, String idRegistroDiario,
       ListaTratamientos listaTratamientos) async {
     try {
@@ -41,6 +45,7 @@ class CreateListaTratamientosController
     }
   }
 
+  // actualiza un tratamiento existente y refresca la lista
   Future<void> updateListaTratamientos(
       String idIngreso,
       String idRegistroDiario,
@@ -56,6 +61,7 @@ class CreateListaTratamientosController
     }
   }
 
+  // elimina un tratamiento y refresca la lista
   Future<void> deleteListaTratamientos(String idIngreso, String idRegistroDiario,
       String idListaTratamientos) async {
     try {

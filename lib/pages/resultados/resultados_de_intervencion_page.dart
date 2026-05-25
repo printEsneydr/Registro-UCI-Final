@@ -4,8 +4,11 @@ import 'package:registro_uci/features/intervenciones/domain/models/intervencion.
 import 'package:registro_uci/features/resultados/domain/models/resultado.dart';
 import 'package:registro_uci/pages/resultados/resultado_page.dart';
 
+// pagina que lista los resultados NOC asociados a una intervencion NIC
 class ResultadosDeIntervencionPage extends StatelessWidget {
+  // intervencion de la que se mostraran los resultados
   final Intervencion intervencion;
+  // constructor, requiere la intervencion
   const ResultadosDeIntervencionPage({super.key, required this.intervencion});
 
   @override

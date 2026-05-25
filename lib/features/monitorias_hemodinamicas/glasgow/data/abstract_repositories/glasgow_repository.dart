@@ -1,5 +1,6 @@
 import 'package:registro_uci/features/monitorias_hemodinamicas/glasgow/domain/models/glasgow.dart';
 
+// repositorio abstracto que define el contrato para operaciones con glasgow
 abstract class GlasgowRepository {
   Stream<List<Glasgow>> getGlasgow(
     String idIngreso,

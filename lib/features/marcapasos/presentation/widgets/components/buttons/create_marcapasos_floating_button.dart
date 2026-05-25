@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../../../pages/marcapasos/create_marcapaso_page.dart';
 
+// boton flotante que navega a la pagina de creacion de marcapaso
 class CreateMarcapasosFloatingButton extends StatelessWidget {
   final String idIngreso; // Recibe el ID del ingreso
 

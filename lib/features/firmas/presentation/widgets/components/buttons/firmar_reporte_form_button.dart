@@ -7,6 +7,7 @@ import 'package:registro_uci/features/firmas/data/dto/create_firma_dto.dart';
 import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/firmas/presentation/controllers/firmar_reporte_controller.dart';
 
+// boton que ejecuta la firma del reporte usando el controller
 class FirmarReporteFormButton extends ConsumerWidget {
   final String tipoFirma; // Type of signature
   final ReporteParams params;

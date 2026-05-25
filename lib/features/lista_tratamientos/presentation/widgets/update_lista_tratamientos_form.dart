@@ -1,3 +1,4 @@
+// formulario para actualizar un tratamiento existente en la lista
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,8 +8,10 @@ import 'package:registro_uci/features/lista_tratamientos/domain/models/lista_tra
 import 'package:registro_uci/features/lista_tratamientos/presentation/controllers/create_lista_tratamientos_controller.dart';
 
 class UpdateListaTratamientosForm extends ConsumerStatefulWidget {
+  // id del ingreso y del registro diario al que pertenece el tratamiento
   final String idIngreso;
   final String idRegistroDiario;
+  // tratamiento existente a editar
   final ListaTratamientos tratamiento;
 
   const UpdateListaTratamientosForm({
@@ -34,6 +37,7 @@ class _UpdateListaTratamientosFormState
   DateTime? _fechaFin;
   late TextEditingController _observacionesController;
 
+  // inicializa los controladores con los valores del tratamiento existente
   @override
   void initState() {
     super.initState();
@@ -51,6 +55,7 @@ class _UpdateListaTratamientosFormState
         text: widget.tratamiento.observaciones ?? '');
   }
 
+  // libera los controladores de texto
   @override
   void dispose() {
     _medicamentoController.dispose();
@@ -61,6 +66,7 @@ class _UpdateListaTratamientosFormState
     super.dispose();
   }
 
+  // muestra un date picker para seleccionar fecha de inicio o fin
   Future<void> _selectDate(BuildContext context, bool isFechaFin) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -79,6 +85,7 @@ class _UpdateListaTratamientosFormState
     }
   }
 
+  // construye el formulario precargado con los datos del tratamiento
   @override
   Widget build(BuildContext context) {
     final dateFormat = DateFormat('dd/MM/yyyy');
@@ -176,6 +183,7 @@ class _UpdateListaTratamientosFormState
     );
   }
 
+  // actualiza el tratamiento en firestore usando el controlador
   void _actualizarTratamiento() async {
     if (_formKey.currentState!.validate()) {
       try {

@@ -1,3 +1,4 @@
+// dto para crear un tratamiento en la lista de tratamientos
 class CreateListaTratamientosDto {
   final String medicamento;
   final int cantidad;
@@ -19,6 +20,7 @@ class CreateListaTratamientosDto {
     this.usuarioRegistro,
   });
 
+  // convierte el dto a un mapa para guardar en firestore
   Map<String, dynamic> toMap() {
     return {
       'medicamento': medicamento,

@@ -1,7 +1,6 @@
-// constantes_upp.dart
-
-// Listado de sitios anatómicos para úlceras por presión
+// listado de sitios anatomicos para ulceras por presion (upp)
 class SitiosAnatomicosUPP {
+  // regiones de la cabeza
   static const List<String> sitiosCefalicos = [
     'Región occipital (posterior de la cabeza)',
     'Región auricular derecha',
@@ -11,6 +10,7 @@ class SitiosAnatomicosUPP {
     'Región frontal (frente)',
   ];
 
+  // regiones de extremidades superiores
   static const List<String> sitiosExtremidadesSuperiores = [
     'Región deltoidea derecha (Extremidades Superiores)',
     'Región deltoidea izquierda (Extremidades Superiores)',
@@ -30,6 +30,7 @@ class SitiosAnatomicosUPP {
     'Región hipotenar izquierda (eminencia de la base del meñique izquierda)',
   ];
 
+  // regiones del tronco
   static const List<String> sitiosTronco = [
     'Región escapular derecha',
     'Región escapular izquierda',
@@ -44,6 +45,7 @@ class SitiosAnatomicosUPP {
     'Región coxígea (cóccix)',
   ];
 
+  // regiones de extremidades inferiores
   static const List<String> sitiosExtremidadesInferiores = [
     'Región glútea derecha',
     'Región glútea izquierda',
@@ -70,6 +72,4 @@ class SitiosAnatomicosUPP {
     'Región metatarsiana derecha (cabezas de los metatarsianos del pie derecho)',
     'Región metatarsiana izquierda (cabezas de los metatarsianos del pie izquierdo)',
   ];
-
-  // Puedes agregar más regiones si es necesario, estos son los principales.
 }

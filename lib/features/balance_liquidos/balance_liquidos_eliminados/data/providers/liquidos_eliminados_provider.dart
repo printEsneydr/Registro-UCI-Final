@@ -3,6 +3,7 @@ import 'package:registro_uci/features/balance_liquidos/balance_liquidos_eliminad
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_eliminados/domain/models/liquido_eliminado.dart';
 
 // Parámetros para el provider
+// parametros para identificar el contexto del balance de liquidos
 class LiquidosEliminadosParams {
   final String idIngreso;
   final String idRegistroDiario;
@@ -31,12 +32,14 @@ class LiquidosEliminadosParams {
 }
 
 // Provider del repositorio
+// provider del repositorio de liquidos eliminados
 final liquidosEliminadosRepositoryProvider =
     Provider<FirebaseLiquidosEliminadosRepository>((ref) {
   return FirebaseLiquidosEliminadosRepository();
 });
 
 // Provider de lista de líquidos eliminados
+// provider que obtiene la lista de liquidos eliminados para un balance dado
 final liquidosEliminadosProvider =
     FutureProvider.family<List<LiquidoEliminado>, LiquidosEliminadosParams>(
         (ref, params) async {

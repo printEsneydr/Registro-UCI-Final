@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:registro_uci/features/auth/presentation/widgets/login_form.dart';
 
+// pagina que muestra el formulario de inicio de sesion
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
+  // construye la pantalla con imagen de fondo y formulario de login
   @override
   Widget build(BuildContext context) {
     return Scaffold(

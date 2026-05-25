@@ -8,9 +8,11 @@ final cateteresRepositoryProvider = Provider<CateterRepository>((ref) {
   return CateterRepository();
 });
 
+// repositorio que maneja las operaciones con cateteres en firestore
 class CateterRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // agrega un nuevo cateter a la coleccion del ingreso
   Future<void> agregarCateter(String idIngreso, Cateter cateter) async {
     await _firestore
         .collection('ingresos')
@@ -19,7 +21,7 @@ class CateterRepository {
         .add(cateter.toJson());
   }
 
-  /// 🔥 **Obtener catéteres en tiempo real**
+  // obtiene los cateteres de un ingreso en tiempo real
   Stream<List<Cateter>> obtenerCateteres(String idIngreso) {
     return _firestore
         .collection('ingresos')
@@ -33,7 +35,7 @@ class CateterRepository {
     });
   }
 
-  /// 🔥 **Actualizar un catéter**
+  // actualiza los datos de un cateter existente
   Future<void> actualizarCateter(
       String idIngreso, String idCateter, UpdateCateterDto dto) async {
     try {
@@ -48,6 +50,7 @@ class CateterRepository {
     }
   }
 
+  // elimina un cateter de la coleccion del ingreso
   Future<void> eliminarCateter(String idIngreso, String idCateter) async {
     await _firestore
         .collection('ingresos')
@@ -65,7 +68,7 @@ final cateteresByIngresoProvider =
   return repository.obtenerCateteres(idIngreso);
 });
 
-/// 🔹 **Actualizar un catéter y refrescar la UI**
+// actualiza un cateter y refresca la interfaz
 final actualizarCateterProvider = FutureProvider.family<
     void,
     ({

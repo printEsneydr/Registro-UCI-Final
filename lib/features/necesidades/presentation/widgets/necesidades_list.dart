@@ -3,11 +3,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:registro_uci/features/necesidades/data/providers/reporte_necesidades_provider.dart';
 import 'package:registro_uci/features/necesidades/domain/models/reporte_necesidades.dart';
 
+// widget que muestra y permite editar el reporte de necesidades, objetivos e intervenciones
 class NecesidadesList extends ConsumerStatefulWidget {
   final String idIngreso;
   final String idRegistro;
   final bool readOnly;
 
+  // constructor que recibe el id del ingreso y del registro diario
   const NecesidadesList({
     super.key,
     required this.idIngreso,
@@ -19,6 +21,7 @@ class NecesidadesList extends ConsumerStatefulWidget {
   ConsumerState<NecesidadesList> createState() => _NecesidadesListState();
 }
 
+// estado interno del widget con controladores de texto y logica de guardado
 class _NecesidadesListState extends ConsumerState<NecesidadesList> {
   final _necesidadesController = TextEditingController();
   final _objetivosController = TextEditingController();
@@ -36,6 +39,7 @@ class _NecesidadesListState extends ConsumerState<NecesidadesList> {
     super.dispose();
   }
 
+  // carga los datos del reporte en los controladores del formulario
   void _loadData(ReporteNecesidades? reporte) {
     if (_loaded || reporte == null) return;
     _necesidadesController.text = reporte.necesidadesDetectadas;
@@ -45,6 +49,7 @@ class _NecesidadesListState extends ConsumerState<NecesidadesList> {
     _loaded = true;
   }
 
+  // guarda el reporte en firestore y refresca el provider
   Future<void> _guardar() async {
     setState(() => _isSaving = true);
     try {
@@ -157,6 +162,7 @@ class _NecesidadesListState extends ConsumerState<NecesidadesList> {
     );
   }
 
+  // construye un campo de texto multilinea con label y hint
   Widget _buildTextField({
     required String label,
     required String hint,

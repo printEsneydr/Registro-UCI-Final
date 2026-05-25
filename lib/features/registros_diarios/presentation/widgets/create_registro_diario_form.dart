@@ -9,6 +9,7 @@ import 'package:registro_uci/features/registros_diarios/data/dto/create_registro
 import 'package:registro_uci/features/registros_diarios/presentation/controllers/add_registro_diario_to_ingreso_controller.dart';
 import 'package:registro_uci/features/registros_diarios/presentation/widgets/validators/fecha_registro_validator.dart';
 
+// formulario para crear un nuevo registro diario
 class CreateRegistroDiarioForm extends StatefulWidget {
   const CreateRegistroDiarioForm({
     super.key,
@@ -28,6 +29,7 @@ class _CreateRegistroDiarioFormState extends State<CreateRegistroDiarioForm> {
 
   @override
   void initState() {
+    // inicializa el controlador con la fecha actual
     final today = DateTime.now();
     _fechaRegistroController = TextEditingController();
     _fechaRegistroController.text = today.toString().split(" ")[0];
@@ -42,6 +44,7 @@ class _CreateRegistroDiarioFormState extends State<CreateRegistroDiarioForm> {
 
   @override
   Widget build(BuildContext context) {
+    // formulario con campo de fecha y boton de crear
     return Form(
       key: _formKey,
       child: Container(
@@ -77,6 +80,7 @@ class _CreateRegistroDiarioFormState extends State<CreateRegistroDiarioForm> {
     );
   }
 
+  // abre el date picker para seleccionar la fecha
   Future<void> _selectDate(
     TextEditingController controller,
     BuildContext context,
@@ -89,6 +93,7 @@ class _CreateRegistroDiarioFormState extends State<CreateRegistroDiarioForm> {
   }
 }
 
+// boton que dispara la creacion del registro diario usando el controller
 class CreateRegistroFormButton extends ConsumerWidget {
   const CreateRegistroFormButton({
     super.key,
@@ -104,9 +109,11 @@ class CreateRegistroFormButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // observa el estado de la operacion de crear registro
     final AsyncValue<void> state =
         ref.watch(addRegistroDiarioToIngresoControllerProvider);
 
+    // muestra dialogo de exito o error segun el resultado
     ref.listen<AsyncValue<void>>(addRegistroDiarioToIngresoControllerProvider,
         (prev, state) {
       state.dialogOnError(context);

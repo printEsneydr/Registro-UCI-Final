@@ -5,6 +5,7 @@ import 'package:registro_uci/common/components/tile.dart';
 import 'package:registro_uci/features/ingresos/presentation/controllers/terminar_ingreso_controller.dart';
 import 'package:registro_uci/features/ingresos/data/providers/ingreso_by_id_provider.dart';
 
+// tile que muestra el estado del ingreso y permite finalizarlo
 class TerminarIngresoTile extends ConsumerWidget {
   final String idIngreso;
 
@@ -52,10 +53,12 @@ class TerminarIngresoTile extends ConsumerWidget {
     );
   }
 
+  // formatea la fecha al formato dd/mm/yyyy hh:mm
   String _formatDate(DateTime date) {
     return DateFormat('dd/MM/yyyy HH:mm').format(date.toLocal());
   }
 
+  // muestra un dialogo para confirmar y seleccionar la fecha de egreso
   void _showTerminarIngresoDialog(BuildContext context, WidgetRef ref) {
     final TextEditingController motivoController = TextEditingController();
     DateTime fechaEgreso = DateTime.now();

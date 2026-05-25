@@ -3,11 +3,13 @@ import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/intervenciones/domain/models/intervencion.dart';
 import 'package:registro_uci/features/intervenciones/presentation/widgets/components/intervencion_action_buttons.dart';
 
+// widget que muestra una intervencion individual
 class IntervencionWidget extends StatelessWidget {
   final Intervencion intervencion;
   final ReporteParams params;
   final bool readOnly;
 
+  // constructor de IntervencionWidget
   const IntervencionWidget({
     super.key,
     required this.intervencion,
@@ -15,6 +17,7 @@ class IntervencionWidget extends StatelessWidget {
     this.readOnly = false,
   });
 
+  // construye la tarjeta con el idNIC y nombre de la intervencion
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -4,6 +4,7 @@ import 'package:registro_uci/common/components/buttons/primary_button.dart';
 import 'package:registro_uci/features/marcapasos/data/dto/update_marcapaso_dto.dart';
 import 'package:registro_uci/features/marcapasos/data/providers/marcapasos_provider.dart';
 
+// boton que actualiza los datos de un marcapaso existente
 class UpdateMarcapasoFormButton extends ConsumerWidget {
   final GlobalKey<FormState> formKey;
   final String idIngreso;

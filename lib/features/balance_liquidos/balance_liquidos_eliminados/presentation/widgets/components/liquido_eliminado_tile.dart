@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_eliminados/domain/models/liquido_eliminado.dart';
 
+// widget expansible que muestra los detalles de un liquido eliminado
 class LiquidoEliminadoTile extends StatelessWidget {
+  // modelo con los datos del liquido eliminado
   final LiquidoEliminado liquido;
+  // callback al presionar el boton de eliminar
   final VoidCallback onDeleteTap;
 
   const LiquidoEliminadoTile({
@@ -11,6 +14,7 @@ class LiquidoEliminadoTile extends StatelessWidget {
     required this.onDeleteTap,
   });
 
+  // construye una tarjeta expansible con todas las mediciones del registro
   @override
   Widget build(BuildContext context) {
     final total = liquido.orina +
@@ -85,6 +89,7 @@ class LiquidoEliminadoTile extends StatelessWidget {
     );
   }
 
+  // fila con nombre y valor de una medicion
   Widget _buildRow(String label, double value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),

@@ -5,6 +5,7 @@ import 'package:registro_uci/common/extensions/async_value_ui.dart';
 import 'package:registro_uci/features/antibioticos/data/dto/create_tratamiento_antibiotico_dto.dart';
 import 'package:registro_uci/features/antibioticos/presentation/controllers/create_tratamiento_antibiotico_controller.dart';
 
+// boton que valida el formulario y crea el tratamiento antibiotico
 class CreateTratamientoAntibioticoFormButton extends ConsumerWidget {
   final String idIngreso;
   final GlobalKey<FormState> _formKey;

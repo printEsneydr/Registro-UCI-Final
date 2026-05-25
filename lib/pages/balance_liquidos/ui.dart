@@ -6,10 +6,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:registro_uci/features/balance_liquidos/data/providers/balances_de_liquidos_provider.dart';
 import 'package:registro_uci/pages/balance_liquidos/providers.dart';
 
+// widget que muestra el resumen del balance de liquidos en una tarjeta
 class BalanceCard extends ConsumerStatefulWidget {
+  // id del ingreso del paciente
   final String idIngreso;
+  // id del registro diario asociado
   final String idRegistroDiario;
 
+  // constructor requiere id de ingreso y registro diario
   const BalanceCard({
     super.key,
     required this.idIngreso,
@@ -20,10 +24,14 @@ class BalanceCard extends ConsumerStatefulWidget {
   ConsumerState<BalanceCard> createState() => _BalanceCardState();
 }
 
+// estado del BalanceCard, maneja la hora seleccionada y carga de datos
 class _BalanceCardState extends ConsumerState<BalanceCard> {
+  // hora seleccionada para el balance parcial
   int _horaSeleccionada = 8;
+  // indica si se estan cargando los datos iniciales
   bool _cargando = true;
 
+  // genera la lista de horas disponibles de 8 a 24 y luego de 1 a 7
   List<int> _generarHoras() {
     final horas = <int>[];
     // Horas 8 a 24
@@ -37,6 +45,7 @@ class _BalanceCardState extends ConsumerState<BalanceCard> {
     return horas;
   }
 
+  // formatea la hora para mostrar en el dropdown
   String _formatHora(int hora) {
     if (hora <= 24) {
       return 'Hasta las $hora:00';
@@ -46,12 +55,14 @@ class _BalanceCardState extends ConsumerState<BalanceCard> {
     }
   }
 
+  // inicializa el estado y carga la hora calculada del registro diario
   @override
   void initState() {
     super.initState();
     _cargarHoraInicial();
   }
 
+  // carga la hora hasta la que se ha calculado el total administrado
   Future<void> _cargarHoraInicial() async {
     try {
       final firestore = FirebaseFirestore.instance;
@@ -79,6 +90,7 @@ class _BalanceCardState extends ConsumerState<BalanceCard> {
     }
   }
 
+  // invalida los providers para recargar los datos del balance
   void _recargar() {
     ref.invalidate(totalBalanceProvider(BalanceParams(
       idIngreso: widget.idIngreso,
@@ -95,6 +107,7 @@ class _BalanceCardState extends ConsumerState<BalanceCard> {
     )));
   }
 
+  // construye la tarjeta con el balance, selector de hora y estado
   @override
   Widget build(BuildContext context) {
     if (_cargando) {
@@ -278,6 +291,7 @@ class _BalanceCardState extends ConsumerState<BalanceCard> {
     );
   }
 
+  // columna con etiqueta y valor en ml para mostrar en el balance
   Widget _buildColumn(String label, String value, Color color,
       {bool isBold = false}) {
     return Column(

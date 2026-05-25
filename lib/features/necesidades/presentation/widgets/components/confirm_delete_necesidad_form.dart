@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/necesidades/presentation/widgets/components/buttons/delete_necesidad_form_button.dart';
 
+// dialogo de confirmacion para eliminar una necesidad
 class ConfirmDeleteNecesidadForm extends StatelessWidget {
+  // constructor que recibe el id de la necesidad y los parametros del reporte
   const ConfirmDeleteNecesidadForm({
     super.key,
     required this.idNecesidad,

@@ -6,15 +6,18 @@ import 'package:registro_uci/features/auth/data/providers/user_role_provider.dar
 import 'package:registro_uci/features/auth/domain/enums/user_role.dart';
 import 'package:registro_uci/features/auth/presentation/controllers/auth_controller.dart';
 
+// pagina principal temporal que muestra el rol y boton de logout
 class MainPage extends ConsumerWidget {
   const MainPage({super.key});
 
+  // construye la interfaz principal con el rol del usuario y boton de cerrar sesion
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // obtiene el rol del usuario desde el provider
     final role = ref.watch(roleProvider);
-
+    // estado del controlador de autenticacion
     final AsyncValue<void> state = ref.watch(authControllerProvider);
-
+    // escucha errores de autenticacion y muestra dialogo si ocurre alguno
     ref.listen<AsyncValue<void>>(authControllerProvider, (prev, state) {
       state.dialogOnError(context);
     });

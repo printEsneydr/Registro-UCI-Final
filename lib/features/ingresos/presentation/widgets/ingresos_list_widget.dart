@@ -5,8 +5,10 @@ import 'package:registro_uci/features/ingresos/presentation/widgets/components/i
 import 'package:registro_uci/common/components/form_fields/dropdown_button_form_field.dart';
 import 'package:registro_uci/features/ingresos/domain/models/ingreso.dart';
 
+// filtros disponibles para la lista de ingresos
 enum IngresoFilter { activos, terminados, todos }
 
+// widget principal que muestra la lista de ingresos con filtros y tabs
 class IngresosListWidget extends ConsumerStatefulWidget {
   final String searchQuery;
 
@@ -16,6 +18,7 @@ class IngresosListWidget extends ConsumerStatefulWidget {
   ConsumerState<IngresosListWidget> createState() => _IngresosListWidgetState();
 }
 
+// estado que maneja las pestañas de filtro y la sala seleccionada
 class _IngresosListWidgetState extends ConsumerState<IngresosListWidget>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
@@ -105,6 +108,7 @@ class _IngresosListWidgetState extends ConsumerState<IngresosListWidget>
   }
 }
 
+// widget que construye la lista filtrada de ingresos con pull-to-refresh
 class IngresosList extends ConsumerWidget {
   final Sala selectedSala;
   final IngresoFilter filter;
@@ -189,6 +193,7 @@ class IngresosList extends ConsumerWidget {
     );
   }
 
+  // aplica los filtros de estado y busqueda a la lista de ingresos
   List<Ingreso> _filterIngresos(List<Ingreso> ingresos) {
     var filtered = ingresos;
 

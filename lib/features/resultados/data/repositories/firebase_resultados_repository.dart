@@ -4,9 +4,11 @@ import 'package:registro_uci/features/resultados/data/abstract_repositories/resu
 import 'package:registro_uci/features/resultados/domain/models/indicador.dart';
 import 'package:registro_uci/features/resultados/domain/models/resultado.dart';
 
+// repositorio de resultados con firebase firestore
 class FirebaseResultadosRepository implements ResultadosRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // obtiene los resultados asociados a una intervencion
   @override
   Future<List<Resultado>> getResultadosDeIntervencion(
       String idIntervencion) async {
@@ -26,6 +28,7 @@ class FirebaseResultadosRepository implements ResultadosRepository {
     }
   }
 
+  // obtiene los indicadores de un resultado especifico
   @override
   Future<List<Indicador>> getIndicadoresDeResultado(
       String idIntervencion, String idResultado) async {

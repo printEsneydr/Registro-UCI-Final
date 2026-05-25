@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../features/procedimientos_especiales/data/providers/procedimiento_provider.dart';
 
+// pagina para editar el nombre y estado de un procedimiento
 class EditarProcedimientoPage extends ConsumerWidget {
+  // id del ingreso al que pertenece el procedimiento
   final String idIngreso;
+  // id del procedimiento a editar
   final String idProcedimiento;
+  // nombre actual del procedimiento
   final String nombreProcedimiento;
+  // estado actual del procedimiento
   final String estado;
 
+  // constructor, requiere los datos del procedimiento
   const EditarProcedimientoPage({
     super.key,
     required this.idIngreso,

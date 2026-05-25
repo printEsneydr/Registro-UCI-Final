@@ -7,9 +7,11 @@ import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administ
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/data/dto/create_liquido_administrado_dto.dart';
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/domain/models/liquido_administrado.dart';
 
+// implementacion en firebase del repositorio de liquidos administrados
 class FirebaseLiquidosAdministradosRepository
     implements LiquidosAdministradosRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // crea un liquido administrado y sincroniza con tratamiento si corresponde
   @override
   Future<void> createLiquidoAdministrado(
     String idIngreso,
@@ -38,6 +40,7 @@ class FirebaseLiquidosAdministradosRepository
     });
   }
 
+  // actualiza un liquido administrado y sincroniza con tratamiento si corresponde
   @override
   Future<void> updateLiquidoAdministrado(
     String idIngreso,
@@ -65,6 +68,7 @@ class FirebaseLiquidosAdministradosRepository
     });
   }
 
+  // elimina un liquido administrado y su dosis de tratamiento si corresponde
   @override
   Future<void> deleteLiquidoAdministrado(
     String idIngreso,
@@ -97,6 +101,7 @@ class FirebaseLiquidosAdministradosRepository
     });
   }
 
+  // elimina la dosis asociada a un tratamiento antibiotico
   Future<void> _deleteDosisTratamiento(Transaction transaction,
       String idIngreso, Map<String, dynamic>? data) async {
     final medicamento = data?['medicamento'];
@@ -132,6 +137,7 @@ class FirebaseLiquidosAdministradosRepository
     }
   }
 
+  // obtiene todos los liquidos administrados de un balance
   @override
   Future<List<LiquidoAdministrado>> getLiquidosAdministrados(
     String idIngreso,
@@ -153,6 +159,7 @@ class FirebaseLiquidosAdministradosRepository
         .toList();
   }
 
+  // obtiene liquidos administrados de la hora anterior
   @override
   Future<List<LiquidoAdministrado>> getLiquidosAdministradosFromPreviousHour(
     String idIngreso,
@@ -176,6 +183,7 @@ class FirebaseLiquidosAdministradosRepository
         .toList();
   }
 
+  // crea multiples liquidos administrados en lote
   @override
   Future<void> createManyLiquidosAdministrados(
     String idIngreso,
@@ -205,6 +213,7 @@ class FirebaseLiquidosAdministradosRepository
     }
   }
 
+  // sincroniza con tratamiento antibiotico sin usar transaccion
   Future<void> _syncTratamientoAntibioticoWithoutTransaction(
     String idIngreso,
     CreateLiquidoAdministradoDto dto,
@@ -252,11 +261,13 @@ class FirebaseLiquidosAdministradosRepository
     );
   }
 
+  // calcula el numero de dia desde la fecha de inicio del tratamiento
   int _calculateDayNumber(DateTime fechaInicio, DateTime hora) {
     final difference = hora.difference(fechaInicio).inDays;
     return difference + 1;
   }
 
+  // sincroniza con tratamiento antibiotico usando una transaccion
   Future<void> _syncTratamientoAntibiotico(
     Transaction transaction,
     String idIngreso,
@@ -305,6 +316,7 @@ class FirebaseLiquidosAdministradosRepository
         ));
   }
 
+  // obtiene los tratamientos antibioticos activos para convertirlos en dto
   @override
   Future<List<CreateLiquidoAdministradoDto>> getTratamientosAntibioticosActivos(
     String idIngreso,
@@ -338,6 +350,7 @@ class FirebaseLiquidosAdministradosRepository
     }
   }
 
+  // obtiene todos los tratamientos antibioticos de un ingreso
   Future<List<TratamientoAntibiotico>> getTratamientosAntibioticosDeIngreso(
     String idIngreso,
   ) async {

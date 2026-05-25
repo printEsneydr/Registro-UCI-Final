@@ -1,3 +1,4 @@
+// constantes con los nombres de las colecciones en firebase
 class FirebaseCollectionNames {
   /// INGRESOS
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/firmas/presentation/widgets/components/buttons/firmar_reporte_form_button.dart';
 
+// formulario de confirmacion que se muestra antes de firmar un reporte
 class ConfirmFirmarReporteForm extends StatelessWidget {
   const ConfirmFirmarReporteForm({
     super.key,

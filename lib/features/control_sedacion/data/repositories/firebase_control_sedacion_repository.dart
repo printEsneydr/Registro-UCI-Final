@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:registro_uci/features/control_sedacion/domain/models/control_sedacion.dart';
 import 'package:registro_uci/features/control_sedacion/data/abstract_repositories/control_sedacion_repository.dart';
 
+// implementacion firebase del repositorio de control de sedacion
 class FirebaseControlSedacionRepository implements ControlSedacionRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // obtiene la referencia a la subcoleccion de controles de sedacion
   CollectionReference<Map<String, dynamic>> _getCollectionRef(
     String idIngreso,
     String idRegistroDiario,
@@ -22,6 +24,7 @@ class FirebaseControlSedacionRepository implements ControlSedacionRepository {
     String idIngreso,
     String idRegistroDiario,
   ) {
+    // stream en tiempo real ordenado por 'orden'
     return _getCollectionRef(idIngreso, idRegistroDiario)
         .orderBy('orden', descending: false)
         .snapshots()
@@ -37,6 +40,7 @@ class FirebaseControlSedacionRepository implements ControlSedacionRepository {
     String idIngreso,
     String idRegistroDiario,
   ) async {
+    // obtiene todos los controles de sedacion ordenados
     final querySnapshot = await _getCollectionRef(idIngreso, idRegistroDiario)
         .orderBy('orden', descending: false)
         .get();
@@ -74,6 +78,7 @@ class FirebaseControlSedacionRepository implements ControlSedacionRepository {
     String idRegistroDiario,
   ) async {
     try {
+      // obtiene el ultimo control por hora descendente
       final querySnapshot = await _getCollectionRef(idIngreso, idRegistroDiario)
           .orderBy('hora', descending: true)
           .limit(1)
@@ -100,7 +105,7 @@ class FirebaseControlSedacionRepository implements ControlSedacionRepository {
       final collectionRef = _getCollectionRef(idIngreso, idRegistroDiario);
       final nuevoDoc = collectionRef.doc();
 
-      // Obtener el máximo orden actual
+      // calcula el orden autoincremental basado en el maximo actual
       final querySnapshot =
           await collectionRef.orderBy('orden', descending: true).limit(1).get();
 
@@ -172,6 +177,7 @@ class FirebaseControlSedacionRepository implements ControlSedacionRepository {
     String idRegistroDiario,
   ) async {
     try {
+      // cuenta cuantas veces aparece cada valor rass
       final querySnapshot = await _getCollectionRef(idIngreso, idRegistroDiario)
           .orderBy('orden')
           .get();
@@ -196,6 +202,7 @@ class FirebaseControlSedacionRepository implements ControlSedacionRepository {
     List<String> idsEnOrden,
   ) async {
     try {
+      // actualiza el campo 'orden' de cada documento segun la posicion en la lista
       final batch = _firestore.batch();
       final collectionRef = _getCollectionRef(idIngreso, idRegistroDiario);
 

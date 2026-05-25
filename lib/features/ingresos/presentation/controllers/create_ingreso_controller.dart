@@ -5,6 +5,7 @@ import 'package:registro_uci/features/ingresos/data/abstract_repositories/ingres
 import 'package:registro_uci/features/ingresos/data/dto/create_ingreso_dto.dart';
 import 'package:registro_uci/features/ingresos/data/providers/ingresos_by_sala_provider.dart';
 
+// controller que maneja la creacion de un nuevo ingreso
 class CreateIngresoController extends AsyncNotifier<void> {
   late final IngresosRepository _repository =
       ref.watch(ingresosRepositoryProvider);
@@ -12,6 +13,7 @@ class CreateIngresoController extends AsyncNotifier<void> {
   @override
   FutureOr<void> build() {}
 
+  // ejecuta la creacion del ingreso e invalida el provider de la sala
   Future<void> createIngreso(CreateIngresoDto dto) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() => _repository.createIngreso(dto));
@@ -19,6 +21,7 @@ class CreateIngresoController extends AsyncNotifier<void> {
   }
 }
 
+// provider del controller de creacion de ingreso
 final createIngresoControllerProvider =
     AsyncNotifierProvider<CreateIngresoController, void>(
   () => CreateIngresoController(),

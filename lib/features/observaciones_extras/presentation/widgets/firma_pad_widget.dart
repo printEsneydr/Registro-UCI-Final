@@ -1,9 +1,11 @@
+// widget que muestra un dialogo para capturar una firma manuscrita
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:signature/signature.dart';
 
 class FirmaPadWidget extends StatefulWidget {
+  // base64 de la firma existente para mostrar, callback al guardar
   final String initialBase64;
   final ValueChanged<String> onSave;
 
@@ -20,6 +22,7 @@ class FirmaPadWidget extends StatefulWidget {
 class _FirmaPadWidgetState extends State<FirmaPadWidget> {
   late SignatureController _controller;
 
+  // inicializa el controlador de firma
   @override
   void initState() {
     super.initState();
@@ -30,12 +33,14 @@ class _FirmaPadWidgetState extends State<FirmaPadWidget> {
     );
   }
 
+  // libera el controlador de firma
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
 
+  // convierte la firma a png y la retorna en base64
   Future<void> _save() async {
     if (_controller.isNotEmpty) {
       final Uint8List? pngBytes = await _controller.toPngBytes();
@@ -47,6 +52,7 @@ class _FirmaPadWidgetState extends State<FirmaPadWidget> {
     }
   }
 
+  // construye el dialogo con el area de firma y botones de accion
   @override
   Widget build(BuildContext context) {
     return Dialog(

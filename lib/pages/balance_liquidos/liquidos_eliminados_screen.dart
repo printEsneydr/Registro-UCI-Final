@@ -7,8 +7,12 @@ import 'package:registro_uci/features/balance_liquidos/balance_liquidos_eliminad
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_eliminados/presentation/widgets/components/liquido_eliminado_tile.dart';
 import 'package:registro_uci/pages/balance_liquidos/providers.dart';
 
+// pantalla que lista los liquidos eliminados para un balance especifico
 class LiquidosEliminadosScreen extends ConsumerWidget {
+  // parametros que incluyen id de ingreso, registro diario y balance
   final LiquidosEliminadosParams params;
+
+  // constructor requiere los parametros del balance
   const LiquidosEliminadosScreen({super.key, required this.params});
 
   @override
@@ -101,6 +105,7 @@ class LiquidosEliminadosScreen extends ConsumerWidget {
     );
   }
 
+  // widget que muestra una columna con etiqueta y valor numerico del balance
   Widget _buildBalanceColumn(String label, String value, Color color,
       {bool isBold = false}) {
     return Column(
@@ -119,10 +124,15 @@ class LiquidosEliminadosScreen extends ConsumerWidget {
   }
 }
 
+// widget que construye la lista de liquidos eliminados
 class LiquidosEliminadosList extends ConsumerWidget {
+  // parametros para obtener los liquidos eliminados
   final LiquidosEliminadosParams params;
+
+  // constructor requiere los parametros
   const LiquidosEliminadosList({super.key, required this.params});
 
+  // construye la lista de liquidos eliminados desde el provider
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final liquidosAsync = ref.watch(liquidosEliminadosProvider(params));
@@ -148,6 +158,7 @@ class LiquidosEliminadosList extends ConsumerWidget {
     );
   }
 
+  // muestra dialogo de confirmacion y elimina un liquido eliminado
   void _confirmDelete(
       BuildContext context, WidgetRef ref, LiquidoEliminado liquido) {
     showDialog(

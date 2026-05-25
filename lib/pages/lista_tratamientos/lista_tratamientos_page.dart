@@ -9,10 +9,14 @@ import 'package:registro_uci/features/lista_tratamientos/presentation/controller
 import '../../pages/lista_tratamientos/create_lista_tratamientos_page.dart';
 import '../../pages/lista_tratamientos/update_lista_tratamientos_page.dart';
 
+// pagina que lista los tratamientos de un registro diario
 class ListaTratamientosPage extends ConsumerWidget {
+  // id del ingreso al que pertenecen los tratamientos
   final String idIngreso;
+  // id del registro diario
   final String idRegistroDiario;
 
+  // constructor, requiere el id del ingreso y del registro diario
   const ListaTratamientosPage({
     super.key,
     required this.idIngreso,
@@ -21,8 +25,11 @@ class ListaTratamientosPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // obtiene el rol del usuario actual
     final role = ref.watch(roleProvider);
+    // verifica si el usuario es admin
     final isAdmin = role == UserRole.admin;
+    // obtiene la lista de tratamientos desde el proveedor
     final listaTratamientosAsync = ref.watch(
       listaTratamientosByIngresoProvider(
         (idIngreso: idIngreso, idRegistroDiario: idRegistroDiario),
@@ -212,6 +219,7 @@ class ListaTratamientosPage extends ConsumerWidget {
     );
   }
 
+  // muestra un dialogo con los detalles completos del registro
   void _mostrarDetallesRegistro(
       BuildContext context, ListaTratamientos registro) {
     final dateFormat = DateFormat('dd/MM/yyyy HH:mm');
@@ -252,6 +260,7 @@ class ListaTratamientosPage extends ConsumerWidget {
     );
   }
 
+  // construye una fila con titulo y valor para mostrar detalles
   Widget _buildDetailRow(String title, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -279,6 +288,7 @@ class ListaTratamientosPage extends ConsumerWidget {
     );
   }
 
+  // muestra un dialogo de confirmacion y elimina el tratamiento si se confirma
   void _confirmDelete(
       BuildContext context, WidgetRef ref, ListaTratamientos registro) {
     showDialog<bool>(

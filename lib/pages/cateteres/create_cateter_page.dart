@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../features/cateteres/presentation/widgets/components/create_cateter_form.dart';
 
+// pagina con el formulario para crear un nuevo cateter
 class CreateCateterPage extends StatelessWidget {
+  // id del ingreso al que se asociara el cateter
   final String idIngreso;
 
+  // constructor, requiere el id del ingreso
   const CreateCateterPage({super.key, required this.idIngreso});
 
   @override
@@ -12,6 +15,7 @@ class CreateCateterPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Registrar Catéter"),
       ),
+      // permite desplazar el contenido si el teclado aparece
       body: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior
             .onDrag, // Mejora la experiencia de usuario

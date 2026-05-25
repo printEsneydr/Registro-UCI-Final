@@ -8,12 +8,14 @@ final createMarcapasoControllerProvider =
   (ref) => CreateMarcapasoController(ref.watch(marcapasosRepositoryProvider)),
 );
 
+// controlador que maneja la creacion de un marcapaso en firebase
 class CreateMarcapasoController extends StateNotifier<AsyncValue<void>> {
   final MarcapasosRepository _repository;
 
   CreateMarcapasoController(this._repository)
       : super(const AsyncValue.data(null));
 
+  // crea el marcapaso usando el repositorio
   Future<void> createMarcapaso(CreateMarcapasoDto dto) async {
     state = const AsyncValue.loading();
     try {

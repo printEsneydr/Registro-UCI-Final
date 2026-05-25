@@ -8,7 +8,9 @@ import 'package:registro_uci/features/ingresos/data/providers/ingreso_by_id_prov
 import 'package:registro_uci/features/ingresos/domain/models/ingreso.dart';
 import 'package:registro_uci/pages/ingreso/update_ingreso_page.dart';
 
+// pagina que muestra los detalles completos de un ingreso
 class IngresoDetailsPage extends ConsumerWidget {
+  // identificador del ingreso
   final String idIngreso;
 
   const IngresoDetailsPage({
@@ -16,10 +18,13 @@ class IngresoDetailsPage extends ConsumerWidget {
     required this.idIngreso,
   });
 
+  // construye la pantalla con la informacion del paciente y boton de editar
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // verifica si el usuario es admin para mostrar boton de editar
     final role = ref.watch(roleProvider);
     final isAdmin = role == UserRole.admin;
+    // obtiene los datos del ingreso
     final ingreso = ref.watch(ingresoByIdProvider(idIngreso));
 
     return ingreso.when(
@@ -201,7 +206,7 @@ class IngresoDetailsPage extends ConsumerWidget {
     );
   }
 
-  // Method to create modern styled tile with icons
+  // crea una fila con icono, etiqueta y valor para mostrar un detalle
   Widget _buildDetailTile({
     required String label,
     required IconData icon,

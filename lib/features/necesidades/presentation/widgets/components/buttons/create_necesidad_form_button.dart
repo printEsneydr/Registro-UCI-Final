@@ -6,7 +6,9 @@ import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/necesidades/data/dto/create_necesidad_dto.dart';
 import 'package:registro_uci/features/necesidades/presentation/controllers/add_necesidad_controller.dart';
 
+// boton de formulario que ejecuta la creacion de una nueva necesidad
 class CreateNecesidadFormButton extends ConsumerWidget {
+  // constructor que recibe la key del formulario, el controlador y los parametros
   const CreateNecesidadFormButton({
     super.key,
     required GlobalKey<FormState> formKey,

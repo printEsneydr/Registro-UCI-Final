@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'liquido_administrado.freezed.dart';
 
+// modelo freezed que representa un liquido administrado
 @freezed
 class LiquidoAdministrado with _$LiquidoAdministrado {
   const factory LiquidoAdministrado({
@@ -14,6 +15,7 @@ class LiquidoAdministrado with _$LiquidoAdministrado {
     required bool esTratamiento,
   }) = _LiquidoAdministrado;
 
+  // construye el modelo desde un mapa de firestore
   factory LiquidoAdministrado.fromJson(Map<String, dynamic> json,
       {required String id}) {
     return LiquidoAdministrado(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/common/components/form_tile.dart';
 import 'package:registro_uci/pages/lista_tratamientos/lista_tratamientos_page.dart';
 
+// tile que navega a la pagina de lista de tratamientos del paciente
 class TratamientosTile extends StatelessWidget {
   const TratamientosTile({
     super.key,

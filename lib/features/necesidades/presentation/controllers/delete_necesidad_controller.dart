@@ -5,6 +5,7 @@ import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/necesidades/data/abstract_repositories/necesidades_repository.dart';
 import 'package:registro_uci/features/necesidades/data/providers/necesidades_de_registro_provider.dart';
 
+// controlador que maneja la logica de eliminar una necesidad de firestore
 class DeleteNecesidadDeRegistroController extends AsyncNotifier<void> {
   late final NecesidadesRepository _repository =
       ref.watch(necesidadesRepositoryProvider);
@@ -12,6 +13,7 @@ class DeleteNecesidadDeRegistroController extends AsyncNotifier<void> {
   @override
   FutureOr<void> build() {}
 
+  // elimina una necesidad de firestore e invalida el provider
   Future<void> deleteNecesidadDeRegistro(
     String idIngreso,
     String idRegistro,
@@ -31,6 +33,7 @@ class DeleteNecesidadDeRegistroController extends AsyncNotifier<void> {
   }
 }
 
+// provider del controlador de eliminacion de necesidades
 final deleteNecesidadDeRegistroControllerProvider =
     AsyncNotifierProvider<DeleteNecesidadDeRegistroController, void>(
   () => DeleteNecesidadDeRegistroController(),

@@ -4,16 +4,19 @@ import 'package:registro_uci/features/registros_diarios/data/providers/registros
 import 'package:registro_uci/features/registros_diarios/presentation/widgets/components/registro_diario_tile.dart';
 import 'package:registro_uci/features/registros_diarios/presentation/widgets/create_registro_diario_form.dart';
 
+// widget que muestra la lista de registros diarios de un ingreso
 class RegistrosDiariosList extends ConsumerWidget {
   final String idIngreso;
   const RegistrosDiariosList({super.key, required this.idIngreso});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // observa el provider que obtiene los registros diarios del ingreso
     final registrosDiarios =
         ref.watch(registrosDiariosDeIngresoProvider(idIngreso));
     return registrosDiarios.when(
       data: (data) {
+        // muestra pantalla vacia con boton de crear si no hay registros
         if (data.isEmpty) {
           return Center(
             child: Column(
@@ -44,6 +47,7 @@ class RegistrosDiariosList extends ConsumerWidget {
             ),
           );
         }
+        // lista los registros diarios existentes
         return ListView.separated(
           itemCount: data.length,
           itemBuilder: (context, index) => RegistroDiarioTile(
@@ -54,6 +58,7 @@ class RegistrosDiariosList extends ConsumerWidget {
           padding: const EdgeInsets.all(15),
         );
       },
+      // muestra error si falla la carga
       error: (error, stackTrace) => Center(
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -64,6 +69,7 @@ class RegistrosDiariosList extends ConsumerWidget {
           ),
         ),
       ),
+      // indicador de carga mientras se obtienen los datos
       loading: () => const Center(
         child: CircularProgressIndicator(),
       ),

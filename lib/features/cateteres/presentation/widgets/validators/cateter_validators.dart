@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart'; // ✅ Importado para el manejo de fechas
 
-/// 🔹 Valida la fecha de colocación del marcapaso.
+// valida que la fecha de colocacion no este vacia
 String? fechaColocacionValidator(String? value) {
   if (value == null || value.trim().isEmpty) {
     return "La fecha de colocación es obligatoria.";
@@ -14,7 +14,7 @@ String? fechaColocacionValidator(String? value) {
   }
 }
 
-/// 🔹 Valida que el modo del marcapaso haya sido seleccionado.
+// valida que el modo del marcapaso haya sido seleccionado
 String? modoMarcapasoValidator(String? value) {
   if (value == null || value.trim().isEmpty) {
     return "Debe seleccionar un modo de marcapaso.";
@@ -22,7 +22,7 @@ String? modoMarcapasoValidator(String? value) {
   return null;
 }
 
-/// 🔹 Valida que la vía del marcapaso haya sido seleccionada.
+// valida que la via del marcapaso haya sido seleccionada
 String? viaMarcapasoValidator(String? value) {
   if (value == null || value.trim().isEmpty) {
     return "Debe seleccionar una vía de marcapaso.";
@@ -30,7 +30,7 @@ String? viaMarcapasoValidator(String? value) {
   return null;
 }
 
-/// 🔹 Valida que la frecuencia sea un número válido y mayor que 0.
+// valida que la frecuencia sea un numero entero positivo
 String? frecuenciaMarcapasoValidator(String? value) {
   if (value == null || value.trim().isEmpty) {
     return "Debe ingresar una frecuencia válida.";
@@ -42,7 +42,7 @@ String? frecuenciaMarcapasoValidator(String? value) {
   return null;
 }
 
-/// 🔹 Valida que la sensibilidad sea un número válido y mayor que 0.
+// valida que la sensibilidad sea un numero mayor a 0
 String? sensibilidadMarcapasoValidator(String? value) {
   if (value == null || value.trim().isEmpty) {
     return "Debe ingresar una sensibilidad válida.";
@@ -54,7 +54,7 @@ String? sensibilidadMarcapasoValidator(String? value) {
   return null;
 }
 
-/// 🔹 Valida que la salida sea un número válido y mayor que 0.
+// valida que la salida sea un numero mayor a 0
 String? salidaMarcapasoValidator(String? value) {
   if (value == null || value.trim().isEmpty) {
     return "Debe ingresar una salida válida.";

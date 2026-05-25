@@ -1,3 +1,4 @@
+// formulario para crear un nuevo tratamiento en la lista
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +7,7 @@ import 'package:registro_uci/features/lista_tratamientos/domain/models/lista_tra
 import 'package:registro_uci/features/lista_tratamientos/presentation/controllers/create_lista_tratamientos_controller.dart';
 
 class CreateListaTratamientosForm extends ConsumerStatefulWidget {
+  // id del ingreso y del registro diario donde se agregara el tratamiento
   final String idIngreso;
   final String idRegistroDiario;
 
@@ -31,6 +33,7 @@ class _CreateListaTratamientosFormState
   DateTime? _fechaFin;
   final _observacionesController = TextEditingController();
 
+  // libera los controladores de texto
   @override
   void dispose() {
     _medicamentoController.dispose();
@@ -41,6 +44,7 @@ class _CreateListaTratamientosFormState
     super.dispose();
   }
 
+  // muestra un date picker para seleccionar fecha de inicio o fin
   Future<void> _selectDate(BuildContext context, bool isFechaFin) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -59,6 +63,7 @@ class _CreateListaTratamientosFormState
     }
   }
 
+  // construye el formulario con los campos para crear un tratamiento
   @override
   Widget build(BuildContext context) {
     final dateFormat = DateFormat('dd/MM/yyyy');
@@ -156,6 +161,7 @@ class _CreateListaTratamientosFormState
     );
   }
 
+  // guarda el tratamiento en firestore usando el controlador
   void _guardarTratamiento() async {
     if (_formKey.currentState!.validate()) {
       try {

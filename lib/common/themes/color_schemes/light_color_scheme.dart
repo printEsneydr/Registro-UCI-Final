@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// esquema de colores del tema claro de la app
 const lightColorScheme = ColorScheme(
   brightness: Brightness.light,
   secondary: Color(0xff009049),

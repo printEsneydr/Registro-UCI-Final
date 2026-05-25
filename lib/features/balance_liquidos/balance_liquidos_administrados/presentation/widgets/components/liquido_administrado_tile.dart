@@ -4,7 +4,9 @@ import 'package:registro_uci/features/auth/data/providers/user_role_provider.dar
 import 'package:registro_uci/features/auth/domain/enums/user_role.dart';
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/domain/models/liquido_administrado.dart';
 
+// widget que muestra un liquido administrado en una tarjeta con acciones
 class LiquidoAdministradoTile extends ConsumerWidget {
+  // modelo del liquido y callbacks para ver detalle, editar y eliminar
   final LiquidoAdministrado liquido;
   final VoidCallback onDetailsTap;
   final VoidCallback onEditTap;
@@ -18,6 +20,7 @@ class LiquidoAdministradoTile extends ConsumerWidget {
     required this.onDeleteTap,
   });
 
+  // construye el tile con icono segun si es tratamiento, y acciones segun el rol
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final role = ref.watch(roleProvider);

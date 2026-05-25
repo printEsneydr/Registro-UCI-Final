@@ -2,6 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:registro_uci/features/auth/domain/enums/user_role.dart';
 import 'package:registro_uci/features/auth/presentation/controllers/auth_controller.dart';
 
+// provider que expone el rol del usuario desde el estado de auth
 final roleProvider = Provider<UserRole?>((ref) {
   return ref.watch(authControllerProvider).when(
         data: (data) {

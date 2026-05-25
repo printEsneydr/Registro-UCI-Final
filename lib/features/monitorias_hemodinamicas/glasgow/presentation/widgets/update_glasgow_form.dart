@@ -3,11 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/glasgow/domain/models/glasgow.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/glasgow/presentation/controllers/glasgow_controller.dart';
 
+// formulario para actualizar un registro existente de glasgow
 class UpdateGlasgowForm extends ConsumerStatefulWidget {
   final String idIngreso;
   final String idRegistroDiario;
   final Glasgow glasgow;
 
+  // constructor que recibe los ids y el objeto glasgow a editar
   const UpdateGlasgowForm({
     super.key,
     required this.idIngreso,
@@ -50,15 +52,18 @@ class _UpdateGlasgowFormState extends ConsumerState<UpdateGlasgowForm> {
     {'valor': 1, 'texto': 'No responde'},
   ];
 
+  // calcula el puntaje total sumando las tres subescalas
   int get _puntajeTotal =>
       _aperturaOcular + _respuestaVerbal + _respuestaMotora;
 
+  // clasifica el puntaje en leve, moderado o grave
   String get _clasificacion {
     if (_puntajeTotal >= 13) return 'Leve';
     if (_puntajeTotal >= 9) return 'Moderado';
     return 'Grave';
   }
 
+  // retorna el color segun la severidad (verde, naranja, rojo)
   Color get _colorClasificacion {
     if (_puntajeTotal >= 13) return Colors.green;
     if (_puntajeTotal >= 9) return Colors.orange;
@@ -136,6 +141,7 @@ class _UpdateGlasgowFormState extends ConsumerState<UpdateGlasgowForm> {
     );
   }
 
+  // construye la tarjeta que muestra el puntaje total y su clasificacion
   Widget _buildPuntajeCard() {
     return Card(
       elevation: 4,
@@ -183,6 +189,7 @@ class _UpdateGlasgowFormState extends ConsumerState<UpdateGlasgowForm> {
     );
   }
 
+  // construye una seccion con opciones de radio para una subescala
   Widget _buildSection(
       String title, List<Map<String, dynamic>> opciones, int valorActual, Function(int) onChanged) {
     return Card(
@@ -224,6 +231,7 @@ class _UpdateGlasgowFormState extends ConsumerState<UpdateGlasgowForm> {
     );
   }
 
+  // guarda los cambios del glasgow en firestore y cierra el dialogo
   void _actualizarGlasgow() async {
     try {
       final now = DateTime.now();

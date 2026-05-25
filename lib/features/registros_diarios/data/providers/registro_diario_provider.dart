@@ -3,6 +3,7 @@ import 'package:registro_uci/common/providers/repository_providers.dart';
 import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/registros_diarios/domain/models/registro_diario.dart';
 
+// provider que obtiene un registro diario especifico por ingreso y registro
 final registroDiarioProvider =
     FutureProvider.family<RegistroDiario?, ReporteParams>((ref, params) async {
   return await ref.watch(registrosDiariosRepositoryProvider).getRegistroDiario(

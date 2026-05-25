@@ -11,6 +11,7 @@ import 'package:registro_uci/features/registros_diarios/data/abstract_repositori
 import 'package:registro_uci/features/registros_diarios/data/dto/create_registro_diario_dto.dart';
 import 'package:registro_uci/features/registros_diarios/domain/models/registro_diario.dart';
 
+// implementacion en firebase del repositorio de registros diarios
 class FirebaseRegistrosDiariosRepository
     implements IRegistrosDiariosRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -19,14 +20,14 @@ class FirebaseRegistrosDiariosRepository
   Future<List<RegistroDiario>> getRegistrosDiariosDeIngreso(
       String idIngreso) async {
     try {
-      // Get the 'registrosDiarios' subcollection of the specific 'Ingreso'
+      // obtiene los documentos de la subcoleccion 'registrosDiarios' del ingreso
       final querySnapshot = await _firestore
           .collection(FirebaseCollectionNames.ingresos)
           .doc(idIngreso)
           .collection(FirebaseCollectionNames.registrosDiarios)
           .get();
 
-      // Map the Firestore documents to RegistroDiario models using fromJson
+      // mapea los documentos firestore a modelos RegistroDiario
       return querySnapshot.docs
           .map((doc) => RegistroDiario.fromJson(doc.data(), id: doc.id))
           .toList();
@@ -69,6 +70,7 @@ class FirebaseRegistrosDiariosRepository
             .doc(idIngreso)
             .collection(FirebaseCollectionNames.registrosDiarios);
 
+        // usa la fecha como id del documento para evitar duplicados
         final String fechaRegistroId =
             dto.fechaRegistro.toIso8601String().split('T')[0];
 
@@ -76,15 +78,16 @@ class FirebaseRegistrosDiariosRepository
 
         final existingRegistro = await transaction.get(docRef);
 
+        // valida que no exista ya un registro para esa fecha
         if (existingRegistro.exists) {
           throw Exception(
               'Ya existe un registro diario para la fecha: $fechaRegistroId');
         }
 
-        // Add the Registro Diario
+        // crea el registro diario
         transaction.set(docRef, dto);
 
-        // Create 24 Balance de Líquidos with specific orden and hora mapping
+        // crea los 24 registros de balance de liquidos para el dia
         final horas = [
           8,
           9,
@@ -146,8 +149,9 @@ class FirebaseRegistrosDiariosRepository
           .collection('registrosDiarios')
           .doc(idRegistro);
 
+      // actualiza el campo de firma correspondiente en el documento
       await docRef.update({
-        tipoFirma: firma, // Update the corresponding firma property
+        tipoFirma: firma,
       });
     } catch (e) {
       log('Error al firmar el reporte: $e');
@@ -173,10 +177,9 @@ class FirebaseRegistrosDiariosRepository
       if (docSnapshot.exists) {
         final firmaData = docSnapshot.data()![tipoFirma];
         if (firmaData != null) {
-          return Firma.fromJson(
-              firmaData); // Assuming Firma has a fromJson method
+          return Firma.fromJson(firmaData);
         } else {
-          return null; // Return null if the firmaData is not available
+          return null;
         }
       } else {
         throw Exception('Registro diario no encontrado');
@@ -191,11 +194,11 @@ class FirebaseRegistrosDiariosRepository
   Future<int> getBalanceAcumuladoUntilHora(
     String idIngreso,
     String idRegistroDiario,
-    int hora, // limit
+    int hora,
   ) async {
     int totalBalanceAcumulado = 0;
 
-    // Reference to balancesDeLiquidos subcollection
+    // referencia a la subcoleccion de balances de liquidos
     CollectionReference balancesDeLiquidosRef = _firestore
         .collection('ingresos')
         .doc(idIngreso)
@@ -203,28 +206,27 @@ class FirebaseRegistrosDiariosRepository
         .doc(idRegistroDiario)
         .collection('balancesDeLiquidos');
 
-    // Get all balancesDeLiquidos sorted by 'orden'
+    // obtiene todos los balances ordenados
     QuerySnapshot balancesSnapshot =
         await balancesDeLiquidosRef.orderBy('orden').get();
 
-    // Iterate through balancesDeLiquidos documents
+    // itera sobre los balances hasta llegar a la hora indicada
     var shouldBreak = false;
     for (var balanceDoc in balancesSnapshot.docs) {
       Map<String, dynamic> balanceData =
           balanceDoc.data() as Map<String, dynamic>;
 
-      // Check if the current balance has reached the specified 'hora'
       if (balanceData['hora'] != null && balanceData['hora'] == hora) {
         shouldBreak = true;
       }
 
       log(balanceData['hora'].toString());
 
-      // Reference to administrados subcollection for the current balance
+      // referencia a los administrados de cada balance
       CollectionReference administradosRef =
           balanceDoc.reference.collection('administrados');
 
-      // Sum the 'cantidad' field for each administrado in the subcollection
+      // suma las cantidades de los administrados
       QuerySnapshot administradosSnapshot = await administradosRef.get();
       int balanceTotalForThisBalance =
           administradosSnapshot.docs.fold(0, (suma, administradoDoc) {
@@ -235,7 +237,6 @@ class FirebaseRegistrosDiariosRepository
         return result;
       });
 
-      // Add to the total balance
       totalBalanceAcumulado += balanceTotalForThisBalance;
 
       if (shouldBreak) {
@@ -243,7 +244,7 @@ class FirebaseRegistrosDiariosRepository
       }
     }
 
-    // Update the registroDiario document with the calculated total
+    // actualiza el registro diario con el total calculado
     DocumentReference registroDiarioRef = _firestore
         .collection('ingresos')
         .doc(idIngreso)

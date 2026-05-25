@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:registro_uci/features/control_cambio_posicion/domain/models/cambio_posicion.dart';
 import 'package:registro_uci/features/control_cambio_posicion/data/abstract_repositories/cambio_posicion_repository.dart';
 
+// implementacion firebase del repositorio de cambios de posicion
 class FirebaseCambioPosicionRepository implements CambioPosicionRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // referencia a la subcoleccion de cambios de posicion
   CollectionReference<Map<String, dynamic>> _getCollectionRef(
     String idIngreso,
     String idRegistroDiario,
@@ -22,6 +24,7 @@ class FirebaseCambioPosicionRepository implements CambioPosicionRepository {
     String idIngreso,
     String idRegistroDiario,
   ) async {
+    // obtiene todos los cambios ordenados por 'orden'
     final querySnapshot = await _getCollectionRef(idIngreso, idRegistroDiario)
         .orderBy('orden', descending: false)
         .get();
@@ -59,6 +62,7 @@ class FirebaseCambioPosicionRepository implements CambioPosicionRepository {
     String idRegistroDiario,
   ) async {
     try {
+      // obtiene el ultimo cambio por hora descendente
       final querySnapshot = await _getCollectionRef(idIngreso, idRegistroDiario)
           .orderBy('hora', descending: true)
           .limit(1)
@@ -84,7 +88,7 @@ class FirebaseCambioPosicionRepository implements CambioPosicionRepository {
       final collectionRef = _getCollectionRef(idIngreso, idRegistroDiario);
       final nuevoDoc = collectionRef.doc();
 
-      // Obtener el máximo orden actual
+      // calcula el orden autoincremental
       final querySnapshot =
           await collectionRef.orderBy('orden', descending: true).limit(1).get();
 
@@ -153,6 +157,7 @@ class FirebaseCambioPosicionRepository implements CambioPosicionRepository {
     String idRegistroDiario,
   ) async {
     try {
+      // cuenta cuantas veces aparece cada posicion
       final querySnapshot = await _getCollectionRef(idIngreso, idRegistroDiario)
           .orderBy('orden')
           .get();
@@ -177,6 +182,7 @@ class FirebaseCambioPosicionRepository implements CambioPosicionRepository {
     List<String> idsEnOrden,
   ) async {
     try {
+      // actualiza el campo 'orden' de cada documento usando batch
       final batch = _firestore.batch();
       final collectionRef = _getCollectionRef(idIngreso, idRegistroDiario);
 

@@ -8,6 +8,7 @@ final updateCateterControllerProvider =
   (ref) => UpdateCateterController(ref.watch(cateteresRepositoryProvider), ref),
 );
 
+// controlador que maneja la actualizacion de un cateter
 class UpdateCateterController extends StateNotifier<AsyncValue<void>> {
   final CateteresRepository _repository;
   final Ref _ref; // ✅ Se añade referencia a Riverpod para invalidar providers

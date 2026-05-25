@@ -8,6 +8,7 @@ import 'package:registro_uci/common/utils/time_picker.dart';
 import 'package:registro_uci/common/validators/default_validator.dart';
 import 'package:registro_uci/features/antibioticos/presentation/widgets/components/buttons/create_tratamiento_antibiotico_form_button.dart';
 
+// lista de antibioticos disponibles para seleccionar
 const antibioticos = [
   'Amoxicilina',
   'Ceftriaxona',
@@ -31,6 +32,7 @@ const antibioticos = [
   'Meropenem',
 ];
 
+// opciones de frecuencia de administracion en 24 horas
 const frecuenciaEn24hOptions = {
   1: 'cada 24 horas (1 al día)',
   2: 'cada 12 horas (2 al día)',
@@ -42,6 +44,7 @@ const frecuenciaEn24hOptions = {
   24: 'cada hora',
 };
 
+// formulario para crear un nuevo tratamiento antibiotico
 class CreateTratamientoAntibioticoForm extends StatefulWidget {
   const CreateTratamientoAntibioticoForm({
     super.key,
@@ -50,10 +53,12 @@ class CreateTratamientoAntibioticoForm extends StatefulWidget {
   final String idIngreso;
 
   @override
+  // crea el estado del formulario
   State<CreateTratamientoAntibioticoForm> createState() =>
       _CreateTratamientoAntibioticoFormState();
 }
 
+// estado del formulario con los controladores y valores seleccionados
 class _CreateTratamientoAntibioticoFormState
     extends State<CreateTratamientoAntibioticoForm> {
   late TextEditingController _cantidadController;
@@ -68,6 +73,7 @@ class _CreateTratamientoAntibioticoFormState
   TimeOfDay _startTime = const TimeOfDay(hour: 12, minute: 0);
 
   @override
+  // inicializa los controladores de texto
   void initState() {
     super.initState();
     _cantidadController = TextEditingController();
@@ -78,6 +84,7 @@ class _CreateTratamientoAntibioticoFormState
   }
 
   @override
+  // libera los recursos de los controladores
   void dispose() {
     _cantidadController.dispose();
     _dosisController.dispose();
@@ -88,6 +95,7 @@ class _CreateTratamientoAntibioticoFormState
   }
 
   @override
+  // construye el formulario con todos los campos
   Widget build(BuildContext context) {
     return SizedBox(
       child: Form(
@@ -219,6 +227,7 @@ class _CreateTratamientoAntibioticoFormState
     );
   }
 
+  // abre el selector de fecha y guarda la fecha elegida
   Future<void> _selectDate(
       TextEditingController controller, BuildContext context) async {
     final initialDate = DateTime.now();
@@ -229,6 +238,7 @@ class _CreateTratamientoAntibioticoFormState
     });
   }
 
+  // abre el selector de hora y guarda la hora elegida
   Future<void> _selectStartTime() async {
     TimeOfDay? pickedTime =
         await pickTime(context, _startTime, "SELECCIONAR HORA DE INICIO");

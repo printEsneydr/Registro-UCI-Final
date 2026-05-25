@@ -4,8 +4,10 @@ import 'package:registro_uci/features/firmas/domain/models/firma.dart';
 import 'package:registro_uci/features/registros_diarios/data/constants/strings.dart';
 part 'registro_diario.freezed.dart';
 
+// modelo principal de registro diario usando freezed para inmutable
 @freezed
 class RegistroDiario with _$RegistroDiario {
+  // constructor con campos: id, fecha, firma y observaciones
   const factory RegistroDiario({
     required String idRegistroDiario,
     required DateTime fechaRegistro,
@@ -13,6 +15,7 @@ class RegistroDiario with _$RegistroDiario {
     @Default('') String observaciones,
   }) = _RegistroDiario;
 
+  // factory que construye un registro diario desde firestore incluyendo el id
   factory RegistroDiario.fromJson(
     Map<String, dynamic> json, {
     required String id,

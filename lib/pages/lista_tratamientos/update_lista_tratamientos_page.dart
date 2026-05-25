@@ -5,11 +5,16 @@ import 'package:registro_uci/features/lista_tratamientos/data/providers/lista_tr
 import 'package:registro_uci/features/lista_tratamientos/domain/models/lista_tratamientos.dart';
 import 'package:registro_uci/features/lista_tratamientos/presentation/widgets/update_lista_tratamientos_form.dart';
 
+// pagina para editar un tratamiento existente
 class UpdateListaTratamientosPage extends ConsumerWidget {
+  // id del ingreso al que pertenece el tratamiento
   final String idIngreso;
+  // id del registro diario
   final String idRegistroDiario;
+  // id del tratamiento a editar
   final String listaTratamientosId;
 
+  // constructor, requiere los ids del ingreso, registro diario y tratamiento
   const UpdateListaTratamientosPage({
     super.key,
     required this.idIngreso,

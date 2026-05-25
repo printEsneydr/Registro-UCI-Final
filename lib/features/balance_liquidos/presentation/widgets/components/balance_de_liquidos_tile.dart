@@ -4,7 +4,9 @@ import 'package:registro_uci/features/balance_liquidos/data/providers/balances_d
 import 'package:registro_uci/features/balance_liquidos/domain/models/balance_de_liquidos.dart';
 import 'package:registro_uci/pages/balance_liquidos/choose_balance_liquidos_page.dart';
 
+// widget que muestra un balance de liquidos individual como un tile
 class BalanceDeLiquidosTile extends StatelessWidget {
+  // modelo del balance y parametros para navegar a la pagina de detalle
   final BalanceDeLiquidos balance;
   final BalancesDeLiquidosParams params;
   const BalanceDeLiquidosTile({
@@ -13,6 +15,7 @@ class BalanceDeLiquidosTile extends StatelessWidget {
     required this.params,
   });
 
+  // navega a la pagina de detalle del balance al hacer tap
   @override
   Widget build(BuildContext context) {
     return LiteTile(

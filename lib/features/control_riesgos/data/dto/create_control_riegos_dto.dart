@@ -1,3 +1,4 @@
+// dto para crear un control de riesgos con todos los campos
 class CreateControlDeRiesgosDto {
   final bool tieneUPP;
   final DateTime? fechaRegistroUlcera;
@@ -41,7 +42,7 @@ class CreateControlDeRiesgosDto {
     this.medicamentoAlergico,
   });
 
-  // Método para convertir el DTO a un mapa
+  // convierte el dto a un mapa para firestore
   Map<String, dynamic> toMap() {
     return {
       'tieneUPP': tieneUPP,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/common/components/tile.dart';
 import 'package:registro_uci/pages/tratamiento_antibioticos/dia_tratamiento_antibiotico_page.dart';
 
+// tile que navega a la pagina de dias de tratamiento antibiotico
 class DiasTratamientoAntibioticoTile extends StatelessWidget {
   final String idIngreso;
   final String idTratamientoAntibiotico;

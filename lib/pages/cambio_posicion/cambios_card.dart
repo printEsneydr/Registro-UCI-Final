@@ -5,8 +5,11 @@ import 'package:registro_uci/features/auth/domain/enums/user_role.dart';
 import 'package:registro_uci/features/control_cambio_posicion/data/providers/cambio_posicion_provider.dart';
 import 'package:registro_uci/features/control_cambio_posicion/domain/models/cambio_posicion.dart';
 
+// tarjeta que muestra los cambios de posicion de un paciente por hora
 class CambioPosicionCard extends ConsumerWidget {
+  // id del paciente en la coleccion ingresos
   final String idIngreso;
+  // id del registro diario al que pertenecen los cambios
   final String idRegistroDiario;
 
   const CambioPosicionCard({
@@ -15,6 +18,7 @@ class CambioPosicionCard extends ConsumerWidget {
     required this.idRegistroDiario,
   });
 
+  // construye la tarjeta mostrando ultima posicion y lista de horas
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final params = CambioPosicionParams(
@@ -66,11 +70,13 @@ class CambioPosicionCard extends ConsumerWidget {
     );
   }
 
+  // convierte un numero de hora en formato legible ej: 08:00 AM
   String _formatearHora(int hora) {
     if (hora < 0) return '--';
     return '${hora.toString().padLeft(2, '0')}:00 ${hora < 12 ? 'AM' : 'PM'}';
   }
 
+  // construye la lista de todas las horas con su estado de registro
   List<Widget> _buildListaHoras(
     List<CambioDePosicion> cambios,
     BuildContext context,
@@ -142,6 +148,7 @@ class CambioPosicionCard extends ConsumerWidget {
     }).toList();
   }
 
+  // layout horizontal con icono hora posicion y botones
   Widget _buildHorizontalLayout(
     int hora,
     bool tieneRegistro,
@@ -184,6 +191,7 @@ class CambioPosicionCard extends ConsumerWidget {
     );
   }
 
+  // layout vertical para pantallas angostas con icono hora posicion y botones
   Widget _buildVerticalLayout(
     int hora,
     bool tieneRegistro,
@@ -224,6 +232,7 @@ class CambioPosicionCard extends ConsumerWidget {
     );
   }
 
+  // muestra botones de agregar y editar segun el rol del usuario
   Widget _buildActionButtons(
     bool tieneRegistro,
     int hora,
@@ -269,6 +278,7 @@ class CambioPosicionCard extends ConsumerWidget {
     );
   }
 
+  // abre un dialogo con el detalle de la posicion registrada
   void _mostrarDetalleCambio(
     BuildContext context,
     CambioDePosicion cambio,
@@ -321,6 +331,7 @@ class CambioPosicionCard extends ConsumerWidget {
     );
   }
 
+  // abre el dialogo para seleccionar o editar una posicion
   void _mostrarSelectorPosicion(
     BuildContext context,
     WidgetRef ref, {
@@ -340,6 +351,7 @@ class CambioPosicionCard extends ConsumerWidget {
   }
 }
 
+// dialogo interno para seleccionar hora y posicion del cambio
 class _SelectorPosicionDialog extends ConsumerStatefulWidget {
   final String idIngreso;
   final String idRegistroDiario;
@@ -358,6 +370,7 @@ class _SelectorPosicionDialog extends ConsumerStatefulWidget {
   _SelectorPosicionDialogState createState() => _SelectorPosicionDialogState();
 }
 
+// estado del dialogo con los valores seleccionados de hora y posicion
 class _SelectorPosicionDialogState
     extends ConsumerState<_SelectorPosicionDialog> {
   late int selectedHora;
@@ -376,6 +389,7 @@ class _SelectorPosicionDialogState
     }
   }
 
+  // carga los datos del cambio existente si se esta editando
   Future<void> _cargarDatosExistente() async {
     final cambios = ref.read(cambioPosicionProvider(CambioPosicionParams(
       idIngreso: widget.idIngreso,
@@ -402,6 +416,7 @@ class _SelectorPosicionDialogState
     }
   }
 
+  // construye el dialogo con selectores de hora y posicion
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -460,10 +475,12 @@ class _SelectorPosicionDialogState
     );
   }
 
+  // convierte un numero de hora en formato legible
   String _formatearHora(int hora) {
     return '${hora.toString().padLeft(2, '0')}:00 ${hora < 12 ? 'AM' : 'PM'}';
   }
 
+  // dropdown para seleccionar la hora del cambio
   Widget _buildHoraSelector() {
     final horasDisponibles = [
       8,
@@ -511,6 +528,7 @@ class _SelectorPosicionDialogState
     );
   }
 
+  // dropdown para seleccionar la posicion del paciente
   Widget _buildPosicionSelector() {
     return DropdownButtonFormField<String>(
       value: selectedPosicion,
@@ -531,6 +549,7 @@ class _SelectorPosicionDialogState
     );
   }
 
+  // guarda o actualiza el cambio de posicion en firestore
   Future<void> _guardarCambio(BuildContext context) async {
     try {
       await ref.read(guardarCambioPosicionProvider(

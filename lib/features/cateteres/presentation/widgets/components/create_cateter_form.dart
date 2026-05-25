@@ -6,6 +6,7 @@ import '../../controllers/create_cateter_controller.dart';
 import '../../../data/providers/cateteres_providers.dart';
 import '../../../data/constants/constants.dart';
 
+// formulario para crear un nuevo cateter
 class CreateCateterForm extends ConsumerStatefulWidget {
   final String idIngreso;
   const CreateCateterForm({super.key, required this.idIngreso});
@@ -14,6 +15,7 @@ class CreateCateterForm extends ConsumerStatefulWidget {
   ConsumerState<CreateCateterForm> createState() => _CreateCateterFormState();
 }
 
+// estado del formulario con los campos y controladores
 class _CreateCateterFormState extends ConsumerState<CreateCateterForm> {
   final _formKey = GlobalKey<FormState>();
   String? _tipo;
@@ -42,6 +44,7 @@ class _CreateCateterFormState extends ConsumerState<CreateCateterForm> {
     super.dispose();
   }
 
+  // abre el date picker para seleccionar la fecha de insercion
   Future<void> _seleccionarFecha() async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -58,6 +61,7 @@ class _CreateCateterFormState extends ConsumerState<CreateCateterForm> {
     }
   }
 
+  // abre el date picker para seleccionar la fecha de curacion o cambio
   Future<void> _seleccionarFechaCuracion() async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -189,6 +193,7 @@ class _CreateCateterFormState extends ConsumerState<CreateCateterForm> {
     );
   }
 
+  // guarda el cateter en firebase usando el controlador
   void _guardarCateter() {
     if (_formKey.currentState!.validate()) {
       final nuevoCateter = CreateCateterDto(

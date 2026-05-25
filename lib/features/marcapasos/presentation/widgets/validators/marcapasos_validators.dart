@@ -1,4 +1,4 @@
-/// Valida la fecha de colocación del marcapaso.
+// valida que la fecha de colocacion no este vacia
 String? fechaColocacionValidator(String? value) {
   if (value == null || value.isEmpty) {
     return "La fecha de colocación es obligatoria.";
@@ -6,7 +6,7 @@ String? fechaColocacionValidator(String? value) {
   return null;
 }
 
-/// Valida que el modo del marcapaso haya sido seleccionado.
+// valida que el modo del marcapaso haya sido seleccionado
 String? modoMarcapasoValidator(String? value) {
   if (value == null || value.isEmpty) {
     return "Debe seleccionar un modo de marcapaso.";
@@ -14,7 +14,7 @@ String? modoMarcapasoValidator(String? value) {
   return null;
 }
 
-/// Valida que la vía del marcapaso haya sido seleccionada.
+// valida que la via del marcapaso haya sido seleccionada
 String? viaMarcapasoValidator(String? value) {
   if (value == null || value.isEmpty) {
     return "Debe seleccionar una vía de marcapaso.";
@@ -22,7 +22,7 @@ String? viaMarcapasoValidator(String? value) {
   return null;
 }
 
-/// Valida que la frecuencia sea un número válido y mayor que 0.
+// valida que la frecuencia sea un numero mayor a 0
 String? frecuenciaMarcapasoValidator(int? value) {
   if (value == null || value <= 0) {
     return "Debe ingresar una frecuencia válida.";
@@ -30,7 +30,7 @@ String? frecuenciaMarcapasoValidator(int? value) {
   return null;
 }
 
-/// Valida que la sensibilidad sea un número válido y mayor que 0.
+// valida que la sensibilidad sea un numero mayor a 0
 String? sensibilidadMarcapasoValidator(double? value) {
   if (value == null || value <= 0) {
     return "Debe ingresar una sensibilidad válida.";
@@ -38,7 +38,7 @@ String? sensibilidadMarcapasoValidator(double? value) {
   return null;
 }
 
-/// Valida que la salida sea un número válido y mayor que 0.
+// valida que la salida sea un numero mayor a 0
 String? salidaMarcapasoValidator(double? value) {
   if (value == null || value <= 0) {
     return "Debe ingresar una salida válida.";

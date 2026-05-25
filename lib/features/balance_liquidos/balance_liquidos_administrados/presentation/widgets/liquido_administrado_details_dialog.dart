@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/domain/models/liquido_administrado.dart';
 
+// dialog que muestra los detalles completos de un liquido administrado
 class LiquidoAdministradoDetailsDialog extends StatelessWidget {
+  // modelo del liquido administrado a mostrar
   final LiquidoAdministrado liquido;
 
   const LiquidoAdministradoDetailsDialog({super.key, required this.liquido});
 
+  // construye el dialog con medicamento, cantidad, comentario, dosis y hora
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

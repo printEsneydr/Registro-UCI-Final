@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/common/components/tile.dart';
 import '../../../../../../pages/marcapasos/marcapasos_page.dart'; // ✅ Importa la página correcta
 
+// tile que navega a la pagina de listado de marcapasos
 class MarcapasosTile extends StatelessWidget {
   final String idIngreso; // 🔥 Se añade el idIngreso como parámetro
 

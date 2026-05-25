@@ -8,6 +8,7 @@ import 'package:registro_uci/features/ingresos/domain/models/ingreso.dart';
 import 'package:registro_uci/features/ingresos/presentation/validators/create_ingreso_validators.dart';
 import 'package:registro_uci/features/ingresos/presentation/widgets/components/buttons/update_ingreso_form_button.dart';
 
+// formulario precargado para actualizar un ingreso existente
 class UpdateIngresoForm extends StatefulWidget {
   final Ingreso ingreso;
   const UpdateIngresoForm({
@@ -19,6 +20,7 @@ class UpdateIngresoForm extends StatefulWidget {
   State<UpdateIngresoForm> createState() => _UpdateIngresoFormState();
 }
 
+// estado que inicializa los controladores con los datos del ingreso a editar
 class _UpdateIngresoFormState extends State<UpdateIngresoForm> {
   late TextEditingController _nombrePacienteController;
   late TextEditingController _fechaNacimientoPacienteController;
@@ -415,6 +417,7 @@ class _UpdateIngresoFormState extends State<UpdateIngresoForm> {
     );
   }
 
+  // abre un date picker y asigna la fecha seleccionada al controlador
   Future<void> _selectDate(
     TextEditingController controller,
     BuildContext context,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/common/components/tile.dart';
 import '../../../../../../pages/procedimientos_especiales/precedimientos_page.dart';
 
+// tile que navega a la pagina de procedimientos especiales
 class ProcedimientosEspecialesTile extends StatelessWidget {
   const ProcedimientosEspecialesTile({
     super.key,

@@ -1,5 +1,6 @@
-// Validaciones
+// validaciones de los campos del formulario de creacion de ingreso
 
+// valida que el nombre del paciente no este vacio
 String? Function(String?) nombrePacienteValidator = (String? value) {
   if (value == null || value.isEmpty) {
     return 'Este campo es obligatorio';
@@ -7,6 +8,7 @@ String? Function(String?) nombrePacienteValidator = (String? value) {
   return null;
 };
 
+// valida que la identificacion sea numerica y no este vacia
 String? Function(String?) identificacionPacienteValidator = (String? value) {
   if (value == null || value.isEmpty) {
     return 'Este campo es obligatorio';
@@ -16,6 +18,7 @@ String? Function(String?) identificacionPacienteValidator = (String? value) {
   return null;
 };
 
+// valida que la carpeta sea numerica y no este vacia
 String? Function(String?) carpetaValidator = (String? value) {
   if (value == null || value.isEmpty) {
     return 'Este campo es obligatorio';
@@ -25,6 +28,7 @@ String? Function(String?) carpetaValidator = (String? value) {
   return null;
 };
 
+// valida el formato de fecha yyyy-mm-dd
 String? Function(String?) fechaNacimientoValidator = (String? value) {
   if (value == null || value.isEmpty) {
     return 'Este campo es obligatorio';
@@ -36,6 +40,7 @@ String? Function(String?) fechaNacimientoValidator = (String? value) {
   return null;
 };
 
+// valida que el peso sea un numero valido
 String? Function(String?) pesoValidator = (String? value) {
   if (value == null || value.isEmpty) {
     return 'Este campo es obligatorio';
@@ -45,6 +50,7 @@ String? Function(String?) pesoValidator = (String? value) {
   return null;
 };
 
+// valida que la talla sea un numero valido
 String? Function(String?) tallaValidator = (String? value) {
   if (value == null || value.isEmpty) {
     return 'Este campo es obligatorio';
@@ -54,6 +60,7 @@ String? Function(String?) tallaValidator = (String? value) {
   return null;
 };
 
+// valida que la cama no este vacia
 String? Function(String?) camaValidator = (String? value) {
   if (value == null || value.isEmpty) {
     return 'Este campo es obligatorio';
@@ -61,6 +68,7 @@ String? Function(String?) camaValidator = (String? value) {
   return null;
 };
 
+// valida que el diagnostico de ingreso no este vacio
 String? Function(String?) diagnosticoIngresoValidator = (String? value) {
   if (value == null || value.isEmpty) {
     return 'Este campo es obligatorio';
@@ -68,6 +76,7 @@ String? Function(String?) diagnosticoIngresoValidator = (String? value) {
   return null;
 };
 
+// valida que el nombre del familiar no este vacio
 String? Function(String?) nombreFamiliarValidator = (String? value) {
   if (value == null || value.isEmpty) {
     return 'Este campo es obligatorio';
@@ -75,6 +84,7 @@ String? Function(String?) nombreFamiliarValidator = (String? value) {
   return null;
 };
 
+// valida que la sala haya sido seleccionada
 String? Function(String?) salaValidator = (String? value) {
   if (value == null || value.isEmpty) {
     return 'Este campo es obligatorio';
@@ -82,6 +92,7 @@ String? Function(String?) salaValidator = (String? value) {
   return null;
 };
 
+// valida que el parentesco no este vacio
 String? Function(String?) parentescoFamiliarValidator = (String? value) {
   if (value == null || value.isEmpty) {
     return 'Este campo es obligatorio';
@@ -89,7 +100,7 @@ String? Function(String?) parentescoFamiliarValidator = (String? value) {
   return null;
 };
 
-// Validación del campo "Otro" en parentesco familiar
+// valida que se especifique el parentesco cuando se selecciona "otro"
 String? Function(String?) otherParentescoFamiliarValidator = (String? value) {
   if (value == null || value.isEmpty) {
     return 'Debes especificar el parentesco';
@@ -97,6 +108,7 @@ String? Function(String?) otherParentescoFamiliarValidator = (String? value) {
   return null;
 };
 
+// valida que la eps o arl haya sido seleccionada
 String? Function(String?) epsOArlValidator = (String? value) {
   if (value == null || value.isEmpty) {
     return 'Este campo es obligatorio';
@@ -104,6 +116,7 @@ String? Function(String?) epsOArlValidator = (String? value) {
   return null;
 };
 
+// valida que se especifique la eps cuando se selecciona "otro"
 String? Function(String?) otherEpsArlValidator = (String? value) {
   if (value == null || value.isEmpty) {
     return 'Debes especificar la EPS o ARL';
@@ -111,7 +124,7 @@ String? Function(String?) otherEpsArlValidator = (String? value) {
   return null;
 };
 
-// Validación del teléfono para Colombia (exactamente 10 dígitos)
+// valida que el telefono tenga exactamente 10 digitos (colombia)
 String? Function(String?) telefonoFamiliarValidator = (String? value) {
   if (value == null || value.isEmpty) {
     return 'Este campo es obligatorio';

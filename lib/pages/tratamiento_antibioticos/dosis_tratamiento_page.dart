@@ -8,10 +8,14 @@ import 'package:registro_uci/features/antibioticos/data/providers/tratamiento_an
 import 'package:registro_uci/features/antibioticos/domain/models/dosis_tratamiento.dart';
 import 'package:registro_uci/features/antibioticos/presentation/controllers/update_dia_tratamiento_controller.dart';
 
+// pagina que muestra las dosis de un dia de tratamiento antibiotico
 class DosisTratamientoPage extends ConsumerStatefulWidget {
+  // parametros para obtener las dosis del dia
   final DosisTratamientoParams dosisParams;
+  // parametros para obtener los datos del tratamiento
   final TratamientoAntibioticoParams tratamientoParams;
 
+  // constructor, requiere ambos parametros
   const DosisTratamientoPage({
     super.key,
     required this.dosisParams,
@@ -23,18 +27,17 @@ class DosisTratamientoPage extends ConsumerStatefulWidget {
       _DosisTratamientoPageState();
 }
 
+// estado de la pagina de dosis del tratamiento
 class _DosisTratamientoPageState extends ConsumerState<DosisTratamientoPage> {
   @override
   void initState() {
     super.initState();
-    // You can add any initialization logic here if necessary
   }
 
+  // recarga los datos del tratamiento y las dosis
   Future<void> _refreshData() async {
-    // Refresh the two providers
     ref.invalidate(tratamientoAntibioticoProvider(widget.tratamientoParams));
     ref.invalidate(dosisTratamientoProvider(widget.dosisParams));
-    // Wait for the providers to load the new data
     await Future.wait([
       ref.read(tratamientoAntibioticoProvider(widget.tratamientoParams).future),
       ref.read(dosisTratamientoProvider(widget.dosisParams).future),
@@ -43,6 +46,7 @@ class _DosisTratamientoPageState extends ConsumerState<DosisTratamientoPage> {
 
   @override
   Widget build(BuildContext context) {
+    // observa los datos del tratamiento y las dosis desde los proveedores
     final tratamientoAsyncValue =
         ref.watch(tratamientoAntibioticoProvider(widget.tratamientoParams));
     final dosisAsyncValue =
@@ -122,7 +126,7 @@ class _DosisTratamientoPageState extends ConsumerState<DosisTratamientoPage> {
     );
   }
 
-  // Method to update the tratamiento if necessary
+  // actualiza el dia de tratamiento como valido si se completaron las dosis
   Future<void> _updateTratamiento(
     WidgetRef ref,
     String idIngreso,
@@ -144,7 +148,7 @@ class _DosisTratamientoPageState extends ConsumerState<DosisTratamientoPage> {
     );
   }
 
-  // Doses list widget
+  // construye la lista de dosis del dia
   Widget _buildDosesList(List<DosisTratamiento> dosisList) {
     return Expanded(
       child: ListView.builder(
@@ -185,7 +189,7 @@ class _DosisTratamientoPageState extends ConsumerState<DosisTratamientoPage> {
     );
   }
 
-  // Progress bar for dosage
+  // construye una barra de progreso que muestra el avance de las dosis diarias
   Widget _buildProgressBar(int totalDosis, int expectedDosis) {
     final progress = totalDosis / expectedDosis;
     return Column(
@@ -210,7 +214,7 @@ class _DosisTratamientoPageState extends ConsumerState<DosisTratamientoPage> {
     );
   }
 
-  // Treatment day status widget
+  // muestra si el dia cuenta como dia de tratamiento segun las dosis completadas
   Widget _buildTreatmentDayStatus(bool isComplete) {
     return Center(
       child: Container(

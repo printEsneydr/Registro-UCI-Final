@@ -1,3 +1,4 @@
+// dto para crear un medicamento administrado, extiende MapView para usar como mapa directo
 import "dart:collection";
 
 class CreateMedicamentoAdministradoDto extends MapView<String, dynamic> {
@@ -6,6 +7,7 @@ class CreateMedicamentoAdministradoDto extends MapView<String, dynamic> {
   final String unidad;
   final bool esTratamiento;
 
+  // constructor que inicializa los campos y el mapa interno
   CreateMedicamentoAdministradoDto({
     required this.medicamento,
     required this.cantidad,

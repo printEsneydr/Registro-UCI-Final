@@ -2,6 +2,7 @@ import 'package:registro_uci/features/necesidades/data/dto/create_necesidad_dto.
 import 'package:registro_uci/features/necesidades/data/dto/update_necesidad_dto.dart';
 import 'package:registro_uci/features/necesidades/domain/models/necesidad.dart';
 
+// repositorio abstracto que define el contrato para operaciones con necesidades
 abstract class NecesidadesRepository {
   Future<List<Necesidad>> getNecesidadesDeRegistro(
     String idIngreso,

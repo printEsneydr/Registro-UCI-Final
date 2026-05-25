@@ -4,9 +4,10 @@ import 'package:registro_uci/features/ingresos/data/constants/strings.dart';
 
 part 'ingreso.freezed.dart';
 
-// Enum para 'Sala'
+// enum que representa las salas disponibles (A, B, C, D)
 enum Sala { A, B, C, D }
 
+// modelo que representa un ingreso de paciente en la uci
 @freezed
 class Ingreso with _$Ingreso {
   const factory Ingreso({
@@ -31,6 +32,7 @@ class Ingreso with _$Ingreso {
     required Sala sala,
   }) = _Ingreso;
 
+  // construye un ingreso desde un mapa de firestore usando el id del documento
   factory Ingreso.fromJson(Map<String, dynamic> json, {required String id}) {
     return Ingreso(
       idIngreso: id, // ✅ Se usa el ID que se pasa en la función
@@ -68,7 +70,7 @@ class Ingreso with _$Ingreso {
   }
 }
 
-// Extensión para convertir String a Enum Sala
+// extension que convierte un string al enum Sala
 extension ToSala on String {
   Sala toSala() {
     switch (this) {
@@ -86,7 +88,7 @@ extension ToSala on String {
   }
 }
 
-// Extensión para convertir Enum Sala a String
+// extension que convierte el enum Sala a string
 extension SalaToString on Sala {
   String salaToString() {
     switch (this) {

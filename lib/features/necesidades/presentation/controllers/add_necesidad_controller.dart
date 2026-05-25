@@ -6,6 +6,7 @@ import 'package:registro_uci/features/necesidades/data/abstract_repositories/nec
 import 'package:registro_uci/features/necesidades/data/dto/create_necesidad_dto.dart';
 import 'package:registro_uci/features/necesidades/data/providers/necesidades_de_registro_provider.dart';
 
+// controlador que maneja la logica de agregar una nueva necesidad a firestore
 class AddNecesidadToRegistroController extends AsyncNotifier<void> {
   late final NecesidadesRepository _repository =
       ref.watch(necesidadesRepositoryProvider);
@@ -13,6 +14,7 @@ class AddNecesidadToRegistroController extends AsyncNotifier<void> {
   @override
   FutureOr<void> build() {}
 
+  // agrega una nueva necesidad a firestore e invalida el provider
   Future<void> addNecesidadToRegistro(
     String idIngreso,
     String idRegistro,
@@ -29,6 +31,7 @@ class AddNecesidadToRegistroController extends AsyncNotifier<void> {
   }
 }
 
+// provider del controlador de agregar necesidades
 final addNecesidadToRegistroControllerProvider =
     AsyncNotifierProvider<AddNecesidadToRegistroController, void>(
   () => AddNecesidadToRegistroController(),

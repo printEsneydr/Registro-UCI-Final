@@ -5,9 +5,11 @@ import 'package:registro_uci/features/nutricion/data/dto/create_registro_nutrici
 import 'package:registro_uci/features/nutricion/data/providers/nutricion_provider.dart';
 import 'package:registro_uci/features/nutricion/data/repositories/firebase_nutricion_repository.dart';
 
+// formulario para crear un nuevo registro nutricional con antropometria y distribucion calorica
 class CreateRegistroNutricionalForm extends ConsumerStatefulWidget {
   final String idIngreso;
 
+  // constructor que recibe el id del ingreso
   const CreateRegistroNutricionalForm({
     super.key,
     required this.idIngreso,
@@ -55,6 +57,7 @@ class _CreateRegistroNutricionalFormState
     super.dispose();
   }
 
+  // calcula el imc en tiempo real desde los controladores de peso y talla
   double get _imc {
     final peso = double.tryParse(_pesoController.text);
     final talla = double.tryParse(_tallaController.text);
@@ -62,12 +65,14 @@ class _CreateRegistroNutricionalFormState
     return peso / ((talla / 100) * (talla / 100));
   }
 
+  // calcula el requerimiento calorico estimado desde el peso
   double get _requerimientoCalorico {
     final peso = double.tryParse(_pesoController.text);
     if (peso == null || peso <= 0) return 0;
     return peso * 27.5;
   }
 
+  // valida que el valor sea un numero positivo
   String? _validarNumeroPositivo(String? value) {
     if (value == null || value.isEmpty) return 'Requerido';
     final numero = double.tryParse(value);
@@ -76,6 +81,7 @@ class _CreateRegistroNutricionalFormState
     return null;
   }
 
+  // valida que el valor sea un porcentaje entre 0 y 100 (opcional)
   String? _validarPorcentaje(String? value) {
     if (value == null || value.isEmpty) return null;
     final numero = double.tryParse(value);
@@ -299,6 +305,7 @@ class _CreateRegistroNutricionalFormState
     );
   }
 
+  // guarda el registro nutricional en firestore y refresca los providers
   Future<void> _guardar() async {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);

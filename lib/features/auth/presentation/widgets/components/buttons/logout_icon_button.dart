@@ -4,11 +4,14 @@ import 'package:registro_uci/common/components/buttons/primary_button.dart';
 import 'package:registro_uci/common/components/buttons/secondary_button.dart';
 import 'package:registro_uci/features/auth/presentation/controllers/auth_controller.dart';
 
+// boton de icono para cerrar sesion con confirmacion
 class LogoutIconButton extends ConsumerWidget {
   const LogoutIconButton({
     super.key,
   });
 
+
+  // construye un iconbutton que muestra un dialogo de confirmacion
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(

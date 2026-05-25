@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// dto con los datos para crear un registro nutricional
 class CreateRegistroNutricionalDto {
   final double peso;
   final double talla;
@@ -27,6 +28,7 @@ class CreateRegistroNutricionalDto {
     this.observaciones,
   });
 
+  // convierte el dto a un mapa para guardar en firestore
   Map<String, dynamic> toMap() {
     return {
       'peso': peso,

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:registro_uci/features/necesidades/domain/models/reporte_necesidades.dart';
 
+// provider que obtiene el reporte de necesidades desde firestore
 final reporteNecesidadesProvider =
     FutureProvider.family<ReporteNecesidades?, ReporteNecesidadesParams>(
   (ref, params) async {
@@ -18,6 +19,7 @@ final reporteNecesidadesProvider =
   },
 );
 
+// parametros de entrada para el provider del reporte de necesidades
 class ReporteNecesidadesParams {
   final String idIngreso;
   final String idRegistro;
@@ -38,6 +40,7 @@ class ReporteNecesidadesParams {
   int get hashCode => Object.hash(idIngreso, idRegistro);
 }
 
+// funcion global para guardar el reporte de necesidades en firestore
 Future<void> guardarReporteNecesidades({
   required String idIngreso,
   required String idRegistro,

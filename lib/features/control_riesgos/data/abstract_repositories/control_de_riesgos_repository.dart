@@ -1,20 +1,21 @@
 import 'package:registro_uci/features/control_riesgos/domain/models/control_de_riesgos.dart';
 
+// repositorio abstracto para operaciones de control de riesgos
 abstract class ControlDeRiesgosRepository {
-  // Método para obtener la lista de controles de riesgos de un ingreso y registro diario
+  // obtiene un stream de controles de riesgos
   Stream<List<ControlDeRiesgos>> getControlDeRiesgos(
     String idIngreso,
     String idRegistroDiario,
   );
 
-  // Método para agregar un nuevo control de riesgos
+  // agrega un nuevo control de riesgos
   Future<void> addControlDeRiesgos(
     String idIngreso,
     String idRegistroDiario,
     ControlDeRiesgos controlDeRiesgos,
   );
 
-  // Método para actualizar un control de riesgos existente
+  // actualiza un control de riesgos existente
   Future<void> updateControlDeRiesgos(
     String idIngreso,
     String idRegistroDiario,
@@ -22,14 +23,14 @@ abstract class ControlDeRiesgosRepository {
     ControlDeRiesgos controlDeRiesgos,
   );
 
-  // Método para eliminar un control de riesgos
+  // elimina un control de riesgos
   Future<void> deleteControlDeRiesgos(
     String idIngreso,
     String idRegistroDiario,
     String idControlDeRiesgos,
   );
 
-  // Método para obtener un control de riesgos por ID
+  // obtiene un control de riesgos por su id
   Future<ControlDeRiesgos?> getControlDeRiesgosById(
     String idIngreso,
     String idRegistroDiario,

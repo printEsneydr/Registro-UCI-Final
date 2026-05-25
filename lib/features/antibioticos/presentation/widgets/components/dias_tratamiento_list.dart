@@ -4,6 +4,7 @@ import 'package:registro_uci/common/providers/repository_providers.dart';
 import 'package:registro_uci/features/antibioticos/data/providers/dias_tratamiento_provider.dart';
 import 'package:registro_uci/features/antibioticos/presentation/widgets/components/dia_tratamiento_tile.dart';
 
+// lista de dias de tratamiento antibiotico con soporte para actualizar
 class DiasTratamientoList extends ConsumerWidget {
   final String idIngreso;
   final String idTratamientoAntibiotico;
@@ -23,6 +24,7 @@ class DiasTratamientoList extends ConsumerWidget {
       ),
     ));
 
+    // refresca los datos desde firebase y actualiza el provider
     Future<void> refresh() {
       ref.read(diasTratamientoRepositoryProvider).refreshDiasTratamiento(
             idIngreso,

@@ -5,6 +5,7 @@ import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administ
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/data/dto/create_liquido_administrado_dto.dart';
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/data/providers/liquidos_administrados_provider.dart';
 
+// controller para actualizar un liquido administrado
 class UpdateLiquidoAdministradoController extends AsyncNotifier<void> {
   late final LiquidosAdministradosRepository _repository =
       ref.watch(liquidosAdministradosRepositoryProvider);
@@ -12,6 +13,7 @@ class UpdateLiquidoAdministradoController extends AsyncNotifier<void> {
   @override
   FutureOr<void> build() {}
 
+  // actualiza un liquido administrado e invalida el provider
   Future<void> updateLiquidoAdministrado(
     String idIngreso,
     String idRegistroDiario,
@@ -36,6 +38,7 @@ class UpdateLiquidoAdministradoController extends AsyncNotifier<void> {
   }
 }
 
+// provider del controller de actualizacion de liquidos administrados
 final updateLiquidoAdministradoControllerProvider =
     AsyncNotifierProvider<UpdateLiquidoAdministradoController, void>(
   () => UpdateLiquidoAdministradoController(),

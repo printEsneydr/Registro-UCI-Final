@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// muestra un dialogo para seleccionar una hora
 Future<TimeOfDay?> pickTime(
   BuildContext context,
   TimeOfDay initialTime,

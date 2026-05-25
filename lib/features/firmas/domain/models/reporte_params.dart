@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+// parametros inmutables que identifican un reporte para firmar
 @immutable
 class ReporteParams {
   final String idIngreso;

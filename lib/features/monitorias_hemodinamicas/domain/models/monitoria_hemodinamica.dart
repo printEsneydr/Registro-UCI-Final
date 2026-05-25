@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'monitoria_hemodinamica.freezed.dart';
 
+// modelo freezed que representa los parametros de una monitoria hemodinamica
 @freezed
 class MonitoriaHemodinamica with _$MonitoriaHemodinamica {
   const factory MonitoriaHemodinamica({
@@ -28,6 +29,7 @@ class MonitoriaHemodinamica with _$MonitoriaHemodinamica {
     int? saturacion,
   }) = _MonitoriaHemodinamica;
 
+  // crea una monitoria desde un mapa de firestore
   factory MonitoriaHemodinamica.fromJson(Map<String, dynamic> json,
       {required String id}) {
     return MonitoriaHemodinamica(

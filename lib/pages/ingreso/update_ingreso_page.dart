@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/features/ingresos/domain/models/ingreso.dart';
 import 'package:registro_uci/features/ingresos/presentation/widgets/update_ingreso_form.dart';
 
+// pagina con el formulario para actualizar un ingreso existente
 class UpdateIngresoPage extends StatelessWidget {
+  // datos del ingreso que se va a editar
   final Ingreso ingreso;
   const UpdateIngresoPage({
     super.key,
     required this.ingreso,
   });
 
+  // muestra el formulario de actualizacion con los datos del ingreso
   @override
   Widget build(BuildContext context) {
     return Scaffold(

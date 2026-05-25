@@ -4,8 +4,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/domain/models/monitoria_hemodinamica.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/data/providers/monitoria_hemodinamica_provider.dart';
 
+// pagina que muestra graficos de lineas con datos de monitoria hemodinamica
 class GraphicsPage extends ConsumerWidget {
+  // id del ingreso
   final String idIngreso;
+  // id del registro diario
   final String idRegistroDiario;
 
   const GraphicsPage({
@@ -25,6 +28,7 @@ class GraphicsPage extends ConsumerWidget {
     );
   }
 
+  // construye el cuerpo con los graficos o mensaje de carga/error
   Widget _buildBody(WidgetRef ref) {
     final monitoriasAsync = ref.watch(monitoriasHemodinamicasStreamProvider(
       ParametrosMonitoriaHemodinamica(
@@ -193,6 +197,7 @@ class GraphicsPage extends ConsumerWidget {
     );
   }
 
+  // titulo de cada seccion de graficos
   Widget _buildSectionTitle(String title) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -207,6 +212,7 @@ class GraphicsPage extends ConsumerWidget {
     );
   }
 
+  // construye una card con un grafico de linea para un parametro especifico
   Widget _buildLineChartCard({
     required String title,
     required List<MonitoriaHemodinamica> data,
@@ -333,6 +339,7 @@ class GraphicsPage extends ConsumerWidget {
     );
   }
 
+  // calcula el intervalo entre marcas del eje x segun el rango de horas
   double _calculateInterval(int minHora, int maxHora) {
     final diff = maxHora - minHora;
     if (diff <= 6) return 1;
@@ -340,6 +347,7 @@ class GraphicsPage extends ConsumerWidget {
     return 4;
   }
 
+  // calcula el valor minimo del eje y segun el tipo de grafico
   double _getMinY(String title, List<MonitoriaHemodinamica> data, 
       double? Function(MonitoriaHemodinamica) getValue) {
     if (title.contains('Temperatura')) return 35;
@@ -351,6 +359,7 @@ class GraphicsPage extends ConsumerWidget {
     return (min * 0.8).clamp(0, double.infinity);
   }
 
+  // calcula el valor maximo del eje y con margen superior
   double _calculateMaxY(List<MonitoriaHemodinamica> data,
       double? Function(MonitoriaHemodinamica) getValue, double? minY) {
     final values = data.map((m) => getValue(m) ?? 0).toList();

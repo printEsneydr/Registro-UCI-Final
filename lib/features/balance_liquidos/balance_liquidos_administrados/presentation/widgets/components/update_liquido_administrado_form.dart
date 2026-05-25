@@ -14,7 +14,9 @@ const medicamentos = [
   'Other'
 ];
 
+// widget con formulario para actualizar un liquido administrado existente
 class UpdateLiquidoAdministradoForm extends StatefulWidget {
+  // parametros y modelo del liquido a editar
   final LiquidosAdministradosParams params;
   final LiquidoAdministrado liquidoAdministrado;
 
@@ -29,6 +31,7 @@ class UpdateLiquidoAdministradoForm extends StatefulWidget {
       _UpdateLiquidoAdministradoFormState();
 }
 
+// estado del formulario de actualizacion con campos precargados
 class _UpdateLiquidoAdministradoFormState
     extends State<UpdateLiquidoAdministradoForm> {
   late TextEditingController _cantidadController;
@@ -69,6 +72,7 @@ class _UpdateLiquidoAdministradoFormState
     super.dispose();
   }
 
+  // construye el formulario precargado con los datos del liquido a editar
   @override
   Widget build(BuildContext context) {
     final dateTime = widget.liquidoAdministrado.hora;

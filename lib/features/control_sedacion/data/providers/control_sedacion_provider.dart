@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:registro_uci/common/providers/repository_providers.dart';
 import 'package:registro_uci/features/control_sedacion/domain/models/control_sedacion.dart';
 
+// parametros para obtener controles de sedacion por ingreso y registro
 @immutable
 class ControlSedacionParams {
   final String idIngreso;
@@ -30,6 +31,7 @@ class ControlSedacionParams {
       Object.hash(idIngreso, idRegistroDiario, idControlSedacion);
 }
 
+// parametros para guardar o actualizar un control de sedacion
 @immutable
 class GuardarControlSedacionParams {
   final String idIngreso;
@@ -51,6 +53,7 @@ class GuardarControlSedacionParams {
   });
 }
 
+// provider que expone un stream en tiempo real de controles de sedacion
 final controlSedacionStreamProvider =
     StreamProvider.family<List<ControlSedacion>, ControlSedacionParams>(
   (ref, params) {
@@ -62,6 +65,7 @@ final controlSedacionStreamProvider =
   },
 );
 
+// provider para guardar o actualizar un control de sedacion
 final guardarControlSedacionProvider =
     FutureProvider.family<void, GuardarControlSedacionParams>(
   (ref, params) async {
@@ -94,6 +98,7 @@ final guardarControlSedacionProvider =
   },
 );
 
+// provider que obtiene el ultimo control de sedacion registrado
 final ultimoControlSedacionProvider =
     FutureProvider.family<ControlSedacion?, ControlSedacionParams>(
   (ref, params) async {
@@ -111,6 +116,7 @@ final ultimoControlSedacionProvider =
   },
 );
 
+// provider para eliminar un control de sedacion
 final eliminarControlSedacionProvider =
     FutureProvider.family<void, ControlSedacionParams>(
   (ref, params) async {
@@ -131,6 +137,7 @@ final eliminarControlSedacionProvider =
   },
 );
 
+// provider que obtiene el resumen de valores rass registrados
 final resumenRASSProvider =
     FutureProvider.family<Map<String, int>, ControlSedacionParams>(
   (ref, params) async {
@@ -148,6 +155,7 @@ final resumenRASSProvider =
   },
 );
 
+// provider para reordenar los controles de sedacion
 final reordenarControlesSedacionProvider = FutureProvider.family<void,
     ({String idIngreso, String idRegistroDiario, List<String> idsEnOrden})>(
   (ref, params) async {

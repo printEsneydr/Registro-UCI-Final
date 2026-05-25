@@ -4,10 +4,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:registro_uci/common/providers/repository_providers.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/data/providers/monitoria_hemodinamica_provider.dart';
 
+// pantalla para editar una monitoria hemodinamica existente
 class EditMonitoriaScreen extends ConsumerStatefulWidget {
+  // id del ingreso
   final String idIngreso;
+  // id del registro diario
   final String idRegistroDiario;
+  // hora inicial del registro
   final int? horaInicial;
+  // id de la monitoria a editar
   final String? idMonitoriaExistente;
 
   const EditMonitoriaScreen({
@@ -22,7 +27,9 @@ class EditMonitoriaScreen extends ConsumerStatefulWidget {
   EditMonitoriaScreenState createState() => EditMonitoriaScreenState();
 }
 
+// estado de la pantalla de edicion de monitoria hemodinamica
 class EditMonitoriaScreenState extends ConsumerState<EditMonitoriaScreen> {
+  // hora seleccionada
   late int selectedHora;
   int? pas,
       pad,
@@ -48,6 +55,7 @@ class EditMonitoriaScreenState extends ConsumerState<EditMonitoriaScreen> {
   bool _isSaving = false;
   bool _isLoading = false;
 
+  // carga los datos iniciales de la monitoria al iniciar la pantalla
   @override
   void initState() {
     super.initState();
@@ -57,6 +65,7 @@ class EditMonitoriaScreenState extends ConsumerState<EditMonitoriaScreen> {
     });
   }
 
+  // carga los datos de la monitoria existente desde el repositorio
   Future<void> _loadInitialData() async {
     if (_isLoading) return;
     if (!mounted) return;
@@ -83,6 +92,7 @@ class EditMonitoriaScreenState extends ConsumerState<EditMonitoriaScreen> {
     }
   }
 
+  // obtiene la monitoria por id y llena los campos del formulario
   Future<void> _cargarDatosExistente() async {
     try {
       final repo = ref.read(monitoriasHemodinamicaRepositoryProvider);
@@ -123,6 +133,7 @@ class EditMonitoriaScreenState extends ConsumerState<EditMonitoriaScreen> {
     }
   }
 
+  // actualiza la monitoria con los datos del formulario
   Future<void> _actualizarMonitoria() async {
     if (_isSaving || !mounted) return;
     if (!_formKey.currentState!.validate()) return;
@@ -245,6 +256,7 @@ class EditMonitoriaScreenState extends ConsumerState<EditMonitoriaScreen> {
     );
   }
 
+  // construye el formulario completo con todas las secciones
   Widget _buildFormulario(ThemeData theme, ColorScheme colors) {
     return Form(
       key: _formKey,
@@ -267,6 +279,7 @@ class EditMonitoriaScreenState extends ConsumerState<EditMonitoriaScreen> {
     );
   }
 
+  // card con campos de presion arterial (PAS, PAD) y calculo de PAM
   Widget _buildPressureCard(ThemeData theme, ColorScheme colors) {
     return Card(
       elevation: 2,
@@ -348,6 +361,7 @@ class EditMonitoriaScreenState extends ConsumerState<EditMonitoriaScreen> {
     );
   }
 
+  // card con campos de signos vitales: frecuencia cardiaca, respiratoria y temperatura
   Widget _buildVitalSignsCard(ThemeData theme, ColorScheme colors) {
     return Card(
       elevation: 2,
@@ -408,6 +422,7 @@ class EditMonitoriaScreenState extends ConsumerState<EditMonitoriaScreen> {
     );
   }
 
+  // card con parametros hemodinamicos: PVC, GC, IC, RVS, IRVS, FiO2, presiones
   Widget _buildHemodynamicCard(ThemeData theme, ColorScheme colors) {
     return Card(
       elevation: 2,
@@ -549,6 +564,7 @@ class EditMonitoriaScreenState extends ConsumerState<EditMonitoriaScreen> {
     );
   }
 
+  // card con monitoreo metabolico: glucometria, insulina y saturacion de O2
   Widget _buildMetabolicCard(ThemeData theme, ColorScheme colors) {
     return Card(
       elevation: 2,
@@ -608,6 +624,7 @@ class EditMonitoriaScreenState extends ConsumerState<EditMonitoriaScreen> {
     );
   }
 
+  // construye un campo de texto numerico con icono, validacion y formato
   Widget _buildNumberField({
     required String label,
     required int? value,
@@ -680,6 +697,7 @@ class EditMonitoriaScreenState extends ConsumerState<EditMonitoriaScreen> {
     );
   }
 
+  // botones de cancelar y guardar cambios en la parte inferior
   Widget _buildActionButtons(ThemeData theme) {
     final colors = theme.colorScheme;
 

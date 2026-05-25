@@ -7,9 +7,11 @@ import 'package:registro_uci/features/ingresos/data/dto/update_ingreso_dto.dart'
 import 'package:registro_uci/features/ingresos/domain/models/ingreso.dart';
 import 'package:registro_uci/features/ingresos/data/constants/strings.dart';
 
+// implementacion en firebase del repositorio de ingresos
 class FirebaseIngresosRepository implements IngresosRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // obtiene todos los ingresos ordenados por fecha de ingreso descendente
   @override
   Future<List<Ingreso>> getAllIngresos() async {
     try {
@@ -30,6 +32,7 @@ class FirebaseIngresosRepository implements IngresosRepository {
     }
   }
 
+  // agrega un nuevo documento de ingreso a la coleccion
   @override
   Future<void> createIngreso(CreateIngresoDto dto) async {
     try {
@@ -39,6 +42,7 @@ class FirebaseIngresosRepository implements IngresosRepository {
     }
   }
 
+  // actualiza los campos de un ingreso existente por su id
   @override
   Future<void> updateIngreso(String idIngreso, UpdateIngresoDto dto) async {
     try {
@@ -53,6 +57,7 @@ class FirebaseIngresosRepository implements IngresosRepository {
     }
   }
 
+  // obtiene un ingreso por su id, retorna null si no existe
   @override
   Future<Ingreso?> getIngresoById(String idIngreso) async {
     try {
@@ -73,6 +78,7 @@ class FirebaseIngresosRepository implements IngresosRepository {
     }
   }
 
+  // obtiene los ingresos filtrados por el campo sala
   @override
   Future<List<Ingreso>> getIngresosBySala(Sala sala) async {
     // Query Firestore for documents where the 'sala' field matches the provided Sala
@@ -88,6 +94,7 @@ class FirebaseIngresosRepository implements IngresosRepository {
         .toList();
   }
 
+  // marca un ingreso como finalizado asignandole la fecha de egreso
   @override
   Future<void> terminarIngreso(String idIngreso, DateTime fechaFin) async {
     try {

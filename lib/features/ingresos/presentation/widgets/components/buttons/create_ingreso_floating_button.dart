@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:registro_uci/pages/ingreso/create_ingreso_page.dart';
 
+// boton flotante que navega a la pagina de creacion de ingreso
 class CreateIngresoFAB extends StatelessWidget {
   const CreateIngresoFAB({
     super.key,

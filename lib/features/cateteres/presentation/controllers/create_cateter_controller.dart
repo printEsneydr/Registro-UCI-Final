@@ -8,6 +8,7 @@ final createCateterControllerProvider =
   (ref) => CreateCateterController(ref.watch(cateteresRepositoryProvider), ref),
 );
 
+// controlador que maneja la creacion de un cateter en firebase
 class CreateCateterController extends StateNotifier<AsyncValue<void>> {
   final CateteresRepository _repository;
   final Ref _ref; // ✅ Se añade referencia a Riverpod para invalidar providers
@@ -15,6 +16,7 @@ class CreateCateterController extends StateNotifier<AsyncValue<void>> {
   CreateCateterController(this._repository, this._ref)
       : super(const AsyncValue.data(null));
 
+  // crea el cateter y refresca la lista
   Future<void> createCateter(CreateCateterDto dto) async {
     state = const AsyncValue.loading();
     try {

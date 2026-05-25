@@ -7,15 +7,21 @@ import 'package:registro_uci/features/marcapasos/presentation/controllers/delete
 import 'update_marcapasos_page.dart';
 import '../../features/marcapasos/presentation/widgets/components/buttons/create_marcapasos_floating_button.dart';
 
+// pagina que lista los marcapasos registrados para un ingreso
 class ListadoMarcapasosPage extends ConsumerWidget {
+  // id del ingreso al que pertenecen los marcapasos
   final String idIngreso;
 
+  // constructor, requiere el id del ingreso
   const ListadoMarcapasosPage({super.key, required this.idIngreso});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // obtiene el rol del usuario actual
     final role = ref.watch(roleProvider);
+    // verifica si el usuario es admin
     final isAdmin = role == UserRole.admin;
+    // obtiene la lista de marcapasos desde el proveedor
     final marcapasosAsync = ref.watch(marcapasosByIngresoProvider(idIngreso));
 
     return Scaffold(
@@ -214,6 +220,7 @@ class ListadoMarcapasosPage extends ConsumerWidget {
     );
   }
 
+  // construye una fila con icono, etiqueta y valor para mostrar informacion
   Widget _buildInfoRow({
     required IconData icon,
     required String label,
@@ -249,6 +256,7 @@ class ListadoMarcapasosPage extends ConsumerWidget {
     );
   }
 
+  // muestra un dialogo de confirmacion y elimina el marcapaso si se confirma
   void _confirmDelete(BuildContext context, WidgetRef ref, marcapaso) {
     showDialog<bool>(
       context: context,

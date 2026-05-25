@@ -9,16 +9,22 @@ import 'package:registro_uci/features/monitorias_hemodinamicas/glasgow/presentat
 import '../../pages/glasgow/create_glasgow_page.dart';
 import '../../pages/glasgow/update_glasgow_page.dart';
 
+// pagina que muestra la lista de registros de la escala de glasgow
+// permite ver, crear, editar y eliminar registros
 class GlasgowPage extends ConsumerWidget {
+  // id del ingreso del paciente
   final String idIngreso;
+  // id del registro diario asociado
   final String idRegistroDiario;
 
+  // constructor de la pagina, requiere el id del ingreso y del registro diario
   const GlasgowPage({
     super.key,
     required this.idIngreso,
     required this.idRegistroDiario,
   });
 
+  // construye la interfaz con la lista de registros de glasgow
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final role = ref.watch(roleProvider);
@@ -250,6 +256,7 @@ Container(
     );
   }
 
+  // widget que muestra una etiqueta con el puntaje de una categoria
   Widget _buildScoreChip(String label, int score) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -264,12 +271,14 @@ Container(
     );
   }
 
+  // devuelve un color segun el puntaje total de glasgow (verde >= 13, naranja >= 9, rojo < 9)
   Color _getColorByScore(int score) {
     if (score >= 13) return Colors.green;
     if (score >= 9) return Colors.orange;
     return Colors.red;
   }
 
+  // muestra un dialogo con los detalles completos del registro de glasgow
   void _mostrarDetallesRegistro(BuildContext context, Glasgow registro) {
     final dateFormat = DateFormat('dd/MM/yyyy HH:mm');
 
@@ -325,6 +334,7 @@ Container(
     );
   }
 
+  // fila con titulo y valor para mostrar detalles en el dialogo
   Widget _buildDetailRow(String title, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -352,6 +362,7 @@ Container(
     );
   }
 
+  // muestra dialogo de confirmacion y elimina el registro de glasgow
   void _confirmDelete(BuildContext context, WidgetRef ref, Glasgow registro) {
     showDialog<bool>(
       context: context,

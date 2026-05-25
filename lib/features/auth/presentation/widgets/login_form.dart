@@ -5,21 +5,27 @@ import 'package:registro_uci/features/auth/presentation/widgets/validators/email
 import 'package:registro_uci/features/auth/presentation/widgets/validators/password_validator.dart';
 
 
+// widget del formulario de inicio de sesion
 class LoginForm extends StatefulWidget {
   const LoginForm({
     super.key,
   });
 
+
   @override
   State<LoginForm> createState() => _LoginFormState();
 }
 
+// estado interno del formulario de login
 class _LoginFormState extends State<LoginForm> {
+  // clave global para validar el formulario
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  // controladores para los campos de email y contrasena
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
 
+  // controla si la contrasena se muestra o se oculta
   bool obscuredPassword = true;
 
   @override
@@ -29,6 +35,7 @@ class _LoginFormState extends State<LoginForm> {
     super.initState();
   }
 
+  // libera los controladores cuando el widget se elimina
   @override
   void dispose() {
     _emailController.dispose();
@@ -36,6 +43,7 @@ class _LoginFormState extends State<LoginForm> {
     super.dispose();
   }
 
+  // construye la interfaz del formulario con logo, campos y boton
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -101,6 +109,7 @@ class _LoginFormState extends State<LoginForm> {
                   Icons.password,
                   size: 25,
                 ),
+                // boton para mostrar/ocultar la contrasena
                 suffixIcon: IconButton(
                   onPressed: () {
                     setState(() {

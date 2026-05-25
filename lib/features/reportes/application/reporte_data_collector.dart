@@ -1,3 +1,4 @@
+// recopilador de todos los datos del paciente desde firestore para generar el pdf
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:registro_uci/features/ingresos/domain/models/ingreso.dart';
@@ -20,6 +21,8 @@ import 'package:registro_uci/features/firmas/domain/models/firma.dart';
 import 'package:registro_uci/features/necesidades/domain/models/reporte_necesidades.dart';
 import 'package:registro_uci/features/observaciones_extras/domain/models/observaciones_extras_data.dart';
 
+// clase que agrupa todos los datos recopilados para el reporte
+// contiene todas las listas de datos del paciente organizadas para el pdf
 class ReporteData {
   final Ingreso ingreso;
   final List<RegistroDiario> registrosDiarios;
@@ -64,14 +67,17 @@ class ReporteData {
   });
 }
 
+// recopila todos los datos del paciente desde firestore de forma paralela
 class ReporteDataCollector {
   final String idIngreso;
   final _firestore = FirebaseFirestore.instance;
 
   ReporteDataCollector({required this.idIngreso});
 
+  // numero maximo de reintentos ante error unavailable de firestore
   static const _maxRetries = 3;
 
+  // ejecuta una funcion con reintentos automaticos si firestore esta no disponible
   Future<T> _retryOnUnavailable<T>(Future<T> Function() fn) async {
     for (int attempt = 0; attempt < _maxRetries; attempt++) {
       try {
@@ -91,8 +97,10 @@ class ReporteDataCollector {
     );
   }
 
+  // punto de entrada principal con reintentos ante fallos de red
   Future<ReporteData> collectAll() => _retryOnUnavailable(() => _collectAll());
 
+  // recopila todos los datos en paralelo y los agrupa en ReporteData
   Future<ReporteData> _collectAll() async {
     final ingreso = await _fetchIngreso();
     final registrosDiarios = await _fetchRegistrosDiarios();
@@ -140,11 +148,13 @@ class ReporteDataCollector {
     );
   }
 
+  // obtiene el ingreso del paciente desde firestore
   Future<Ingreso> _fetchIngreso() async {
     final doc = await _firestore.collection('ingresos').doc(idIngreso).get();
     return Ingreso.fromJson(doc.data()!, id: doc.id);
   }
 
+  // obtiene todos los registros diarios del ingreso
   Future<List<RegistroDiario>> _fetchRegistrosDiarios() async {
     final snap = await _firestore
         .collection('ingresos').doc(idIngreso)
@@ -153,9 +163,11 @@ class ReporteDataCollector {
     return snap.docs.map((doc) => RegistroDiario.fromJson(doc.data(), id: doc.id)).toList();
   }
 
+  // referencia a un registro diario dentro del ingreso
   DocumentReference<Map<String, dynamic>> _rdRef(String rdId) =>
       _firestore.collection('ingresos').doc(idIngreso).collection('registrosDiarios').doc(rdId);
 
+  // obtiene todas las monitorias hemodinamicas de todos los registros diarios
   Future<List<MonitoriaHemodinamica>> _fetchMonitorias(List<String> rdIds) async {
     final results = await Future.wait(rdIds.map((id) =>
       _rdRef(id).collection('monitoriasHemodinamicas').get()
@@ -163,6 +175,7 @@ class ReporteDataCollector {
     return results.expand((s) => s.docs.map((doc) => MonitoriaHemodinamica.fromJson(doc.data(), id: doc.id))).toList();
   }
 
+  // obtiene todos los controles de sedacion
   Future<List<ControlSedacion>> _fetchSedaciones(List<String> rdIds) async {
     final results = await Future.wait(rdIds.map((id) =>
       _rdRef(id).collection('controlesSedacion').get()
@@ -170,6 +183,7 @@ class ReporteDataCollector {
     return results.expand((s) => s.docs.map((doc) => ControlSedacion.fromJson(doc.data(), id: doc.id))).toList();
   }
 
+  // obtiene todos los cambios de posicion
   Future<List<CambioDePosicion>> _fetchCambiosPosicion(List<String> rdIds) async {
     final results = await Future.wait(rdIds.map((id) =>
       _rdRef(id).collection('cambiosPosicion').get()
@@ -177,6 +191,7 @@ class ReporteDataCollector {
     return results.expand((s) => s.docs.map((doc) => CambioDePosicion.fromJson(doc.data(), id: doc.id))).toList();
   }
 
+  // obtiene todos los registros de glasgow
   Future<List<Glasgow>> _fetchGlasgow(List<String> rdIds) async {
     final results = await Future.wait(rdIds.map((id) =>
       _rdRef(id).collection('glasgow').get()
@@ -184,6 +199,7 @@ class ReporteDataCollector {
     return results.expand((s) => s.docs.map((doc) => Glasgow.fromJson(doc.data(), id: doc.id))).toList();
   }
 
+  // obtiene todos los cateteres del ingreso
   Future<List<Cateter>> _fetchCateteres() async {
     final snap = await _firestore
         .collection('ingresos').doc(idIngreso)
@@ -192,6 +208,7 @@ class ReporteDataCollector {
     return snap.docs.map((doc) => Cateter.fromFirestore(doc)).toList();
   }
 
+  // obtiene todos los marcapasos del ingreso
   Future<List<Marcapaso>> _fetchMarcapasos() async {
     final snap = await _firestore
         .collection('ingresos').doc(idIngreso)
@@ -200,6 +217,7 @@ class ReporteDataCollector {
     return snap.docs.map((doc) => Marcapaso.fromJson(doc.data())).toList();
   }
 
+  // obtiene todas las sondas del ingreso
   Future<List<Sonda>> _fetchSondas() async {
     final snap = await _firestore
         .collection('ingresos').doc(idIngreso)
@@ -208,6 +226,7 @@ class ReporteDataCollector {
     return snap.docs.map((doc) => Sonda.fromJson(doc.data())).toList();
   }
 
+  // obtiene la lista de tratamientos de todos los registros diarios
   Future<List<ListaTratamientos>> _fetchListaTratamientos(List<String> rdIds) async {
     final results = await Future.wait(rdIds.map((id) =>
       _rdRef(id).collection('listaTratamientos').get()
@@ -215,6 +234,7 @@ class ReporteDataCollector {
     return results.expand((s) => s.docs.map((doc) => ListaTratamientos.fromJson(doc.data(), id: doc.id))).toList();
   }
 
+  // obtiene el control de riesgos mas reciente
   Future<ControlDeRiesgos?> _fetchControlRiesgos(List<String> rdIds) async {
     for (final id in rdIds.reversed) {
       final snap = await _rdRef(id).collection('controlDeRiesgos').get();
@@ -225,6 +245,7 @@ class ReporteDataCollector {
     return null;
   }
 
+  // obtiene todos los procedimientos especiales del ingreso
   Future<List<ProcedimientoEspecial>> _fetchProcedimientos() async {
     final snap = await _firestore
         .collection('ingresos').doc(idIngreso)
@@ -233,6 +254,7 @@ class ReporteDataCollector {
     return snap.docs.map((doc) => ProcedimientoEspecial.fromJson(doc.data(), id: doc.id)).toList();
   }
 
+  // obtiene todos los registros nutricionales del ingreso
   Future<List<RegistroNutricional>> _fetchNutricion() async {
     final snap = await _firestore
         .collection('ingresos').doc(idIngreso)
@@ -241,6 +263,7 @@ class ReporteDataCollector {
     return snap.docs.map((doc) => RegistroNutricional.fromJson(doc.data(), id: doc.id)).toList();
   }
 
+  // obtiene todos los liquidos administrados y eliminados del ingreso
   Future<(List<LiquidoAdministrado>, List<LiquidoEliminado>)> _fetchLiquidos(List<String> rdIds) async {
     final path = _firestore.collection('ingresos').doc(idIngreso);
     List<LiquidoAdministrado> admin = [];
@@ -258,6 +281,7 @@ class ReporteDataCollector {
     return (admin, elim);
   }
 
+  // obtiene todos los tratamientos antibioticos del ingreso
   Future<List<TratamientoAntibiotico>> _fetchAntibioticos() async {
     final snap = await _firestore
         .collection('ingresos').doc(idIngreso)
@@ -266,6 +290,7 @@ class ReporteDataCollector {
     return snap.docs.map((doc) => TratamientoAntibiotico.fromJson(doc.data(), id: doc.id)).toList();
   }
 
+  // obtiene el reporte de necesidades mas reciente
   Future<ReporteNecesidades?> _fetchNecesidades(List<String> rdIds) async {
     for (final rdId in rdIds.reversed) {
       final doc = await _rdRef(rdId).collection('necesidades').doc('reporte').get();
@@ -276,6 +301,7 @@ class ReporteDataCollector {
     return null;
   }
 
+  // obtiene las firmas de necesidades e intervenciones de los registros diarios
   Future<List<Firma>> _fetchFirmas(List<String> rdIds) async {
     List<Firma> firmas = [];
     for (final rdId in rdIds) {
@@ -295,6 +321,7 @@ class ReporteDataCollector {
     return firmas;
   }
 
+  // obtiene los datos de observaciones extras del ingreso
   Future<ObservacionesExtrasData?> _fetchObservacionesExtras() async {
     try {
       final doc = await _firestore

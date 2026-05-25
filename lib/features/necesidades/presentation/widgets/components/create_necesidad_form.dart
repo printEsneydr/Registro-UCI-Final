@@ -4,8 +4,10 @@ import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/necesidades/presentation/validators/nombre_necesidad_validator.dart';
 import 'package:registro_uci/features/necesidades/presentation/widgets/components/buttons/create_necesidad_form_button.dart';
 
+// formulario para crear una nueva necesidad en un registro
 class CreateNecesidadForm extends StatefulWidget {
   final ReporteParams params;
+  // constructor que recibe los parametros del reporte
   const CreateNecesidadForm({
     super.key,
     required this.params,

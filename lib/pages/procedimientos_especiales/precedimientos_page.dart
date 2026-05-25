@@ -5,9 +5,12 @@ import 'package:registro_uci/features/auth/domain/enums/user_role.dart';
 import '../../features/procedimientos_especiales/data/providers/procedimiento_provider.dart';
 import '../../features/procedimientos_especiales/domain/models/procedimientos_especiales.dart';
 
+// pagina que lista los procedimientos especiales de un ingreso
 class ProcedimientosPage extends ConsumerWidget {
+  // id del ingreso al que pertenecen los procedimientos
   final String idIngreso;
 
+  // constructor, requiere el id del ingreso
   const ProcedimientosPage({
     super.key,
     required this.idIngreso,
@@ -15,6 +18,7 @@ class ProcedimientosPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // obtiene la lista de procedimientos desde el proveedor
     final procedimientosAsync =
         ref.watch(procedimientoStreamProvider(idIngreso));
 
@@ -83,6 +87,7 @@ class ProcedimientosPage extends ConsumerWidget {
     );
   }
 
+  // widget que se muestra cuando no hay procedimientos registrados
   Widget _buildEmptyState() {
     return Center(
       child: Column(
@@ -111,6 +116,7 @@ class ProcedimientosPage extends ConsumerWidget {
     );
   }
 
+  // construye una tarjeta expandible con la informacion del procedimiento
   Widget _buildProcedimientoCard(
     BuildContext context,
     WidgetRef ref,
@@ -234,6 +240,7 @@ class ProcedimientosPage extends ConsumerWidget {
     );
   }
 
+  // construye una fila con icono, etiqueta y valor para mostrar informacion
   Widget _buildInfoRow({
     required IconData icon,
     required String label,
@@ -269,6 +276,7 @@ class ProcedimientosPage extends ConsumerWidget {
     );
   }
 
+  // devuelve el color segun el estado del procedimiento
   Color _getEstadoColor(String estado) {
     switch (estado) {
       case 'Por realizar':
@@ -282,6 +290,7 @@ class ProcedimientosPage extends ConsumerWidget {
     }
   }
 
+  // devuelve el icono segun el estado del procedimiento
   IconData _getEstadoIcon(String estado) {
     switch (estado) {
       case 'Por realizar':
@@ -295,6 +304,7 @@ class ProcedimientosPage extends ConsumerWidget {
     }
   }
 
+  // muestra un dialogo con formulario para agregar un nuevo procedimiento
   void _mostrarDialogoAgregar(BuildContext context, WidgetRef ref) {
     final nombreCtrl = TextEditingController();
     final medicamentoCtrl = TextEditingController();
@@ -414,6 +424,7 @@ class ProcedimientosPage extends ConsumerWidget {
     );
   }
 
+  // muestra un dialogo para editar el nombre del procedimiento
   void _editarNombre(
     BuildContext context,
     WidgetRef ref,
@@ -479,6 +490,7 @@ class ProcedimientosPage extends ConsumerWidget {
     );
   }
 
+  // muestra un dialogo de confirmacion para eliminar un procedimiento
   void _mostrarConfirmacionEliminar(
     BuildContext context,
     WidgetRef ref,
@@ -530,6 +542,7 @@ class ProcedimientosPage extends ConsumerWidget {
     );
   }
 
+  // muestra un dialogo para cambiar el estado del procedimiento
   void _actualizarEstado(
     BuildContext context,
     WidgetRef ref,
@@ -589,6 +602,7 @@ class ProcedimientosPage extends ConsumerWidget {
     );
   }
 
+  // construye una opcion de estado para el dialogo de actualizar estado
   Widget _buildEstadoOption(
     BuildContext context,
     WidgetRef ref,

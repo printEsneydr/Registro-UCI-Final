@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// muestra un dialogo para seleccionar una fecha
 Future<DateTime?> pickDate(DateTime? initialDate, BuildContext context) async {
   DateTime? pickedDate = await showDatePicker(
       locale: const Locale('es', "ES"),

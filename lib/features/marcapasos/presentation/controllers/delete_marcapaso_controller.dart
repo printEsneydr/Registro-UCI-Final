@@ -6,11 +6,13 @@ final deleteMarcapasoControllerProvider =
   (ref) => DeleteMarcapasoController(ref),
 );
 
+// controlador que maneja la eliminacion de un marcapaso
 class DeleteMarcapasoController extends StateNotifier<AsyncValue<void>> {
   final Ref ref;
 
   DeleteMarcapasoController(this.ref) : super(const AsyncValue.data(null));
 
+  // elimina el marcapaso y refresca la lista
   Future<void> deleteMarcapaso(String idIngreso, String idMarcapaso) async {
     state = const AsyncValue.loading();
     try {

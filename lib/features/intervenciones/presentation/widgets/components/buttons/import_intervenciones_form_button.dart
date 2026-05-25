@@ -4,12 +4,14 @@ import 'package:registro_uci/common/components/buttons/primary_button.dart';
 import 'package:registro_uci/common/extensions/async_value_ui.dart';
 import 'package:registro_uci/features/intervenciones/presentation/controllers/import_intervenciones_de_registro_controller.dart';
 
+// boton que ejecuta la importacion de intervenciones entre registros
 class ImportIntervencionesFormButton extends ConsumerWidget {
   final String idIngreso;
   final String originRegistroId;
   final String targetRegistroId;
   final bool enabled;
 
+  // constructor de ImportIntervencionesFormButton
   const ImportIntervencionesFormButton({
     super.key,
     required this.idIngreso,
@@ -18,6 +20,7 @@ class ImportIntervencionesFormButton extends ConsumerWidget {
     required this.enabled,
   });
 
+  // construye el boton primario que dispara la importacion
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<void> state =

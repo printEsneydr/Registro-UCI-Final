@@ -3,10 +3,12 @@ import 'package:registro_uci/features/balance_liquidos/balance_liquidos_eliminad
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_eliminados/data/dto/create_liquido_eliminado_dto.dart';
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_eliminados/domain/models/liquido_eliminado.dart';
 
+// implementacion en firebase del repositorio de liquidos eliminados
 class FirebaseLiquidosEliminadosRepository
     implements LiquidosEliminadosRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // crea un nuevo documento en la subcoleccion 'eliminados' del balance
   @override
   Future<void> createLiquidoEliminado(
     String idIngreso,
@@ -27,6 +29,7 @@ class FirebaseLiquidosEliminadosRepository
     await newDocRef.set(dto.toMap());
   }
 
+  // actualiza un documento existente en la subcoleccion 'eliminados'
   @override
   Future<void> updateLiquidoEliminado(
     String idIngreso,
@@ -48,6 +51,7 @@ class FirebaseLiquidosEliminadosRepository
     await liquidoEliminadoRef.update(dto.toMap());
   }
 
+  // elimina un documento de la subcoleccion 'eliminados'
   @override
   Future<void> deleteLiquidoEliminado(
     String idIngreso,
@@ -68,6 +72,7 @@ class FirebaseLiquidosEliminadosRepository
     await liquidoEliminadoRef.delete();
   }
 
+  // obtiene todos los liquidos eliminados ordenados por hora
   @override
   Future<List<LiquidoEliminado>> getLiquidosEliminados(
     String idIngreso,

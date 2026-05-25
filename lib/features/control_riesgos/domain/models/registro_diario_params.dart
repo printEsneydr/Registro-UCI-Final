@@ -1,3 +1,4 @@
+// parametros para pasar datos de registro diario entre componentes
 class RegistroDiarioParams {
   final String idIngreso;
   final String idRegistro;
@@ -37,7 +38,7 @@ class RegistroDiarioParams {
     this.fechaFinAislamiento,
   });
 
-  // Método para convertir el objeto a un Map (serialización)
+  // serializa a mapa para firestore
   Map<String, dynamic> toJson() {
     return {
       'idIngreso': idIngreso,
@@ -60,7 +61,7 @@ class RegistroDiarioParams {
     };
   }
 
-  // Método para crear una instancia desde un Map (deserialización)
+  // construye desde un mapa de firestore
   factory RegistroDiarioParams.fromJson(Map<String, dynamic> json) {
     return RegistroDiarioParams(
       idIngreso: json['idIngreso'] as String,

@@ -8,7 +8,9 @@ import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administ
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/data/providers/tratamientos_antibioticos_activos_provider.dart';
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/presentation/controllers/create_many_liquidos_administrados_controller.dart';
 
+// widget para seleccionar y agregar liquidos desde tratamientos activos
 class AddLiquidosAdministradosFromTratamientoForm extends StatefulWidget {
+  // ids del ingreso, registro diario, balance y hora del balance
   final String idIngreso;
   final DateTime hora;
   final String idRegistroDiario;
@@ -27,11 +29,13 @@ class AddLiquidosAdministradosFromTratamientoForm extends StatefulWidget {
       AddLiquidosAdministradosFromTratamientoFormState();
 }
 
+// estado con la seleccion de tratamientos y logica de envio masivo
 class AddLiquidosAdministradosFromTratamientoFormState
     extends State<AddLiquidosAdministradosFromTratamientoForm> {
   final Set<CreateLiquidoAdministradoDto> _selectedTratamientos = {};
   bool _isSubmitting = false;
 
+  // construye la lista de tratamientos activos con checkboxes para seleccion
   @override
   Widget build(BuildContext context) {
     return Consumer(
@@ -133,6 +137,7 @@ class AddLiquidosAdministradosFromTratamientoFormState
     );
   }
 
+  // envia los tratamientos seleccionados al controller de creacion masiva
   Future<void> _addSelectedTratamientos(WidgetRef ref) async {
     setState(() {
       _isSubmitting = true;

@@ -6,6 +6,7 @@ import 'package:registro_uci/features/marcapasos/data/providers/marcapasos_provi
 import 'package:intl/intl.dart';
 import 'package:registro_uci/features/marcapasos/data/constants/constants.dart';
 
+// formulario para registrar un nuevo marcapaso
 class CreateMarcapasoForm extends ConsumerStatefulWidget {
   final String idIngreso;
 
@@ -16,6 +17,7 @@ class CreateMarcapasoForm extends ConsumerStatefulWidget {
       _CreateMarcapasoFormState();
 }
 
+// estado del formulario con los valores seleccionados
 class _CreateMarcapasoFormState extends ConsumerState<CreateMarcapasoForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _dateFormat = DateFormat('dd/MM/yyyy');
@@ -42,6 +44,7 @@ class _CreateMarcapasoFormState extends ConsumerState<CreateMarcapasoForm> {
     super.dispose();
   }
 
+  // abre el date picker para seleccionar la fecha de colocacion
   Future<void> _selectDate() async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -176,6 +179,7 @@ class _CreateMarcapasoFormState extends ConsumerState<CreateMarcapasoForm> {
     );
   }
 
+  // registra el marcapaso en firebase usando el provider
   void _registerMarcapaso() async {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);

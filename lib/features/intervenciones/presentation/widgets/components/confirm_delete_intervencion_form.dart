@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/intervenciones/presentation/widgets/components/buttons/delete_intervencion_form_button.dart';
 
+// formulario de confirmacion para eliminar una intervencion
 class ConfirmDeleteIntervencionForm extends StatelessWidget {
+  // constructor de ConfirmDeleteIntervencionForm
   const ConfirmDeleteIntervencionForm({
     super.key,
     required this.idIntervencion,
@@ -11,6 +13,7 @@ class ConfirmDeleteIntervencionForm extends StatelessWidget {
 
   final String idIntervencion;
   final ReporteParams params;
+  // construye el dialogo con el mensaje y el boton de eliminar
   @override
   Widget build(BuildContext context) {
     return Padding(

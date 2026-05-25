@@ -6,9 +6,12 @@ import 'package:registro_uci/features/nutricion/presentation/controllers/delete_
 import 'package:registro_uci/features/nutricion/presentation/widgets/components/create_registro_nutricional_form.dart';
 import 'package:registro_uci/features/nutricion/presentation/widgets/components/registro_nutricional_tile.dart';
 
+// pagina que muestra los registros nutricionales de un ingreso
 class NutricionPage extends ConsumerWidget {
+  // id del ingreso al que pertenecen los registros
   final String idIngreso;
 
+  // constructor, requiere el id del ingreso
   const NutricionPage({
     super.key,
     required this.idIngreso,
@@ -16,6 +19,7 @@ class NutricionPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // obtiene los registros nutricionales desde el proveedor
     final registrosAsync = ref.watch(registrosNutricionalesProvider(idIngreso));
 
     return Scaffold(
@@ -65,6 +69,7 @@ class NutricionPage extends ConsumerWidget {
     );
   }
 
+  // muestra un dialogo de confirmacion y elimina el registro si se confirma
   void _confirmDelete(
     BuildContext context,
     WidgetRef ref,

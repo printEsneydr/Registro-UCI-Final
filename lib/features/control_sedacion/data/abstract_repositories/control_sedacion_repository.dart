@@ -1,32 +1,33 @@
 import 'package:registro_uci/features/control_sedacion/domain/models/control_sedacion.dart';
 
+// repositorio abstracto para el control de sedacion
 abstract class ControlSedacionRepository {
-  /// Obtiene un stream de todos los controles de sedación registrados
+  // obtiene un stream de todos los controles de sedacion registrados
   Stream<List<ControlSedacion>> getControlesSedacionStream(
     String idIngreso,
     String idRegistroDiario,
   );
 
-  /// Obtiene todos los controles de sedación registrados
+  // obtiene todos los controles de sedacion registrados
   Future<List<ControlSedacion>> getControlesSedacion(
     String idIngreso,
     String idRegistroDiario,
   );
 
-  /// Obtiene un control de sedación específico por su ID
+  // obtiene un control de sedacion especifico por su id
   Future<ControlSedacion?> getControlSedacionById(
     String idIngreso,
     String idRegistroDiario,
     String idControlSedacion,
   );
 
-  /// Obtiene el último control de sedación registrado
+  // obtiene el ultimo control de sedacion registrado
   Future<ControlSedacion?> getUltimoControlSedacion(
     String idIngreso,
     String idRegistroDiario,
   );
 
-  /// Guarda un nuevo control de sedación
+  // guarda un nuevo control de sedacion
   Future<void> guardarControlSedacion(
     String idIngreso,
     String idRegistroDiario,
@@ -35,7 +36,7 @@ abstract class ControlSedacionRepository {
     int rass,
   );
 
-  /// Actualiza un control de sedación existente
+  // actualiza un control de sedacion existente
   Future<void> actualizarControlSedacion(
     String idIngreso,
     String idRegistroDiario,
@@ -46,20 +47,20 @@ abstract class ControlSedacionRepository {
     int? orden,
   });
 
-  /// Elimina un control de sedación
+  // elimina un control de sedacion
   Future<void> eliminarControlSedacion(
     String idIngreso,
     String idRegistroDiario,
     String idControlSedacion,
   );
 
-  /// Obtiene un resumen de los valores RASS registrados
+  // obtiene un resumen de los valores rass registrados
   Future<Map<String, int>> getResumenRASS(
     String idIngreso,
     String idRegistroDiario,
   );
 
-  /// Reordena los controles de sedación según la lista de IDs proporcionada
+  // reordena los controles de sedacion segun lista de ids
   Future<void> reordenarControlesSedacion(
     String idIngreso,
     String idRegistroDiario,

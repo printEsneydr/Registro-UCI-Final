@@ -9,11 +9,16 @@ import 'package:registro_uci/features/firmas/presentation/widgets/components/but
 import 'package:registro_uci/features/firmas/presentation/widgets/components/firma_widget.dart';
 import 'package:registro_uci/features/necesidades/presentation/widgets/necesidades_list.dart';
 
+// pagina que muestra la lista de necesidades valoradas de un registro
 class NecesidadesPage extends ConsumerWidget {
+  // id del ingreso al que pertenece el registro
   final String idIngreso;
+  // id del registro
   final String idRegistro;
+  // firma del reporte, si ya esta firmado
   final Firma? firma;
 
+  // constructor, requiere el id del ingreso y del registro, la firma es opcional
   const NecesidadesPage({
     super.key,
     required this.idIngreso,
@@ -25,8 +30,9 @@ class NecesidadesPage extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     final params = ReporteParams(idIngreso: idIngreso, idRegistro: idRegistro);
 
+    // obtiene el rol del usuario actual
     final role = ref.watch(roleProvider);
-
+    // permite firmar solo si no hay firma y el usuario es admin
     final canSign = firma == null && role == UserRole.admin;
 
     return Scaffold(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:registro_uci/features/antibioticos/presentation/widgets/components/buttons/confirmar_finalizar_antibiotico_form_button.dart';
 
+// formulario de confirmacion para finalizar un tratamiento antibiotico
 class ConfirmFinalizarAntibioticoForm extends StatelessWidget {
   final String idIngreso;
   final String idTratamientoAntibiotico;

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:registro_uci/features/control_riesgos/domain/models/control_de_riesgos.dart';
 import 'package:registro_uci/features/control_riesgos/data/abstract_repositories/control_de_riesgos_repository.dart';
 
+// implementacion firebase del repositorio de control de riesgos
 class FirebaseControlDeRiesgosRepository implements ControlDeRiesgosRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -18,10 +19,8 @@ class FirebaseControlDeRiesgosRepository implements ControlDeRiesgosRepository {
         .doc(idRegistroDiario)
         .collection('controlDeRiesgos');
 
-    // Convertir el ControlDeRiesgos a un mapa antes de guardarlo
+    // convierte a mapa y guarda en firestore
     final controlDeRiesgosMap = controlDeRiesgos.toJson();
-
-    // Guardar en Firestore (en este caso estamos usando add para crear un nuevo documento)
     await controlDeRiesgosRef.add(controlDeRiesgosMap);
   }
 
@@ -37,6 +36,7 @@ class FirebaseControlDeRiesgosRepository implements ControlDeRiesgosRepository {
         .doc(idRegistroDiario)
         .collection('controlDeRiesgos');
 
+    // stream en tiempo real de los controles de riesgos
     return controlDeRiesgosRef.snapshots().map((querySnapshot) {
       return querySnapshot.docs.map((doc) {
         return ControlDeRiesgos.fromJson(doc.data(), id: doc.id);
@@ -48,8 +48,7 @@ class FirebaseControlDeRiesgosRepository implements ControlDeRiesgosRepository {
   Future<void> updateControlDeRiesgos(
     String idIngreso,
     String idRegistroDiario,
-    String
-        idControlDeRiesgos, // Este parámetro es necesario para ubicar el documento
+    String idControlDeRiesgos,
     ControlDeRiesgos controlDeRiesgos,
   ) async {
     final controlDeRiesgosRef = _firestore
@@ -58,8 +57,7 @@ class FirebaseControlDeRiesgosRepository implements ControlDeRiesgosRepository {
         .collection('registrosDiarios')
         .doc(idRegistroDiario)
         .collection('controlDeRiesgos')
-        .doc(
-            idControlDeRiesgos); // Se usa el ID aquí para actualizar el documento
+        .doc(idControlDeRiesgos);
 
     await controlDeRiesgosRef.update(controlDeRiesgos.toJson());
   }
@@ -75,7 +73,7 @@ class FirebaseControlDeRiesgosRepository implements ControlDeRiesgosRepository {
         .collection('registrosDiarios')
         .doc(idRegistroDiario)
         .collection('controlDeRiesgos')
-        .doc(idControlDeRiesgos); // Usamos el ID para buscar el documento
+        .doc(idControlDeRiesgos);
 
     final doc = await controlDeRiesgosRef.get();
     if (doc.exists) {

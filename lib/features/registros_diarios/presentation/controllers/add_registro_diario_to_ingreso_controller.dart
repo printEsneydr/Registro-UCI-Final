@@ -6,6 +6,7 @@ import 'package:registro_uci/features/registros_diarios/data/abstract_repositori
 import 'package:registro_uci/features/registros_diarios/data/dto/create_registro_diario_dto.dart';
 import 'package:registro_uci/features/registros_diarios/data/providers/registros_diarios_de_ingreso_provider.dart';
 
+// controller que maneja la creacion de un registro diario en un ingreso
 class AddRegistroDiarioToIngresoController extends AsyncNotifier<void> {
   late final IRegistrosDiariosRepository _repository =
       ref.watch(registrosDiariosRepositoryProvider);
@@ -13,6 +14,7 @@ class AddRegistroDiarioToIngresoController extends AsyncNotifier<void> {
   @override
   FutureOr<void> build() {}
 
+  // agrega un registro diario al ingreso y refresca la lista
   Future<void> addRegistroDiarioToIngreso(
     String idIngreso,
     CreateRegistroDiarioDto dto,
@@ -26,6 +28,7 @@ class AddRegistroDiarioToIngresoController extends AsyncNotifier<void> {
   }
 }
 
+// provider del controller para crear registros diarios
 final addRegistroDiarioToIngresoControllerProvider =
     AsyncNotifierProvider<AddRegistroDiarioToIngresoController, void>(
   () => AddRegistroDiarioToIngresoController(),

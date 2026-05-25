@@ -6,10 +6,14 @@ import 'package:registro_uci/features/cateteres/data/dto/update_cateter_dto.dart
 import 'package:registro_uci/features/cateteres/data/providers/cateteres_providers.dart';
 import 'package:registro_uci/features/cateteres/domain/models/cateter.dart';
 
+// pagina para editar los datos de un cateter existente
 class EditCateterPage extends ConsumerStatefulWidget {
+  // id del ingreso al que pertenece el cateter
   final String idIngreso;
+  // cateter que se va a editar
   final Cateter cateter;
 
+  // constructor, requiere el id del ingreso y el cateter a editar
   const EditCateterPage({
     super.key,
     required this.idIngreso,
@@ -20,16 +24,20 @@ class EditCateterPage extends ConsumerStatefulWidget {
   _EditCateterPageState createState() => _EditCateterPageState();
 }
 
+// estado del formulario de edicion de cateter
 class _EditCateterPageState extends ConsumerState<EditCateterPage> {
+  // clave global para validar el formulario
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  // controladores para los campos de texto
   late TextEditingController fechaInsercionController;
   late TextEditingController fechaRetiroController;
   late TextEditingController fechaCuracionController;
   late TextEditingController caracteristicasController;
+  // valores seleccionados en los dropdowns
   String? selectedTipo;
   String? selectedVia;
 
+  // inicializa los controladores con los valores actuales del cateter
   @override
   void initState() {
     super.initState();
@@ -54,6 +62,7 @@ class _EditCateterPageState extends ConsumerState<EditCateterPage> {
         : null;
   }
 
+  // libera los controladores al salir de la pantalla
   @override
   void dispose() {
     fechaInsercionController.dispose();
@@ -63,6 +72,7 @@ class _EditCateterPageState extends ConsumerState<EditCateterPage> {
     super.dispose();
   }
 
+  // abre el selector de fecha yactualiza el controlador correspondiente
   Future<void> _seleccionarFecha(TextEditingController controller) async {
     DateTime? picked = await showDatePicker(
       context: context,
@@ -82,6 +92,7 @@ class _EditCateterPageState extends ConsumerState<EditCateterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Editar Catéter")),
+      // formulario con campos para editar los datos del cateter
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(

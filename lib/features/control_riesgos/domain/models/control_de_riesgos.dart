@@ -1,3 +1,4 @@
+// modelo que representa el control de riesgos de un paciente
 class ControlDeRiesgos {
   final String idControlDeRiesgos;
   final bool tieneUPP;
@@ -59,7 +60,7 @@ class ControlDeRiesgos {
     this.controlCaidaNoche,
   });
 
-  // Asegúrate de actualizar también los métodos toJson y fromJson
+  // serializa el modelo a mapa para firestore
   Map<String, dynamic> toJson() {
     return {
       'tieneUPP': tieneUPP,
@@ -92,6 +93,7 @@ class ControlDeRiesgos {
     };
   }
 
+  // construye el modelo desde un mapa de firestore incluyendo el id
   factory ControlDeRiesgos.fromJson(Map<String, dynamic> json,
       {required String id}) {
     return ControlDeRiesgos(

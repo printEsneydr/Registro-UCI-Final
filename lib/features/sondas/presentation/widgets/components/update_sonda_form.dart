@@ -5,6 +5,7 @@ import '../../../domain/models/sonda.dart';
 import '../../controllers/update_sonda_controller.dart';
 import '../../../data/constants/constants.dart';
 
+// formulario para actualizar una sonda existente
 class UpdateSondaForm extends ConsumerStatefulWidget {
   final Sonda sonda;
   final String idIngreso; // ✅ Nuevo parámetro
@@ -19,6 +20,7 @@ class UpdateSondaForm extends ConsumerStatefulWidget {
   ConsumerState<UpdateSondaForm> createState() => _UpdateSondaFormState();
 }
 
+// estado del formulario con los valores actuales de la sonda
 class _UpdateSondaFormState extends ConsumerState<UpdateSondaForm> {
   final _formKey = GlobalKey<FormState>();
   late String tipo;
@@ -30,6 +32,7 @@ class _UpdateSondaFormState extends ConsumerState<UpdateSondaForm> {
   late bool _esOtroGuardado;
 
   @override
+  // inicializa los valores del formulario con los datos de la sonda
   void initState() {
     super.initState();
 

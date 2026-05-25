@@ -4,9 +4,11 @@ import 'package:registro_uci/features/intervenciones/data/abstract_repositories/
 import 'package:registro_uci/features/intervenciones/domain/models/intervencion.dart';
 import 'package:registro_uci/features/intervenciones/domain/models/actividad.dart';
 
+// repositorio de intervenciones con firebase firestore
 class FirebaseIntervencionesRepository implements IntervencionesRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // obtiene todas las intervenciones desde firestore
   @override
   Future<List<Intervencion>> getIntervenciones() async {
     try {
@@ -21,6 +23,7 @@ class FirebaseIntervencionesRepository implements IntervencionesRepository {
     }
   }
 
+  // obtiene las actividades de una intervencion desde firestore
   @override
   Future<List<Actividad>> getActividadesDeIntervencion(
       String idIntervencion) async {

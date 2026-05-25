@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// dto para crear un registro de liquidos eliminados en firestore
 class CreateLiquidoEliminadoDto {
   final double orina;
   final double perdidasInsensibles;
@@ -41,6 +42,7 @@ class CreateLiquidoEliminadoDto {
     this.comentario,
   });
 
+  // convierte el dto a un mapa para almacenarlo en firestore
   Map<String, dynamic> toMap() {
     return {
       'orina': orina,

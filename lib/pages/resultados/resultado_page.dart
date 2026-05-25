@@ -3,8 +3,11 @@ import 'package:registro_uci/constants/intervenciones.dart';
 import 'package:registro_uci/features/resultados/domain/models/indicador.dart';
 import 'package:registro_uci/features/resultados/domain/models/resultado.dart';
 
+// pagina que muestra los indicadores de un resultado NOC
 class ResultadoPage extends StatelessWidget {
+  // resultado NOC a mostrar
   final Resultado resultado;
+  // constructor, requiere el resultado
   const ResultadoPage({super.key, required this.resultado});
 
   @override

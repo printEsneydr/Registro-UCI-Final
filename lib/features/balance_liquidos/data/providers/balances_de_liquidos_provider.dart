@@ -4,6 +4,7 @@ import 'package:registro_uci/common/providers/repository_providers.dart';
 import 'package:registro_uci/features/balance_liquidos/domain/models/balance_de_liquidos.dart';
 
 @immutable
+// parametros inmutables para identificar el contexto del balance
 class BalancesDeLiquidosParams {
   final String idIngreso;
   final String idRegistroDiario;
@@ -26,6 +27,7 @@ class BalancesDeLiquidosParams {
   int get hashCode => Object.hash(idIngreso, idRegistroDiario);
 }
 
+// provider que obtiene la lista de balances de liquidos para un registro diario
 final balancesDeLiquidosProvider =
     FutureProvider.family<List<BalanceDeLiquidos>, BalancesDeLiquidosParams>(
         (ref, params) async {

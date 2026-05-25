@@ -6,10 +6,14 @@ import 'package:registro_uci/features/balance_liquidos/domain/models/balance_de_
 import 'package:registro_uci/pages/balance_liquidos/liquidos_administrados_screen.dart';
 import 'package:registro_uci/pages/balance_liquidos/liquidos_eliminados_screen.dart';
 
+// pagina que permite elegir entre liquidos administrados o eliminados para un balance
 class ChooseBalanceLiquidosPage extends StatelessWidget {
+  // parametros del balance (id de ingreso, registro diario)
   final BalancesDeLiquidosParams params;
+  // el balance de liquidos seleccionado
   final BalanceDeLiquidos balance;
 
+  // constructor requiere los parametros y el balance
   const ChooseBalanceLiquidosPage(
       {super.key, required this.params, required this.balance});
 
@@ -73,13 +77,18 @@ class ChooseBalanceLiquidosPage extends StatelessWidget {
   }
 }
 
-// Custom widget for option buttons
+// boton personalizado con icono y titulo para las opciones de liquidos
 class OptionButton extends StatelessWidget {
+  // texto del boton
   final String title;
+  // icono del boton
   final IconData icon;
+  // color del boton
   final Color color;
+  // funcion al presionar el boton
   final VoidCallback onPressed;
 
+  // constructor del boton de opcion
   const OptionButton({
     super.key,
     required this.title,
@@ -88,6 +97,7 @@ class OptionButton extends StatelessWidget {
     required this.onPressed,
   });
 
+  // construye el boton con icono dentro de un circulo y texto
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -101,7 +111,7 @@ class OptionButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
           child: Row(
             children: [
-              // Icon
+              // icono dentro de un circulo con color de fondo suave
               CircleAvatar(
                 radius: 30,
                 backgroundColor: color.withOpacity(0.1),

@@ -5,10 +5,12 @@ import 'package:registro_uci/features/necesidades/data/dto/update_necesidad_dto.
 import 'package:registro_uci/features/necesidades/domain/models/necesidad.dart';
 import 'package:registro_uci/features/necesidades/data/abstract_repositories/necesidades_repository.dart';
 
+// implementacion en firestore del repositorio de necesidades
 class FirebaseNecesidadesRepository implements NecesidadesRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
+  // obtiene todas las necesidades de un registro desde firestore
   Future<List<Necesidad>> getNecesidadesDeRegistro(
     String idIngreso,
     String idRegistro,
@@ -32,6 +34,7 @@ class FirebaseNecesidadesRepository implements NecesidadesRepository {
   }
 
   @override
+  // agrega una nueva necesidad al registro en firestore
   Future<void> addNecesidadToRegistro(
     String idIngreso,
     String idRegistro,
@@ -54,6 +57,7 @@ class FirebaseNecesidadesRepository implements NecesidadesRepository {
   }
 
   @override
+  // actualiza los datos de una necesidad existente en firestore
   Future<void> updateNecesidadDeRegistro(
     String idIngreso,
     String idRegistro,
@@ -78,6 +82,7 @@ class FirebaseNecesidadesRepository implements NecesidadesRepository {
   }
 
   @override
+  // elimina una necesidad del registro en firestore
   Future<void> deleteNecesidadDeRegistro(
     String idIngreso,
     String idRegistro,

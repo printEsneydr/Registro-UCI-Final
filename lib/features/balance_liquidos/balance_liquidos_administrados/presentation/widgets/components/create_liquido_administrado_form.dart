@@ -5,6 +5,7 @@ import 'package:registro_uci/common/validators/default_validator.dart';
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/data/providers/liquidos_administrados_provider.dart';
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/presentation/widgets/components/buttons/create_liquido_administrado_form_button.dart';
 
+// categorias disponibles para clasificar los liquidos administrados
 const categoriasLiquidos = [
   'Medicamentos',
   'Líquidos Endovenosos',
@@ -13,6 +14,7 @@ const categoriasLiquidos = [
   'Otros'
 ];
 
+// lista de medicamentos predefinidos
 const medicamentos = [
   'Paracetamol',
   'Ibuprofeno',
@@ -26,6 +28,7 @@ const medicamentos = [
   'Otros'
 ];
 
+// lista de liquidos endovenosos predefinidos
 const liquidosEndovenosos = [
   'Solución Salina 0.9%',
   'Solución Salina 0.45%',
@@ -37,6 +40,7 @@ const liquidosEndovenosos = [
   'Otros'
 ];
 
+// opciones de nutricion enteral y via oral predefinidas
 const nutricionEnteral = [
   'Fórmula Polimérica',
   'Fórmula Elemental',
@@ -46,7 +50,9 @@ const nutricionEnteral = [
   'Otros'
 ];
 
+// widget con formulario para crear un nuevo liquido administrado
 class CreateLiquidoAdministradoForm extends StatefulWidget {
+  // parametros con ids del contexto del balance
   final LiquidosAdministradosParams params;
 
   const CreateLiquidoAdministradoForm({super.key, required this.params});
@@ -56,6 +62,7 @@ class CreateLiquidoAdministradoForm extends StatefulWidget {
       _CreateLiquidoAdministradoFormState();
 }
 
+// estado del formulario con controladores y logica de seleccion de categoria
 class _CreateLiquidoAdministradoFormState
     extends State<CreateLiquidoAdministradoForm> {
   late TextEditingController _cantidadController;
@@ -66,6 +73,7 @@ class _CreateLiquidoAdministradoFormState
   String? _selectedLiquido;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  // retorna la lista de opciones segun la categoria seleccionada
   List<String> _getLiquidosForCategoria(String categoria) {
     switch (categoria) {
       case 'Medicamentos':
@@ -97,6 +105,7 @@ class _CreateLiquidoAdministradoFormState
     super.dispose();
   }
 
+  // construye el formulario con dropdowns de categoria, liquido y campos de texto
   @override
   Widget build(BuildContext context) {
     final dateString = widget.params.idRegistroDiario;

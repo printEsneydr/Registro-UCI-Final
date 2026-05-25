@@ -6,7 +6,9 @@ import 'package:registro_uci/common/extensions/string_to_date.dart';
 import 'package:registro_uci/features/ingresos/data/dto/create_ingreso_dto.dart';
 import 'package:registro_uci/features/ingresos/presentation/controllers/create_ingreso_controller.dart';
 
+// boton que valida el formulario y ejecuta la creacion del ingreso
 class CreateIngresoFormButton extends ConsumerWidget {
+  // constructor que recibe los controladores del formulario y la sala seleccionada
   const CreateIngresoFormButton({
     super.key,
     required GlobalKey<FormState> formKey,

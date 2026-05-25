@@ -6,6 +6,7 @@ import 'package:registro_uci/features/antibioticos/data/providers/tratamiento_an
 import 'package:registro_uci/features/antibioticos/domain/models/dia_tratamiento.dart';
 import 'package:registro_uci/pages/tratamiento_antibioticos/dosis_tratamiento_page.dart';
 
+// tile que muestra un dia de tratamiento y navega a las dosis
 class DiaTratamientoTile extends StatelessWidget {
   final DiaTratamiento diaTratamiento;
   final String idIngreso;

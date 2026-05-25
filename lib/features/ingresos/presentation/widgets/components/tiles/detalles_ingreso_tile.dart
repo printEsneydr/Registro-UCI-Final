@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/common/components/tile.dart';
 import 'package:registro_uci/pages/ingreso/ingreso_details_page.dart';
 
+// tile que navega a la pagina de detalles del ingreso
 class DetallesIngresoTile extends StatelessWidget {
   final String idIngreso;
   const DetallesIngresoTile({

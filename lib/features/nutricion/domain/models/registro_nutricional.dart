@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'registro_nutricional.freezed.dart';
 
+// modelo freezed que representa un registro nutricional completo
 @freezed
 class RegistroNutricional with _$RegistroNutricional {
   const factory RegistroNutricional({
@@ -24,6 +25,7 @@ class RegistroNutricional with _$RegistroNutricional {
     String? observaciones,
   }) = _RegistroNutricional;
 
+  // crea un registro nutricional desde un mapa de firestore
   factory RegistroNutricional.fromJson(
     Map<String, dynamic> json, {
     required String id,

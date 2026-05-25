@@ -3,12 +3,14 @@ import 'package:registro_uci/features/monitorias_hemodinamicas/glasgow/domain/mo
 import 'package:registro_uci/features/monitorias_hemodinamicas/glasgow/data/abstract_repositories/glasgow_repository.dart';
 import '../../data/providers/glasgow_provider.dart';
 
+// provider del controlador de estado para registros de glasgow
 final glasgowControllerProvider =
     StateNotifierProvider<GlasgowController, AsyncValue<List<Glasgow>>>(
   (ref) => GlasgowController(
       ref.watch(glasgowRepositoryProvider)),
 );
 
+// controlador que maneja las operaciones crud de glasgow con state notifier
 class GlasgowController
     extends StateNotifier<AsyncValue<List<Glasgow>>> {
   final GlasgowRepository _repository;
@@ -16,6 +18,7 @@ class GlasgowController
   GlasgowController(this._repository)
       : super(const AsyncValue.loading());
 
+  // obtiene los registros de glasgow desde firestore via stream
   void fetchGlasgow(String idIngreso, String idRegistroDiario) {
     state = const AsyncValue.loading();
     _repository.getGlasgow(idIngreso, idRegistroDiario).listen(
@@ -28,6 +31,7 @@ class GlasgowController
     );
   }
 
+  // agrega un nuevo registro de glasgow y refresca la lista
   Future<void> addGlasgow(String idIngreso, String idRegistroDiario,
       Glasgow glasgow) async {
     try {
@@ -40,6 +44,7 @@ class GlasgowController
     }
   }
 
+  // actualiza un registro de glasgow existente y refresca la lista
   Future<void> updateGlasgow(
       String idIngreso,
       String idRegistroDiario,
@@ -55,6 +60,7 @@ class GlasgowController
     }
   }
 
+  // elimina un registro de glasgow y refresca la lista
   Future<void> deleteGlasgow(String idIngreso, String idRegistroDiario,
       String idGlasgow) async {
     try {

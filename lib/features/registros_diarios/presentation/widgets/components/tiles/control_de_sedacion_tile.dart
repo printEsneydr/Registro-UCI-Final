@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/common/components/form_tile.dart';
 import 'package:registro_uci/pages/control_sedacion/control_sedacion_page.dart';
 
+// tile que navega a la pagina de control de sedacion del paciente
 class ControlDeSedacionTile extends StatelessWidget {
   const ControlDeSedacionTile({
     super.key,

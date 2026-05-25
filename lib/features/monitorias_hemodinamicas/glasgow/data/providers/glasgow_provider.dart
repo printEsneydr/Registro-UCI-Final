@@ -3,10 +3,12 @@ import 'package:registro_uci/features/monitorias_hemodinamicas/glasgow/data/repo
 import 'package:registro_uci/features/monitorias_hemodinamicas/glasgow/domain/models/glasgow.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/glasgow/data/abstract_repositories/glasgow_repository.dart';
 
+// provider del repositorio de glasgow
 final glasgowRepositoryProvider = Provider<GlasgowRepository>((ref) {
   return FirebaseGlasgowRepository();
 });
 
+// provider que expone un stream de los registros de glasgow por ingreso
 final glasgowByIngresoProvider = StreamProvider.family<
     List<Glasgow>, ({String idIngreso, String idRegistroDiario})>(
   (ref, params) {
@@ -18,6 +20,7 @@ final glasgowByIngresoProvider = StreamProvider.family<
   },
 );
 
+// provider que obtiene un registro de glasgow por su id
 final glasgowByIdProvider = FutureProvider.family<
     Glasgow?,
     ({String idIngreso, String idRegistroDiario, String idGlasgow})>(

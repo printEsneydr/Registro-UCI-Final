@@ -4,10 +4,12 @@ import 'package:registro_uci/features/necesidades/domain/models/necesidad.dart';
 import 'package:registro_uci/features/necesidades/presentation/widgets/components/buttons/delete_necesidad_icon_button.dart';
 import 'package:registro_uci/features/necesidades/presentation/widgets/components/buttons/update_necesidad_icon_button.dart';
 
+// widget que agrupa los botones de accion (editar, eliminar) para una necesidad
 class NecesidadActionButtons extends StatelessWidget {
   final Necesidad necesidad;
   final ReporteParams params;
 
+  // constructor que recibe la necesidad y los parametros del reporte
   const NecesidadActionButtons({
     super.key,
     required this.params,

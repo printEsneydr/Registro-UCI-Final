@@ -3,11 +3,16 @@ import '../../features/control_riesgos/presentation/widgets/update_control_riego
 import 'package:registro_uci/features/control_riesgos/domain/models/control_de_riesgos.dart';
 import 'package:registro_uci/features/control_riesgos/data/repositories/firabase_control_de_riesgos.dart'; // Asegúrate de importar el modelo correcto
 
+// pagina para editar un registro existente de control de riesgos
 class UpdateControlRiesgosPage extends StatelessWidget {
+  // id del ingreso del paciente
   final String idIngreso;
+  // id del registro diario asociado
   final String idRegistroDiario;
+  // id del control de riesgos a editar
   final String controlRiesgosId;
 
+  // constructor requiere id de ingreso, registro diario y control de riesgos
   const UpdateControlRiesgosPage({
     super.key,
     required this.idIngreso,
@@ -15,6 +20,7 @@ class UpdateControlRiesgosPage extends StatelessWidget {
     required this.controlRiesgosId,
   });
 
+  // construye la pagina, carga el registro y muestra el formulario de edicion
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +48,7 @@ class UpdateControlRiesgosPage extends StatelessWidget {
     );
   }
 
+  // obtiene el control de riesgos desde firebase usando su id
   Future<ControlDeRiesgos> _fetchControlDeRiesgos() async {
     final repository = FirebaseControlDeRiesgosRepository();
     return await repository.getControlDeRiesgosById(

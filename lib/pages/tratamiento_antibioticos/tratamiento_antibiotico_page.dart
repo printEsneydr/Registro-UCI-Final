@@ -5,10 +5,14 @@ import 'package:registro_uci/features/antibioticos/data/providers/tratamiento_an
 import 'package:registro_uci/features/antibioticos/presentation/widgets/components/dias_tratamiento_tile.dart';
 import 'package:registro_uci/features/antibioticos/presentation/widgets/components/finalizar_tratamiento_antibiotico_tile.dart';
 
+// pagina que muestra los detalles de un tratamiento antibiotico
 class TratamientoAntibioticoPage extends ConsumerWidget {
+  // id del tratamiento antibiotico
   final String idTratamientoAntibiotico;
+  // id del ingreso al que pertenece el tratamiento
   final String idIngreso;
 
+  // constructor, requiere el id del tratamiento y el id del ingreso
   const TratamientoAntibioticoPage({
     super.key,
     required this.idTratamientoAntibiotico,
@@ -165,7 +169,7 @@ class TratamientoAntibioticoPage extends ConsumerWidget {
     );
   }
 
-  // Helper function to map frequency to a string
+  // convierte el numero de frecuencia en un texto legible (ej: 2 -> cada 12 horas)
   String _mapFrecuencia(int frecuenciaEn24h) {
     switch (frecuenciaEn24h) {
       case 1:

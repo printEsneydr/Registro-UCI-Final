@@ -3,9 +3,11 @@ import 'package:intl/intl.dart';
 import 'package:registro_uci/features/antibioticos/domain/models/tratamiento_antibiotico.dart';
 import 'package:registro_uci/pages/tratamiento_antibioticos/tratamiento_antibiotico_page.dart';
 
+// widget que muestra la informacion de un tratamiento antibiotico en una tarjeta
 class TratamientoAntibioticoWidget extends StatefulWidget {
   final TratamientoAntibiotico tratamientoAntibiotico;
   final String idIngreso;
+  // constructor que recibe el tratamiento y el id del ingreso
   const TratamientoAntibioticoWidget({
     super.key,
     required this.tratamientoAntibiotico,
@@ -17,6 +19,7 @@ class TratamientoAntibioticoWidget extends StatefulWidget {
       TratamientoAntibioticoWidgetState();
 }
 
+// estado del widget que maneja la visualizacion del tratamiento
 class TratamientoAntibioticoWidgetState
     extends State<TratamientoAntibioticoWidget> {
   @override
@@ -29,6 +32,7 @@ class TratamientoAntibioticoWidgetState
     final Color estadoColor =
         isFinalized ? Colors.pinkAccent : Colors.greenAccent;
 
+    // convierte el numero de frecuencia a texto legible
     String mapFrecuencia(int frecuenciaEn24h) {
       switch (frecuenciaEn24h) {
         case 1:

@@ -1,3 +1,4 @@
+// implementacion concreta del repositorio de tratamientos usando firestore
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:registro_uci/features/lista_tratamientos/domain/models/lista_tratamientos.dart';
 import 'package:registro_uci/features/lista_tratamientos/data/abstract_repositories/lista_tratamientos_repository.dart';
@@ -5,6 +6,7 @@ import 'package:registro_uci/features/lista_tratamientos/data/abstract_repositor
 class FirebaseListaTratamientosRepository implements ListaTratamientosRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // agrega un tratamiento a la subcoleccion listaTratamientos
   @override
   Future<void> addListaTratamientos(
     String idIngreso,
@@ -21,6 +23,7 @@ class FirebaseListaTratamientosRepository implements ListaTratamientosRepository
     await ref.add(listaTratamientos.toJson());
   }
 
+  // retorna un stream de tratamientos en tiempo real
   @override
   Stream<List<ListaTratamientos>> getListaTratamientos(
     String idIngreso,
@@ -40,6 +43,7 @@ class FirebaseListaTratamientosRepository implements ListaTratamientosRepository
     });
   }
 
+  // actualiza un tratamiento existente en firestore
   @override
   Future<void> updateListaTratamientos(
     String idIngreso,
@@ -58,6 +62,7 @@ class FirebaseListaTratamientosRepository implements ListaTratamientosRepository
     await ref.update(listaTratamientos.toJson());
   }
 
+  // elimina un tratamiento de firestore
   @override
   Future<void> deleteListaTratamientos(
     String idIngreso,
@@ -75,6 +80,7 @@ class FirebaseListaTratamientosRepository implements ListaTratamientosRepository
     await ref.delete();
   }
 
+  // obtiene un tratamiento especifico por su id
   @override
   Future<ListaTratamientos?> getListaTratamientosById(
     String idIngreso,

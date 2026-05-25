@@ -1,10 +1,11 @@
 import 'dart:collection';
 
+// dto para crear/actualizar un control de sedacion con validaciones
 class CreateControlSedacionDto extends MapView<String, dynamic> {
-  final int rass; // Valor de la escala RASS (+4 a -5)
+  final int rass; // valor de la escala rass (+4 a -5)
   final int hora;
   final int orden;
-  final String observacion; // Obligatorio para controles de sedación
+  final String observacion; // obligatorio para controles de sedacion
 
   CreateControlSedacionDto({
     required this.rass,
@@ -17,11 +18,10 @@ class CreateControlSedacionDto extends MapView<String, dynamic> {
           'orden': orden,
           'observacion': observacion,
         }) {
-    // Validaciones en el constructor
     _validarParametros();
   }
 
-  // Método de validación
+  // valida que los parametros esten en rangos permitidos
   void _validarParametros() {
     if (rass < -5 || rass > 4) {
       throw ArgumentError('El valor RASS debe estar entre -5 y +4');
@@ -37,10 +37,10 @@ class CreateControlSedacionDto extends MapView<String, dynamic> {
     }
   }
 
-  // Método para Firestore
+  // convierte a mapa para guardar en firestore
   Map<String, dynamic> toFirestore() => Map<String, dynamic>.from(this);
 
-  // Factory desde Firestore
+  // construye desde firestore
   factory CreateControlSedacionDto.fromFirestore(Map<String, dynamic> map) {
     return CreateControlSedacionDto(
       rass: map['rass'] as int,
@@ -50,15 +50,15 @@ class CreateControlSedacionDto extends MapView<String, dynamic> {
     );
   }
 
-  // Factory desde JSON (para APIs)
+  // construye desde json
   factory CreateControlSedacionDto.fromJson(Map<String, dynamic> json) {
     return CreateControlSedacionDto.fromFirestore(json);
   }
 
-  // Método para convertir a JSON (para APIs)
+  // convierte a json
   Map<String, dynamic> toJson() => toFirestore();
 
-  // Método copyWith para actualizaciones parciales
+  // crea una copia con campos actualizados parcialmente
   CreateControlSedacionDto copyWith({
     int? rass,
     int? hora,

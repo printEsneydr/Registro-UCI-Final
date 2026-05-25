@@ -5,6 +5,7 @@ import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administ
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/data/dto/create_liquido_administrado_dto.dart';
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/data/providers/liquidos_administrados_provider.dart';
 
+// controller para crear multiples liquidos administrados a la vez
 class CreateManyLiquidosAdministradosController extends AsyncNotifier<void> {
   late final LiquidosAdministradosRepository _repository =
       ref.watch(liquidosAdministradosRepositoryProvider);
@@ -12,6 +13,7 @@ class CreateManyLiquidosAdministradosController extends AsyncNotifier<void> {
   @override
   FutureOr<void> build() {}
 
+  // crea varios liquidos administrados en lote e invalida el provider
   Future<void> createManyLiquidosAdministrados(
     String idIngreso,
     String idRegistroDiario,
@@ -34,6 +36,7 @@ class CreateManyLiquidosAdministradosController extends AsyncNotifier<void> {
   }
 }
 
+// provider del controller de creacion masiva de liquidos administrados
 final createManyLiquidosAdministradosControllerProvider =
     AsyncNotifierProvider<CreateManyLiquidosAdministradosController, void>(
   () => CreateManyLiquidosAdministradosController(),

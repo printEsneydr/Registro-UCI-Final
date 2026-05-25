@@ -1,3 +1,4 @@
+// dto con los datos para crear un registro de escala de glasgow
 class CreateGlasgowDto {
   final int aperturaOcular;
   final int respuestaVerbal;
@@ -17,6 +18,7 @@ class CreateGlasgowDto {
     this.usuarioRegistro,
   });
 
+  // convierte el dto a un mapa para guardar en firestore
   Map<String, dynamic> toMap() {
     return {
       'aperturaOcular': aperturaOcular,

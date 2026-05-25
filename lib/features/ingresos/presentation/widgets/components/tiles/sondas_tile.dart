@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/common/components/tile.dart';
 import '../../../../../../pages/sondas/sondas_page.dart'; // ✅ Importa la página correcta
 
+// tile que navega a la pagina de listado de sondas
 class SondasTile extends StatelessWidget {
   final String idIngreso; // ✅ Parám. obligatorio
 

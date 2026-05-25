@@ -49,7 +49,7 @@ class GuardarCambioPosicionParams {
   });
 }
 
-// Provider para obtener cambios de posición
+// provider que obtiene los cambios de posicion de un registro diario
 final cambioPosicionProvider =
     FutureProvider.family<List<CambioDePosicion>, CambioPosicionParams>(
   (ref, params) async {
@@ -79,7 +79,7 @@ final cambioPosicionProvider =
   },
 );
 
-// Provider para guardar/actualizar cambios de posición
+// provider para guardar o actualizar un cambio de posicion
 final guardarCambioPosicionProvider =
     FutureProvider.family<void, GuardarCambioPosicionParams>(
   (ref, params) async {
@@ -87,7 +87,6 @@ final guardarCambioPosicionProvider =
 
     try {
       if (params.idCambioPosicion != null) {
-        // Actualización
         await repository.actualizarCambioPosicion(
           params.idIngreso,
           params.idRegistroDiario,
@@ -97,7 +96,6 @@ final guardarCambioPosicionProvider =
           orden: params.orden,
         );
       } else {
-        // Creación
         await repository.guardarCambioPosicion(
           params.idIngreso,
           params.idRegistroDiario,
@@ -112,7 +110,7 @@ final guardarCambioPosicionProvider =
   },
 );
 
-// Provider para el último cambio
+// provider que obtiene el ultimo cambio de posicion registrado
 final ultimoCambioPosicionProvider =
     FutureProvider.family<CambioDePosicion?, CambioPosicionParams>(
   (ref, params) async {
@@ -130,7 +128,7 @@ final ultimoCambioPosicionProvider =
   },
 );
 
-// Provider para eliminar un cambio
+// provider para eliminar un cambio de posicion
 final eliminarCambioPosicionProvider =
     FutureProvider.family<void, CambioPosicionParams>(
   (ref, params) async {
@@ -151,7 +149,7 @@ final eliminarCambioPosicionProvider =
   },
 );
 
-// Provider para obtener el resumen de posiciones
+// provider que obtiene el resumen de posiciones registradas
 final resumenPosicionesProvider =
     FutureProvider.family<Map<String, int>, CambioPosicionParams>(
   (ref, params) async {
@@ -169,7 +167,7 @@ final resumenPosicionesProvider =
   },
 );
 
-// Provider para reordenar cambios de posición
+// provider para reordenar los cambios de posicion
 final reordenarCambiosPosicionProvider = FutureProvider.family<void,
     ({String idIngreso, String idRegistroDiario, List<String> idsEnOrden})>(
   (ref, params) async {

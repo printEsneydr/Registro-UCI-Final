@@ -3,13 +3,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:registro_uci/features/balance_liquidos/data/providers/balances_de_liquidos_provider.dart';
 import 'package:registro_uci/features/balance_liquidos/presentation/widgets/components/balance_de_liquidos_tile.dart';
 
+// widget que lista todos los balances de liquidos de un registro diario
 class BalancesDeLiquidosList extends ConsumerWidget {
+  // ids del ingreso y registro diario para obtener los balances
   final String idIngreso;
   final String idRegistroDiario;
 
   const BalancesDeLiquidosList(
       {super.key, required this.idIngreso, required this.idRegistroDiario});
 
+  // construye la lista obteniendo los balances desde el provider
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final params = BalancesDeLiquidosParams(

@@ -6,6 +6,7 @@ import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/registros_diarios/data/abstract_repositories/registros_diarios_repository.dart';
 import 'package:registro_uci/features/registros_diarios/data/providers/registro_diario_provider.dart';
 
+// controller que maneja la accion de firmar un reporte
 class FirmarReporteController extends AsyncNotifier<void> {
   late final IRegistrosDiariosRepository _repository =
       ref.watch(registrosDiariosRepositoryProvider);
@@ -13,6 +14,7 @@ class FirmarReporteController extends AsyncNotifier<void> {
   @override
   FutureOr<void> build() {}
 
+  // ejecuta la firma del reporte e invalida el provider del registro diario
   Future<void> firmarReporte(
     String idIngreso,
     String idRegistro,
@@ -28,6 +30,7 @@ class FirmarReporteController extends AsyncNotifier<void> {
   }
 }
 
+// provider del controller de firma de reporte
 final firmarReporteControllerProvider =
     AsyncNotifierProvider<FirmarReporteController, void>(
   () => FirmarReporteController(),

@@ -5,13 +5,17 @@ import 'package:registro_uci/features/auth/application/auth_service.dart';
 import 'package:registro_uci/features/auth/data/dto/login_dto.dart';
 import 'package:registro_uci/features/auth/presentation/state/auth_state.dart';
 
+// controlador principal de autenticacion (riverpod async notifier)
 class AuthController extends AsyncNotifier<AuthState> {
+  // servicio de autenticacion inyectado por riverpod
   late final AuthService _service = ref.watch(authServiceProvider);
   @override
+  // construye el estado inicial verificando si hay sesion activa
   FutureOr<AuthState> build() async {
     return _service.getCurrentSession();
   }
 
+  // inicia sesion con las credenciales del dto
   Future<void> login(LoginDto dto) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(
@@ -19,6 +23,7 @@ class AuthController extends AsyncNotifier<AuthState> {
     );
   }
 
+  // cierra la sesion actual
   Future<void> logout() async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(
@@ -27,5 +32,6 @@ class AuthController extends AsyncNotifier<AuthState> {
   }
 }
 
+// provider de riverpod para acceder al AuthController
 final authControllerProvider =
     AsyncNotifierProvider<AuthController, AuthState>(() => AuthController());

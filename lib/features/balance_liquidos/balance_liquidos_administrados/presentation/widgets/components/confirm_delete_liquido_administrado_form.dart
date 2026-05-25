@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/data/providers/liquidos_administrados_provider.dart';
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/presentation/widgets/components/buttons/confirm_delete_liquido_administrado_form_button.dart';
 
+// widget que muestra una confirmacion antes de eliminar un liquido administrado
 class ConfirmDeleteLiquidoAdministrado extends StatelessWidget {
   const ConfirmDeleteLiquidoAdministrado({
     super.key,
@@ -9,8 +10,10 @@ class ConfirmDeleteLiquidoAdministrado extends StatelessWidget {
     required this.params,
   });
 
+  // id del liquido y parametros del balance para eliminar
   final String idLiquidoAdministrado;
   final LiquidosAdministradosParams params;
+  // construye la pantalla de confirmacion con el boton de eliminar
   @override
   Widget build(BuildContext context) {
     return Padding(

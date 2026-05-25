@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/common/components/tile.dart';
 import 'package:registro_uci/pages/nutricion/nutricion_page.dart';
 
+// tile que navega a la pagina de registro nutricional
 class NutricionTile extends StatelessWidget {
   final String idIngreso;
 

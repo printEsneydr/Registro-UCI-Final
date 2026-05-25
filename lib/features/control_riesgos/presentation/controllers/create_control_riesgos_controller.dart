@@ -3,12 +3,14 @@ import 'package:registro_uci/features/control_riesgos/domain/models/control_de_r
 import 'package:registro_uci/features/control_riesgos/data/abstract_repositories/control_de_riesgos_repository.dart';
 import '../../data/providers/control_de_riesgos_provider.dart'; // Asegúrate de importar el provider del repositorio
 
+// provider del controller para crear controles de riesgos
 final createControlRiesgosControllerProvider = StateNotifierProvider<
     CreateControlRiesgosController, AsyncValue<List<ControlDeRiesgos>>>(
   (ref) => CreateControlRiesgosController(
       ref.watch(controlDeRiesgosRepositoryProvider)),
 );
 
+// controller que maneja la creacion, actualizacion y eliminacion de controles de riesgos
 class CreateControlRiesgosController
     extends StateNotifier<AsyncValue<List<ControlDeRiesgos>>> {
   final ControlDeRiesgosRepository _repository;
@@ -16,12 +18,12 @@ class CreateControlRiesgosController
   CreateControlRiesgosController(this._repository)
       : super(const AsyncValue.loading());
 
+  // obtiene la lista de controles de riesgos en tiempo real
   void fetchControlDeRiesgos(String idIngreso, String idRegistroDiario) {
     state = const AsyncValue.loading();
     _repository.getControlDeRiesgos(idIngreso, idRegistroDiario).listen(
       (result) {
-        state = AsyncValue.data(
-            result); // Esto se llama cada vez que se emite un nuevo valor
+        state = AsyncValue.data(result);
       },
       onError: (e, stack) {
         state = AsyncValue.error(
@@ -30,42 +32,41 @@ class CreateControlRiesgosController
     );
   }
 
-  // Agregar un nuevo control de riesgos
+  // agrega un nuevo control de riesgos y refresca la lista
   Future<void> addControlDeRiesgos(String idIngreso, String idRegistroDiario,
       ControlDeRiesgos controlDeRiesgos) async {
     try {
       await _repository.addControlDeRiesgos(
           idIngreso, idRegistroDiario, controlDeRiesgos);
-      fetchControlDeRiesgos(idIngreso, idRegistroDiario); // Refrescar la lista
+      fetchControlDeRiesgos(idIngreso, idRegistroDiario);
     } catch (e, stack) {
-      state = AsyncValue.error('Error al agregar el control de riesgos',
-          stack); // Añadido stackTrace
+      state = AsyncValue.error('Error al agregar el control de riesgos', stack);
     }
   }
 
-  // Actualizar un control de riesgos existente
+  // actualiza un control de riesgos existente y refresca la lista
   Future<void> updateControlDeRiesgos(String idIngreso, String idRegistroDiario,
       String idControlDeRiesgos, ControlDeRiesgos controlDeRiesgos) async {
     try {
       await _repository.updateControlDeRiesgos(
           idIngreso, idRegistroDiario, idControlDeRiesgos, controlDeRiesgos);
-      fetchControlDeRiesgos(idIngreso, idRegistroDiario); // Refrescar la lista
+      fetchControlDeRiesgos(idIngreso, idRegistroDiario);
     } catch (e, stack) {
       state = AsyncValue.error('Error al actualizar el control de riesgos',
-          stack); // Añadido stackTrace
+          stack);
     }
   }
 
-  // Eliminar un control de riesgos
+  // elimina un control de riesgos y refresca la lista
   Future<void> deleteControlDeRiesgos(String idIngreso, String idRegistroDiario,
       String idControlDeRiesgos) async {
     try {
       await _repository.deleteControlDeRiesgos(
           idIngreso, idRegistroDiario, idControlDeRiesgos);
-      fetchControlDeRiesgos(idIngreso, idRegistroDiario); // Refrescar la lista
+      fetchControlDeRiesgos(idIngreso, idRegistroDiario);
     } catch (e, stack) {
       state = AsyncValue.error('Error al eliminar el control de riesgos',
-          stack); // Añadido stackTrace
+          stack);
     }
   }
 }

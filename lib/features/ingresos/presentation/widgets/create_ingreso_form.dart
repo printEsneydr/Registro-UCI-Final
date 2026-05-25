@@ -6,6 +6,7 @@ import 'package:registro_uci/common/utils/date_picker.dart';
 import 'package:registro_uci/features/ingresos/presentation/validators/create_ingreso_validators.dart';
 import 'package:registro_uci/features/ingresos/presentation/widgets/components/buttons/create_ingreso_form_button.dart';
 
+// formulario completo para crear un nuevo ingreso de paciente
 class CreateIngresoForm extends StatefulWidget {
   const CreateIngresoForm({
     super.key,
@@ -15,6 +16,7 @@ class CreateIngresoForm extends StatefulWidget {
   State<CreateIngresoForm> createState() => _CreateIngresoFormState();
 }
 
+// estado del formulario que maneja los controladores y la logica de ui
 class _CreateIngresoFormState extends State<CreateIngresoForm> {
   late TextEditingController _nombrePacienteController;
   late TextEditingController _fechaNacimientoPacienteController;
@@ -349,6 +351,7 @@ class _CreateIngresoFormState extends State<CreateIngresoForm> {
     );
   }
 
+  // abre un date picker y asigna la fecha seleccionada al controlador
   Future<void> _selectDate(
       TextEditingController controller, BuildContext context) async {
     final initialDate = DateTime.now();

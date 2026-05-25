@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// modelo que representa un registro de la escala de coma de glasgow
 class Glasgow {
   final String idGlasgow;
   final String idIngreso;
@@ -13,6 +14,7 @@ class Glasgow {
   final String? usuarioRegistro;
   final DateTime? fechaCreacion;
 
+  // constructor con todos los campos del registro glasgow
   Glasgow({
     required this.idGlasgow,
     required this.idIngreso,
@@ -27,6 +29,7 @@ class Glasgow {
     this.fechaCreacion,
   });
 
+  // convierte la instancia a un mapa para firestore
   Map<String, dynamic> toJson() {
     return {
       'idIngreso': idIngreso,
@@ -42,6 +45,7 @@ class Glasgow {
     };
   }
 
+  // crea una instancia desde un mapa de firestore
   factory Glasgow.fromJson(Map<String, dynamic> json, {required String id}) {
     return Glasgow(
       idGlasgow: id,
@@ -58,6 +62,7 @@ class Glasgow {
     );
   }
 
+  // parsea una fecha desde timestamp de firestore o string
   static DateTime? _parseFecha(dynamic fecha) {
     if (fecha == null) return null;
     if (fecha is Timestamp) return fecha.toDate();
@@ -65,12 +70,14 @@ class Glasgow {
     return null;
   }
 
+  // clasifica el puntaje total en leve, moderado o grave
   String get clasificacion {
     if (puntajeTotal >= 13) return 'Leve';
     if (puntajeTotal >= 9) return 'Moderado';
     return 'Grave';
   }
 
+  // calcula el puntaje total sumando las tres respuestas
   static int calcularTotal(int ocular, int verbal, int motora) {
     return ocular + verbal + motora;
   }

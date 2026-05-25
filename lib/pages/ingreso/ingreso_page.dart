@@ -15,15 +15,19 @@ import 'package:registro_uci/features/ingresos/presentation/widgets/components/t
 import 'package:registro_uci/features/reportes/presentation/widgets/generar_reporte_pdf_button.dart';
 import 'package:registro_uci/pages/loading_page.dart';
 
+// pantalla de detalle de un ingreso con todas sus secciones
 class IngresoPage extends ConsumerWidget {
+  // identificador del ingreso a mostrar
   final String idIngreso;
   const IngresoPage({
     super.key,
     required this.idIngreso,
   });
 
+  // construye la pantalla con los tiles de cada seccion del ingreso
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // obtiene los datos del ingreso desde el provider
     final ingreso = ref.watch(ingresoByIdProvider(idIngreso));
 
     return ingreso.when(

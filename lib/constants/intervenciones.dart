@@ -1,8 +1,11 @@
+// datos estaticos de intervenciones NIC, actividades y resultados NOC
+// usado para cargar el catalogo de intervenciones de enfermeria
 import 'package:registro_uci/features/intervenciones/domain/models/actividad.dart';
 import 'package:registro_uci/features/intervenciones/domain/models/intervencion.dart';
 import 'package:registro_uci/features/resultados/domain/models/indicador.dart';
 import 'package:registro_uci/features/resultados/domain/models/resultado.dart';
 
+// mapa de todas las intervenciones NIC disponibles agrupadas por region
 final Map<String, Intervencion> mapaIntervenciones = {
   // REGIÓN CEFÁLICA (CABEZA Y CUELLO)
   "3160": const Intervencion(
@@ -383,6 +386,7 @@ final Map<String, Intervencion> mapaIntervenciones = {
   ),
 };
 
+// mapa de actividades (tareas especificas) para cada intervencion
 final Map<String, List<Actividad>> actividadesDeIntervencion = {
   // REGIÓN CEFÁLICA (CABEZA Y CUELLO)
   "3160": [
@@ -1462,6 +1466,7 @@ final Map<String, List<Actividad>> actividadesDeIntervencion = {
   ],
 };
 
+// mapa de resultados NOC esperados para cada intervencion
 final Map<String, List<Resultado>> resultadosDeIntervencion = {
   // REGIÓN CEFÁLICA (CABEZA Y CUELLO)
   "3160": [
@@ -2594,6 +2599,7 @@ final Map<String, List<Resultado>> resultadosDeIntervencion = {
   ],
 };
 
+// mapa de indicadores (metricas medibles) para cada resultado NOC
 final Map<String, List<Indicador>> indicadoresDeResultados = {
   // Control del dolor y malestar
   'NOC-143': [

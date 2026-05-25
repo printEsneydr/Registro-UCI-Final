@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:registro_uci/features/nutricion/domain/models/registro_nutricional.dart';
 
+// widget que muestra un registro nutricional en una tarjeta expandible
 class RegistroNutricionalTile extends StatelessWidget {
   final RegistroNutricional registro;
   final VoidCallback onDeleteTap;
 
+  // constructor que recibe el registro y el callback de eliminacion
   const RegistroNutricionalTile({
     super.key,
     required this.registro,
@@ -57,6 +59,7 @@ class RegistroNutricionalTile extends StatelessWidget {
     );
   }
 
+  // construye una fila con label y valor para mostrar datos antropometricos
   Widget _buildRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),

@@ -4,10 +4,12 @@ import 'package:intl/intl.dart';
 import 'package:registro_uci/features/intervenciones/presentation/widgets/components/buttons/import_intervenciones_form_button.dart';
 import 'package:registro_uci/features/registros_diarios/data/providers/registros_diarios_de_ingreso_provider.dart'; // For formatting the date
 
+// formulario para importar intervenciones desde otro registro diario
 class ImportIntervencionesForm extends ConsumerStatefulWidget {
   final String idIngreso;
   final String idRegistroToOmit;
 
+  // constructor de ImportIntervencionesForm
   const ImportIntervencionesForm({
     super.key,
     required this.idIngreso,
@@ -19,12 +21,14 @@ class ImportIntervencionesForm extends ConsumerStatefulWidget {
       _SelectRegistroDiarioFormState();
 }
 
+// estado del formulario de importacion de intervenciones
 class _SelectRegistroDiarioFormState
     extends ConsumerState<ImportIntervencionesForm> {
   String? _selectedFechaRegistro;
 
   // Function to handle button press
 
+  // verifica si hay una fecha seleccionada para habilitar el boton
   bool _isEnabled() {
     if (_selectedFechaRegistro != null) {
       return true;
@@ -32,6 +36,7 @@ class _SelectRegistroDiarioFormState
     return false;
   }
 
+  // construye la interfaz con los registros disponibles para importar
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;

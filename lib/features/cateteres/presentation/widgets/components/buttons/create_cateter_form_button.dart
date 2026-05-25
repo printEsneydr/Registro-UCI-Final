@@ -5,6 +5,7 @@ import 'package:registro_uci/common/extensions/async_value_ui.dart';
 import 'package:registro_uci/features/marcapasos/data/dto/create_marcapaso_dto.dart';
 import 'package:registro_uci/features/marcapasos/presentation/controllers/create_marcapaso_controller.dart';
 
+// boton que valida y registra un nuevo marcapaso
 class CreateMarcapasoFormButton extends ConsumerWidget {
   const CreateMarcapasoFormButton({
     super.key,

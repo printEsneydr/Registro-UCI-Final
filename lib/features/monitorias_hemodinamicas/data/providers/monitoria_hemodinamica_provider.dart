@@ -4,11 +4,13 @@ import 'package:registro_uci/common/providers/repository_providers.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/domain/models/monitoria_hemodinamica.dart';
 
 @immutable
+// parametros para consultar una monitoria hemodinamica por ingreso y registro
 class ParametrosMonitoriaHemodinamica {
   final String idIngreso;
   final String idRegistroDiario;
   final String? idMonitoria;
 
+  // constructor con los parametros requeridos
   const ParametrosMonitoriaHemodinamica({
     required this.idIngreso,
     required this.idRegistroDiario,
@@ -29,6 +31,7 @@ class ParametrosMonitoriaHemodinamica {
 }
 
 @immutable
+// parametros para guardar (crear o actualizar) una monitoria hemodinamica
 class ParametrosGuardarMonitoria {
   final String idIngreso;
   final String idRegistroDiario;
@@ -84,6 +87,7 @@ class ParametrosGuardarMonitoria {
 }
 
 @immutable
+// parametros para reordenar la lista de monitorias
 class ParametrosReordenarMonitorias {
   final String idIngreso;
   final String idRegistroDiario;
@@ -96,6 +100,7 @@ class ParametrosReordenarMonitorias {
   });
 }
 
+// provider que expone un stream en tiempo real de las monitorias
 final monitoriasHemodinamicasStreamProvider = StreamProvider.family<
     List<MonitoriaHemodinamica>, ParametrosMonitoriaHemodinamica>(
   (ref, params) {
@@ -107,6 +112,7 @@ final monitoriasHemodinamicasStreamProvider = StreamProvider.family<
   },
 );
 
+// provider que guarda (crea o actualiza) una monitoria en firestore
 final guardarMonitoriaHemodinamicaProvider =
     FutureProvider.family<void, ParametrosGuardarMonitoria>(
   (ref, params) async {
@@ -173,6 +179,7 @@ final guardarMonitoriaHemodinamicaProvider =
   },
 );
 
+// provider que elimina una monitoria de firestore
 final eliminarMonitoriaHemodinamicaProvider =
     FutureProvider.family<void, ParametrosMonitoriaHemodinamica>(
   (ref, params) async {
@@ -193,6 +200,7 @@ final eliminarMonitoriaHemodinamicaProvider =
   },
 );
 
+// provider que reordena las monitorias segun una lista de ids
 final reordenarMonitoriasHemodinamicasProvider =
     FutureProvider.family<void, ParametrosReordenarMonitorias>(
   (ref, params) async {

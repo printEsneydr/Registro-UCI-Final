@@ -3,10 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/glasgow/domain/models/glasgow.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/glasgow/presentation/controllers/glasgow_controller.dart';
 
+// formulario para crear un nuevo registro de escala de glasgow
 class CreateGlasgowForm extends ConsumerStatefulWidget {
   final String idIngreso;
   final String idRegistroDiario;
 
+  // constructor que recibe los ids del ingreso y registro diario
   const CreateGlasgowForm({
     super.key,
     required this.idIngreso,
@@ -48,15 +50,18 @@ class _CreateGlasgowFormState extends ConsumerState<CreateGlasgowForm> {
     {'valor': 1, 'texto': 'No responde'},
   ];
 
+  // calcula el puntaje total sumando las tres subescalas
   int get _puntajeTotal =>
       _aperturaOcular + _respuestaVerbal + _respuestaMotora;
 
+  // clasifica el puntaje en leve, moderado o grave
   String get _clasificacion {
     if (_puntajeTotal >= 13) return 'Leve';
     if (_puntajeTotal >= 9) return 'Moderado';
     return 'Grave';
   }
 
+  // retorna el color segun la severidad
   Color get _colorClasificacion {
     if (_puntajeTotal >= 13) return Colors.green;
     if (_puntajeTotal >= 9) return Colors.orange;
@@ -121,6 +126,7 @@ class _CreateGlasgowFormState extends ConsumerState<CreateGlasgowForm> {
     );
   }
 
+  // construye la tarjeta que muestra el puntaje total y clasificacion
   Widget _buildPuntajeCard() {
     return Card(
       elevation: 4,
@@ -168,6 +174,7 @@ class _CreateGlasgowFormState extends ConsumerState<CreateGlasgowForm> {
     );
   }
 
+  // construye una seccion con opciones de radio para una subescala
   Widget _buildSection(
       String title, List<Map<String, dynamic>> opciones, int valorActual, Function(int) onChanged) {
     return Card(
@@ -209,6 +216,7 @@ class _CreateGlasgowFormState extends ConsumerState<CreateGlasgowForm> {
     );
   }
 
+  // guarda el nuevo registro de glasgow en firestore y cierra el dialogo
   void _guardarGlasgow() async {
     try {
       final now = DateTime.now();

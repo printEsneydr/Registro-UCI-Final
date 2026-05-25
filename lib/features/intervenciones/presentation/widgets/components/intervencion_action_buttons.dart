@@ -4,11 +4,13 @@ import 'package:registro_uci/features/intervenciones/domain/models/intervencion.
 import 'package:registro_uci/features/intervenciones/presentation/widgets/components/buttons/delete_intervencion_icon_button.dart';
 import 'package:registro_uci/features/intervenciones/presentation/widgets/components/buttons/intervencion_details_icon_button.dart';
 
+// botones de accion para una intervencion (detalles y eliminar)
 class IntervencionActionButtons extends StatelessWidget {
   final Intervencion intervencion;
   final ReporteParams params;
   final bool readOnly;
 
+  // constructor de IntervencionActionButtons
   const IntervencionActionButtons({
     super.key,
     required this.params,
@@ -16,6 +18,7 @@ class IntervencionActionButtons extends StatelessWidget {
     required this.readOnly,
   });
 
+  // construye la fila con boton de eliminar y boton de detalles
   @override
   Widget build(BuildContext context) {
     return Row(

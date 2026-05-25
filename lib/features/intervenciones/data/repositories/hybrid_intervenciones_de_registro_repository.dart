@@ -4,10 +4,12 @@ import 'package:registro_uci/constants/intervenciones.dart'; // Asegúrate de qu
 import 'package:registro_uci/features/intervenciones/data/abstract_repositories/intervenciones_de_registro_repository.dart';
 import 'package:registro_uci/features/intervenciones/domain/models/intervencion.dart';
 
+// repositorio hibrido que usa firestore y datos locales para intervenciones
 class HybridIntervencionesDeRegistroRepository
     implements IntervencionesDeRegistroRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // agrega intervenciones a un registro usando batch en firestore
   @override
   Future<void> agregarIntervencionesARegistro(
     String idIngreso,
@@ -39,6 +41,7 @@ class HybridIntervencionesDeRegistroRepository
     }
   }
 
+  // elimina una intervencion de un registro en firestore
   @override
   Future<void> eliminarIntervencionDeRegistro(
     String idIngreso,
@@ -62,6 +65,7 @@ class HybridIntervencionesDeRegistroRepository
     }
   }
 
+  // obtiene las intervenciones de un registro usando el mapa local
   @override
   Future<List<Intervencion>> getIntervencionesDeRegistro(
     String idIngreso,
@@ -92,6 +96,7 @@ class HybridIntervencionesDeRegistroRepository
     }
   }
 
+  // importa intervenciones de un registro origen a uno destino
   @override
   Future<void> importIntervencionesFromRegistro(
     String idIngreso,

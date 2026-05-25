@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:registro_uci/common/components/buttons/primary_button.dart';
 
+// extension de AsyncValue para mostrar errores y exito en la UI
 extension AsyncValueUI on AsyncValue {
+  // muestra un dialogo de error si lo hay
   void dialogOnError(BuildContext context) {
     if (!isLoading && hasError) {
       log(error.toString());
@@ -36,12 +38,14 @@ extension AsyncValueUI on AsyncValue {
     }
   }
 
+  // cierra la pantalla si la operacion fue exitosa
   void popOnSuccess(AsyncValue? prev, BuildContext context) {
     if (!isLoading && !hasError && prev != null) {
       Navigator.of(context).pop();
     }
   }
 
+  // muestra un dialogo de exito y cierra la pantalla
   void dialogOnSuccess(AsyncValue? prev, String message, BuildContext context) {
     if (!isLoading && !hasError && prev != null) {
       Navigator.of(context).pop();

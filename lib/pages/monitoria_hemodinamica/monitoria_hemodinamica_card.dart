@@ -8,8 +8,11 @@ import 'package:registro_uci/pages/monitoria_hemodinamica/monitoria_hemodinamica
 import 'package:registro_uci/pages/monitoria_hemodinamica/monitoria_hemodinamica_edit_page.dart';
 import 'package:registro_uci/pages/monitoria_hemodinamica/monitoria_hemodinamica_graphics_page.dart';
 
+// card que muestra las monitorias hemodinamicas por hora con opciones
 class MonitoriaHemodinamicaCard extends ConsumerWidget {
+  // id del ingreso
   final String idIngreso;
+  // id del registro diario
   final String idRegistroDiario;
 
   const MonitoriaHemodinamicaCard({
@@ -18,12 +21,15 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
     required this.idRegistroDiario,
   });
 
+  // construye la card con encabezado, boton de graficos y lista de horas
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // parametros para consultar las monitorias
     final params = ParametrosMonitoriaHemodinamica(
       idIngreso: idIngreso,
       idRegistroDiario: idRegistroDiario,
     );
+    // stream de datos de monitorias hemodinamicas
     final monitoriasData =
         ref.watch(monitoriasHemodinamicasStreamProvider(params));
 
@@ -78,6 +84,7 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
     );
   }
 
+  // construye el titulo del card
   Widget _buildHeader(BuildContext context) {
     return Text(
       'Monitoría Hemodinámica',
@@ -87,6 +94,7 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
     );
   }
 
+  // construye el contenido segun el estado de los datos (cargando, error, datos)
   Widget _buildContent(
     AsyncValue<List<MonitoriaHemodinamica>> monitoriasData,
     BuildContext context,
@@ -111,6 +119,7 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
     );
   }
 
+  // widget que se muestra cuando hay un error al cargar los datos
   Widget _buildErrorWidget(BuildContext context, WidgetRef ref, Object error) {
     return Center(
       child: Padding(
@@ -148,6 +157,7 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
     );
   }
 
+  // muestra el ultimo registro de monitoria registrado
   Widget _buildLastParameters(List<MonitoriaHemodinamica> data) {
     final lastRecord = data.isNotEmpty ? data.last : null;
 
@@ -173,6 +183,7 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
     );
   }
 
+  // construye la lista de cards para cada hora del dia (8am a 7am)
   List<Widget> _buildTimeList(
     List<MonitoriaHemodinamica> monitorias,
     BuildContext context,
@@ -221,6 +232,7 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
     }).toList();
   }
 
+  // construye un card individual para una hora especifica con acciones
   Widget _buildTimeCard(
     BuildContext context,
     WidgetRef ref, {
@@ -251,6 +263,7 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
     );
   }
 
+  // icono que indica si hay un registro en esa hora
   Widget _buildStatusIcon(bool hasRecord) {
     return Icon(
       hasRecord ? Icons.check_circle : Icons.access_time,
@@ -258,6 +271,7 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
     );
   }
 
+  // texto que muestra la hora formateada
   Widget _buildTimeLabel(int hour, bool hasRecord) {
     return Flexible(
       child: Text(
@@ -272,6 +286,7 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
     );
   }
 
+  // botones de accion: agregar, editar y eliminar segun el rol
   Widget _buildActionButtons(
     BuildContext context,
     WidgetRef ref,
@@ -330,12 +345,14 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
     );
   }
 
+  // convierte una hora en formato 24h a formato 12h con AM/PM
   String _formatHour(int hour) {
     final hourFormatted = hour == 0 ? 12 : (hour > 12 ? hour - 12 : hour);
     final period = hour < 12 ? 'AM' : 'PM';
     return '${hourFormatted.toString().padLeft(2, '0')}:00 $period';
   }
 
+  // muestra un dialogo con los detalles de la monitoria seleccionada
   void _showDetails(BuildContext context, MonitoriaHemodinamica record) {
     showDialog(
       context: context,
@@ -384,6 +401,7 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
     );
   }
 
+  // construye una fila con etiqueta y valor para los detalles
   Widget _buildDetailItem(String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -399,6 +417,7 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
     );
   }
 
+  // navega al formulario para crear un nuevo registro en la hora indicada
   void _createForm(BuildContext context, {required int hour}) {
     Navigator.push(
       context,
@@ -413,6 +432,7 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
     );
   }
 
+  // navega al formulario para editar un registro existente
   void _editForm(BuildContext context,
       {required int hour, required String idMonitoria}) {
     Navigator.push(
@@ -429,6 +449,7 @@ class MonitoriaHemodinamicaCard extends ConsumerWidget {
     );
   }
 
+  // muestra un dialogo de confirmacion y elimina el registro si se confirma
   void _confirmDelete(
       BuildContext context, WidgetRef ref, String idMonitoria, int hour) {
     showDialog<bool>(

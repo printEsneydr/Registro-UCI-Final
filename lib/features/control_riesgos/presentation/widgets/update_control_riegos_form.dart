@@ -5,6 +5,7 @@ import '../../data/constants/constants.dart';
 import '../../data/repositories/firabase_control_de_riesgos.dart';
 import 'package:registro_uci/features/control_riesgos/domain/models/control_de_riesgos.dart';
 
+// formulario para actualizar un control de riesgos existente
 class UpdateControlRiesgosForm extends StatefulWidget {
   final String idIngreso;
   final String idRegistroDiario;
@@ -47,12 +48,12 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
   TextEditingController medicamentoAlergicoController = TextEditingController();
   TextEditingController fechaRegistroController = TextEditingController();
 
-  // Controladores para UPP
+  // controladores para valores de upp
   TextEditingController uppMananaController = TextEditingController();
   TextEditingController uppTardeController = TextEditingController();
   TextEditingController uppNocheController = TextEditingController();
 
-  // Controladores para Caídas
+  // controladores para valores de caida
   TextEditingController caidaMananaController = TextEditingController();
   TextEditingController caidaTardeController = TextEditingController();
   TextEditingController caidaNocheController = TextEditingController();
@@ -65,7 +66,7 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
   void initState() {
     super.initState();
 
-    // Crear lista completa de sitios para validación
+    // lista completa de sitios anatomicos para validacion
     final todosSitios = [
       ...SitiosAnatomicosUPP.sitiosCefalicos,
       ...SitiosAnatomicosUPP.sitiosExtremidadesSuperiores,
@@ -73,7 +74,7 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
       ...SitiosAnatomicosUPP.sitiosExtremidadesInferiores,
     ];
 
-    // Inicializar valores con los datos actuales
+    // inicializa los campos con los valores actuales del control
     tieneUPP = widget.controlDeRiesgos.tieneUPP;
     uppResuelta = widget.controlDeRiesgos.uppResuelta;
     enAislamiento = widget.controlDeRiesgos.enAislamiento;
@@ -98,7 +99,7 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
     medicamentoAlergicoController.text =
         widget.controlDeRiesgos.medicamentoAlergico ?? '';
 
-    // Validar que el sitio UPP exista en las opciones
+    // valida que el sitio upp exista en las opciones disponibles
     _selectedSitioUPP = widget.controlDeRiesgos.sitioUPP != null &&
             todosSitios.contains(widget.controlDeRiesgos.sitioUPP)
         ? widget.controlDeRiesgos.sitioUPP
@@ -109,7 +110,7 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
     _selectedTipoAislamiento =
         widget.controlDeRiesgos.tipoAislamiento ?? 'Aislado Respiratorio';
 
-    // Inicializar controladores numéricos
+    // inicializa los campos numericos con los valores actuales
     uppMananaController.text =
         widget.controlDeRiesgos.controlUPPManana?.toString() ?? '0';
     uppTardeController.text =
@@ -139,7 +140,6 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
 
   @override
   void dispose() {
-    // Liberar todos los controladores
     uppMananaController.dispose();
     uppTardeController.dispose();
     uppNocheController.dispose();
@@ -154,8 +154,9 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
     super.dispose();
   }
 
+  // valida y actualiza los datos del control de riesgos en firestore
   void _actualizarDatos() async {
-    // Validación de campos obligatorios
+    // validaciones de campos obligatorios
     if (fechaRegistro == null ||
         uppMananaController.text.isEmpty ||
         uppTardeController.text.isEmpty ||
@@ -171,7 +172,6 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
       return;
     }
 
-    // Validación adicional si tiene UPP
     if (tieneUPP &&
         (fechaRegistroUlcera == null ||
             numeroReporteEAController.text.isEmpty ||
@@ -184,7 +184,6 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
       return;
     }
 
-    // Validación adicional si UPP está resuelta
     if (tieneUPP && uppResuelta && fechaResolucion == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -193,7 +192,6 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
       return;
     }
 
-    // Validación adicional si tiene evento adverso de caída
     if (tieneEventoAdversoCaida && numeroReporteCaidaController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -202,7 +200,6 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
       return;
     }
 
-    // Validación adicional si está en aislamiento
     if (enAislamiento &&
         (fechaInicioAislamiento == null ||
             _selectedTipoAislamiento == null ||
@@ -215,7 +212,7 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
       return;
     }
 
-    // Crear el objeto con los datos actualizados
+    // construye el modelo con los datos actualizados del formulario
     final controlDeRiesgos = ControlDeRiesgos(
       idControlDeRiesgos: widget.controlDeRiesgos.idControlDeRiesgos,
       tieneUPP: tieneUPP,
@@ -274,6 +271,7 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
     }
   }
 
+  // calcula el riesgo de upp basado en promedio de tres horarios
   String _calcularRiesgoUPP() {
     final manana = int.tryParse(uppMananaController.text) ?? 0;
     final tarde = int.tryParse(uppTardeController.text) ?? 0;
@@ -281,16 +279,16 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
 
     final promedio = (manana + tarde + noche) / 3;
 
-    // Comprobamos el promedio según los rangos definidos
     if (promedio < 12) {
-      return 'Alto'; // Riesgo alto
+      return 'Alto';
     } else if (promedio >= 13 && promedio <= 14) {
-      return 'Medio'; // Riesgo medio
+      return 'Medio';
     } else {
-      return 'Bajo'; // Riesgo bajo
+      return 'Bajo';
     }
   }
 
+  // calcula el riesgo de caida basado en promedio de tres horarios
   String _calcularRiesgoCaida() {
     final manana = int.tryParse(caidaMananaController.text) ?? 0;
     final tarde = int.tryParse(caidaTardeController.text) ?? 0;
@@ -302,6 +300,7 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
     return 'Alto';
   }
 
+  // calcula los dias de aislamiento entre fecha inicio y fin
   void _calcularDiasAislamiento() {
     if (fechaInicioAislamiento != null) {
       final fechaReferencia = fechaFinAislamiento ?? DateTime.now();
@@ -312,6 +311,7 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
     }
   }
 
+  // construye la seccion de alergias medicamentosas
   Widget _buildAlergias() {
     return Card(
       elevation: 5,
@@ -356,6 +356,7 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
     );
   }
 
+  // campo de texto numerico para capturar valores de upp o caida
   Widget _buildCampoNumerico({
     required String label,
     required TextEditingController controller,
@@ -391,6 +392,7 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
 
   @override
   Widget build(BuildContext context) {
+    // formulario completo con todas las secciones para actualizar
     return Scaffold(
       appBar: AppBar(title: const Text('Actualizar Control de Riesgos')),
       body: Padding(
@@ -471,8 +473,8 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
     );
   }
 
+  // construye la seccion de ulceras por presion (upp)
   Widget _buildControlUPP() {
-    // Crear lista completa de sitios para validación
     final todosSitios = [
       ...SitiosAnatomicosUPP.sitiosCefalicos,
       ...SitiosAnatomicosUPP.sitiosExtremidadesSuperiores,
@@ -699,6 +701,7 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
     );
   }
 
+  // construye la seccion de riesgo de caidas
   Widget _buildRiesgoDeCaidas() {
     return Card(
       elevation: 5,
@@ -777,6 +780,7 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
     );
   }
 
+  // construye la seccion de anticoagulantes
   Widget _buildAnticoagulantes() {
     return Card(
       elevation: 5,
@@ -824,6 +828,7 @@ class _UpdateControlRiesgosFormState extends State<UpdateControlRiesgosForm> {
     );
   }
 
+  // construye la seccion de aislamiento
   Widget _buildAislamiento() {
     return Card(
       elevation: 5,

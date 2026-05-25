@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+// dto para crear un liquido administrado, extiende MapView para ser usado como mapa
 class CreateLiquidoAdministradoDto extends MapView<String, dynamic> {
   final String medicamento;
   final int cantidad;

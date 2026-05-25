@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'liquido_eliminado.freezed.dart';
 
+// modelo freezed que representa un registro de liquidos eliminados
 @freezed
 class LiquidoEliminado with _$LiquidoEliminado {
   const factory LiquidoEliminado({
@@ -29,6 +30,7 @@ class LiquidoEliminado with _$LiquidoEliminado {
     String? comentario,
   }) = _LiquidoEliminado;
 
+  // construye el modelo desde un mapa de firestore con valores por defecto
   factory LiquidoEliminado.fromJson(
     Map<String, dynamic> json, {
     required String id,

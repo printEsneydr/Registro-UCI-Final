@@ -5,16 +5,21 @@ import 'package:registro_uci/features/auth/domain/enums/user_role.dart';
 import 'package:registro_uci/features/control_sedacion/data/providers/control_sedacion_provider.dart';
 import 'package:registro_uci/features/control_sedacion/domain/models/control_sedacion.dart';
 
+// widget que muestra la tarjeta de control de sedacion con todas las horas
 class ControlSedacionCard extends ConsumerWidget {
+  // id del ingreso del paciente
   final String idIngreso;
+  // id del registro diario asociado
   final String idRegistroDiario;
 
+  // constructor requiere id de ingreso y registro diario
   const ControlSedacionCard({
     super.key,
     required this.idIngreso,
     required this.idRegistroDiario,
   });
 
+  // construye la tarjeta con el ultimo rass y la lista de horas
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final params = ControlSedacionParams(
@@ -66,11 +71,13 @@ class ControlSedacionCard extends ConsumerWidget {
     );
   }
 
+  // formatea la hora numerica a formato HH:00 AM/PM
   String _formatearHora(int hora) {
     if (hora < 0) return '--';
     return '${hora.toString().padLeft(2, '0')}:00 ${hora < 12 ? 'AM' : 'PM'}';
   }
 
+  // construye la lista de widgets para cada hora del dia (8am a 7am)
   List<Widget> _buildListaHoras(
     List<ControlSedacion> controles,
     BuildContext context,
@@ -143,6 +150,7 @@ class ControlSedacionCard extends ConsumerWidget {
     }).toList();
   }
 
+  // layout horizontal para pantallas anchas con icono, hora, rass y botones
   Widget _buildHorizontalLayout(
     int hora,
     bool tieneRegistro,
@@ -185,6 +193,7 @@ class ControlSedacionCard extends ConsumerWidget {
     );
   }
 
+  // layout vertical para pantallas estrechas con icono, hora, rass y botones
   Widget _buildVerticalLayout(
     int hora,
     bool tieneRegistro,
@@ -225,6 +234,7 @@ class ControlSedacionCard extends ConsumerWidget {
     );
   }
 
+  // construye los botones de accion (agregar/editar) segun el rol
   Widget _buildActionButtons(
     bool tieneRegistro,
     int hora,
@@ -270,6 +280,7 @@ class ControlSedacionCard extends ConsumerWidget {
     );
   }
 
+  // muestra dialogo con los detalles del control de sedacion
   void _mostrarDetalleControl(
     BuildContext context,
     ControlSedacion control,
@@ -327,6 +338,7 @@ class ControlSedacionCard extends ConsumerWidget {
     );
   }
 
+  // abre dialogo para crear o editar un control de sedacion
   void _mostrarSelectorSedacion(
     BuildContext context,
     WidgetRef ref, {
@@ -346,12 +358,18 @@ class ControlSedacionCard extends ConsumerWidget {
   }
 }
 
+// dialogo interno para seleccionar rass, hora y observacion de sedacion
 class _SelectorSedacionDialog extends ConsumerStatefulWidget {
+  // id del ingreso del paciente
   final String idIngreso;
+  // id del registro diario
   final String idRegistroDiario;
+  // hora inicial pre-seleccionada
   final int? horaInicial;
+  // id del control existente si se esta editando
   final String? idControlExistente;
 
+  // constructor del dialogo selector de sedacion
   const _SelectorSedacionDialog({
     super.key,
     required this.idIngreso,
@@ -364,13 +382,19 @@ class _SelectorSedacionDialog extends ConsumerStatefulWidget {
   _SelectorSedacionDialogState createState() => _SelectorSedacionDialogState();
 }
 
+// estado del dialogo selector de sedacion
 class _SelectorSedacionDialogState
     extends ConsumerState<_SelectorSedacionDialog> {
+  // hora seleccionada en el dialogo
   late int selectedHora;
+  // valor de rass seleccionado
   late int selectedRass;
+  // observacion ingresada
   late String observacion;
+  // orden del registro
   late int? selectedOrden;
 
+  // inicializa los campos y carga datos si se esta editando
   @override
   void initState() {
     super.initState();
@@ -384,6 +408,7 @@ class _SelectorSedacionDialogState
     }
   }
 
+  // carga los datos del control existente para editar
   Future<void> _cargarDatosExistente() async {
     final controles = ref.read(controlSedacionStreamProvider(ControlSedacionParams(
       idIngreso: widget.idIngreso,
@@ -412,6 +437,7 @@ class _SelectorSedacionDialogState
     }
   }
 
+  // construye el dialogo con selectores de hora, rass y observacion
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -476,6 +502,7 @@ class _SelectorSedacionDialogState
     return '${hora.toString().padLeft(2, '0')}:00 ${hora < 12 ? 'AM' : 'PM'}';
   }
 
+  // dropdown para seleccionar la hora del control
   Widget _buildHoraSelector() {
     final horasDisponibles = [
       8,
@@ -523,6 +550,7 @@ class _SelectorSedacionDialogState
     );
   }
 
+  // dropdown para seleccionar el valor de la escala rass
   Widget _buildRassSelector() {
     return DropdownButtonFormField<int>(
       value: selectedRass,
@@ -580,6 +608,7 @@ class _SelectorSedacionDialogState
     );
   }
 
+  // campo de texto para ingresar observaciones del control
   Widget _buildObservacionField() {
     return TextFormField(
       initialValue: observacion,
@@ -593,6 +622,7 @@ class _SelectorSedacionDialogState
     );
   }
 
+  // guarda el control de sedacion (crea o actualiza segun corresponda)
   Future<void> _guardarControl(BuildContext context) async {
     try {
       await ref.read(guardarControlSedacionProvider(

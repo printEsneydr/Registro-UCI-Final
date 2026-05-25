@@ -8,12 +8,14 @@ final updateMarcapasoControllerProvider =
   (ref) => UpdateMarcapasoController(ref.watch(marcapasosRepositoryProvider)),
 );
 
+// controlador que maneja la actualizacion de un marcapaso
 class UpdateMarcapasoController extends StateNotifier<AsyncValue<void>> {
   final MarcapasosRepository _repository;
 
   UpdateMarcapasoController(this._repository)
       : super(const AsyncValue.data(null));
 
+  // actualiza el marcapaso usando el repositorio
   Future<void> updateMarcapaso(
       String idIngreso, String idMarcapaso, UpdateMarcapasoDto dto) async {
     state = const AsyncValue.loading();

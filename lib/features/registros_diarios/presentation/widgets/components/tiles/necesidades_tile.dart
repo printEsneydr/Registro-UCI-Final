@@ -3,6 +3,7 @@ import 'package:registro_uci/common/components/form_tile.dart';
 import 'package:registro_uci/features/firmas/domain/models/firma.dart';
 import 'package:registro_uci/pages/necesidades/necesidades_page.dart';
 
+// tile que navega a la pagina de lista de necesidades del paciente
 class NecesidadesTile extends StatelessWidget {
   const NecesidadesTile({
     super.key,
@@ -17,6 +18,7 @@ class NecesidadesTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // muestra el tile como completado si existe una firma
     return FormTile(
       completed: firma != null,
       title: "Lista de Necesidades",

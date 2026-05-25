@@ -1,3 +1,4 @@
+// implementacion concreta del repositorio de procedimientos usando firestore
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../dto/create_procedimiento_dto.dart';
@@ -8,7 +9,7 @@ import '../abstract_repositories/procedimientos_repository.dart';
 class FirebaseProcedimientosRepository implements ProcedimientosRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // Usamos un Stream para que se actualice en tiempo real
+  // retorna un stream de procedimientos que se actualiza en tiempo real
   @override
   Stream<List<ProcedimientoEspecial>> getProcedimientosDeRegistro(
       String idIngreso) {
@@ -16,12 +17,12 @@ class FirebaseProcedimientosRepository implements ProcedimientosRepository {
         .collection('ingresos')
         .doc(idIngreso)
         .collection('procedimientosEspeciales')
-        .snapshots() // Escucha los cambios en tiempo real
+        .snapshots()
         .map((querySnapshot) {
       return querySnapshot.docs.map((doc) {
         final data = doc.data();
         return ProcedimientoEspecial.fromJson(data,
-            id: doc.id); // Pasa el ID del doc
+            id: doc.id);
       }).toList();
     });
   }
@@ -58,6 +59,7 @@ class FirebaseProcedimientosRepository implements ProcedimientosRepository {
     }
   }
 
+  // elimina un procedimiento de la coleccion
   @override
   Future<void> deleteProcedimientoDeRegistro(
       String idIngreso, String idProcedimiento) async {
@@ -75,7 +77,7 @@ class FirebaseProcedimientosRepository implements ProcedimientosRepository {
     }
   }
 
-  // Método para editar el nombre del procedimiento
+  // edita el nombre de un procedimiento en firestore
   @override
   Future<void> editProcedimientoNombre(
     String idIngreso,
@@ -89,7 +91,6 @@ class FirebaseProcedimientosRepository implements ProcedimientosRepository {
           .collection('procedimientosEspeciales')
           .doc(idProcedimiento);
 
-      // Solo actualizamos el nombre
       await docRef.update({
         'nombreProcedimiento': nuevoNombre,
       });
@@ -99,6 +100,7 @@ class FirebaseProcedimientosRepository implements ProcedimientosRepository {
     }
   }
 
+  // actualiza campos arbitrarios de un procedimiento
   Future<void> updateProcedimientoFields(
     String idIngreso,
     String idProcedimiento,
@@ -117,7 +119,7 @@ class FirebaseProcedimientosRepository implements ProcedimientosRepository {
     }
   }
 
-  // Método para actualizar el estado del procedimiento
+  // actualiza solo el campo estado de un procedimiento
   @override
   Future<void> updateProcedimientoEstado(
     String idIngreso,
@@ -131,7 +133,6 @@ class FirebaseProcedimientosRepository implements ProcedimientosRepository {
           .collection('procedimientosEspeciales')
           .doc(idProcedimiento);
 
-      // Actualizamos solo el estado
       await docRef.update({
         'estado': nuevoEstado,
       });

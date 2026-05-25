@@ -4,7 +4,9 @@ import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/necesidades/domain/models/necesidad.dart';
 import 'package:registro_uci/features/necesidades/presentation/widgets/components/buttons/update_necesidad_form_button.dart';
 
+// formulario para actualizar el nombre de una necesidad existente
 class UpdateNecesidadForm extends StatefulWidget {
+  // constructor que recibe la necesidad a editar y los parametros del reporte
   const UpdateNecesidadForm({
     super.key,
     required this.necesidad,

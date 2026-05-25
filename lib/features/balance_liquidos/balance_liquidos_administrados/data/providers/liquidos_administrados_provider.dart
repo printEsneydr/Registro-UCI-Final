@@ -4,6 +4,7 @@ import 'package:registro_uci/common/providers/repository_providers.dart';
 
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/domain/models/liquido_administrado.dart';
 
+// provider que obtiene la lista de liquidos administrados de un balance
 final liquidosAdministradosProvider = FutureProvider.family<
     List<LiquidoAdministrado>,
     LiquidosAdministradosParams>((ref, params) async {
@@ -22,6 +23,7 @@ final liquidosAdministradosProvider = FutureProvider.family<
 });
 
 @immutable
+// parametros inmutables para identificar el contexto del balance
 class LiquidosAdministradosParams {
   final String idIngreso;
   final String idRegistroDiario;

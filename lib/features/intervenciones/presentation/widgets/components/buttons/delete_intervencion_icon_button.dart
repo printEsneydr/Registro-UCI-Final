@@ -3,16 +3,19 @@ import 'package:registro_uci/common/components/icon_buttons/delete_icon_button.d
 import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/intervenciones/presentation/widgets/components/confirm_delete_intervencion_form.dart';
 
+// boton de icono para eliminar una intervencion con confirmacion
 class DeleteIntervencionIconButton extends StatelessWidget {
   final String idIntervencion;
   final ReporteParams params;
 
+  // constructor de DeleteIntervencionIconButton
   const DeleteIntervencionIconButton({
     super.key,
     required this.params,
     required this.idIntervencion,
   });
 
+  // muestra un dialogo de confirmacion antes de eliminar
   @override
   Widget build(BuildContext context) {
     return DeleteIconButton(

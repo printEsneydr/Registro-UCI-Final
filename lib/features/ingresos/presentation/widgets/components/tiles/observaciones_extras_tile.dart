@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/common/components/tile.dart';
 import 'package:registro_uci/features/observaciones_extras/presentation/pages/observaciones_extras_page.dart';
 
+// tile que navega a la pagina de observaciones extras y firmas
 class ObservacionesExtrasTile extends StatelessWidget {
   final String idIngreso;
 

@@ -10,6 +10,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+// punto de entrada de la aplicacion
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -21,6 +22,8 @@ void main() async {
   });
 }
 
+// widget principal de la app
+// maneja el splash screen y la navegacion inicial
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -28,7 +31,9 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
+// estado del widget MyApp
 class _MyAppState extends State<MyApp> {
+  // controla si se muestra la pantalla de splash
   bool _showSplash = true;
 
   @override
@@ -37,6 +42,7 @@ class _MyAppState extends State<MyApp> {
     _initApp();
   }
 
+  // simula carga inicial antes de mostrar la app
   Future<void> _initApp() async {
     await Future.delayed(const Duration(seconds: 2));
     if (mounted) {
@@ -97,6 +103,7 @@ class _MyAppState extends State<MyApp> {
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
       ],
+      // redirige al login o a la pagina principal segun el estado de auth
       home: Consumer(
         builder: (context, ref, child) {
           final isLoggedIn = ref.watch(isLoggedInProvider);

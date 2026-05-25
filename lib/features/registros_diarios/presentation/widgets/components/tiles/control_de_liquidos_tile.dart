@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/common/components/form_tile.dart';
 import 'package:registro_uci/pages/balance_liquidos/balances_de_liquidos_page.dart';
 
+// tile que navega a la pagina de control de liquidos y balance hidrico
 class ControlDeLiquidosTile extends StatelessWidget {
   const ControlDeLiquidosTile({
     super.key,

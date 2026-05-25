@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+// boton flotante con menu para agregar o importar intervenciones
 class IntervencionesFloatingButton extends StatelessWidget {
+  // constructor de IntervencionesFloatingButton
   const IntervencionesFloatingButton({
     super.key,
     // required this.onCreate,
@@ -12,6 +14,7 @@ class IntervencionesFloatingButton extends StatelessWidget {
   final VoidCallback onImport;
   final VoidCallback onAdd;
 
+  // construye el popup menu con las opciones agregar e importar
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<String>(

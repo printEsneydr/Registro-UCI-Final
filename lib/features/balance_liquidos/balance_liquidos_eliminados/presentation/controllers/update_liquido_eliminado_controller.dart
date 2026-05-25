@@ -4,6 +4,7 @@ import 'package:registro_uci/features/balance_liquidos/balance_liquidos_eliminad
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_eliminados/data/providers/liquidos_eliminados_provider.dart';
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_eliminados/data/repositories/firebase_liquidos_eliminados_repository.dart';
 
+// controller para actualizar un registro de liquidos eliminados
 class UpdateLiquidoEliminadoController extends AsyncNotifier<void> {
   late final FirebaseLiquidosEliminadosRepository _repository =
       ref.watch(liquidosEliminadosRepositoryProvider);
@@ -11,6 +12,7 @@ class UpdateLiquidoEliminadoController extends AsyncNotifier<void> {
   @override
   FutureOr<void> build() {}
 
+  // actualiza un liquido eliminado e invalida el provider para refrescar la lista
   Future<void> updateLiquidoEliminado(
     String idIngreso,
     String idRegistroDiario,
@@ -35,6 +37,7 @@ class UpdateLiquidoEliminadoController extends AsyncNotifier<void> {
   }
 }
 
+// provider del controller de actualizacion de liquidos eliminados
 final updateLiquidoEliminadoControllerProvider =
     AsyncNotifierProvider<UpdateLiquidoEliminadoController, void>(
   () => UpdateLiquidoEliminadoController(),

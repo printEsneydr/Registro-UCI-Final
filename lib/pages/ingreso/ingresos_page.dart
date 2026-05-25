@@ -3,6 +3,7 @@ import 'package:registro_uci/features/auth/presentation/widgets/components/butto
 import 'package:registro_uci/features/ingresos/presentation/widgets/components/buttons/create_ingreso_floating_button.dart';
 import 'package:registro_uci/features/ingresos/presentation/widgets/ingresos_list_widget.dart';
 
+// pagina que lista todos los ingresos con busqueda
 class IngresosPage extends StatefulWidget {
   const IngresosPage({super.key});
 
@@ -10,15 +11,19 @@ class IngresosPage extends StatefulWidget {
   State<IngresosPage> createState() => _IngresosPageState();
 }
 
+// estado de la pagina de ingresos, maneja el controlador de busqueda
 class _IngresosPageState extends State<IngresosPage> {
+  // controlador para el campo de texto de busqueda
   final TextEditingController _searchController = TextEditingController();
 
+  // libera el controlador al destruir el widget
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
   }
 
+  // construye la pantalla con barra de busqueda y lista de ingresos
   @override
   Widget build(BuildContext context) {
     return Scaffold(

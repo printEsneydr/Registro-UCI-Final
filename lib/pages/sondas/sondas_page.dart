@@ -9,16 +9,23 @@ import 'package:registro_uci/features/sondas/presentation/controllers/delete_son
 
 import '../sondas/update_sondas_page.dart';
 
+// pagina que lista las sondas registradas para un ingreso
 class SondasPage extends ConsumerWidget {
+  // id del ingreso al que pertenecen las sondas
   final String idIngreso;
 
+  // constructor, requiere el id del ingreso
   const SondasPage({super.key, required this.idIngreso});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // obtiene el rol del usuario actual
     final role = ref.watch(roleProvider);
+    // verifica si el usuario es admin
     final isAdmin = role == UserRole.admin;
+    // obtiene la lista de sondas desde el proveedor
     final sondasAsync = ref.watch(sondasProvider(idIngreso));
+    // formato para mostrar fechas
     final dateFormat = DateFormat('dd/MM/yyyy HH:mm');
 
     return Scaffold(
@@ -198,6 +205,7 @@ class SondasPage extends ConsumerWidget {
     );
   }
 
+  // construye una fila con icono, etiqueta y valor para mostrar informacion
   Widget _buildInfoRow({
     required IconData icon,
     required String label,
@@ -235,6 +243,7 @@ class SondasPage extends ConsumerWidget {
     );
   }
 
+  // muestra un dialogo de confirmacion y elimina la sonda si se confirma
   void _showDeleteDialog(
       BuildContext context, WidgetRef ref, String idSonda, String idIngreso) {
     showDialog<bool>(
@@ -276,6 +285,7 @@ class SondasPage extends ConsumerWidget {
   }
 }
 
+// widget que se muestra cuando no hay sondas registradas
 class _NoSondasWidget extends StatelessWidget {
   const _NoSondasWidget();
 

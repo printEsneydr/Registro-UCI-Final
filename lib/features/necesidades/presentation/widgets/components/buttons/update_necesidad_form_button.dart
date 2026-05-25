@@ -6,11 +6,13 @@ import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/necesidades/data/dto/update_necesidad_dto.dart';
 import 'package:registro_uci/features/necesidades/presentation/controllers/update_necesidad_controller.dart';
 
+// boton de formulario que ejecuta la actualizacion de una necesidad
 class UpdateNecesidadFormButton extends ConsumerWidget {
   final String idNecesidad;
   final ReporteParams params; // Assuming this is your parameter type
   final TextEditingController nombreNecesidadController;
 
+  // constructor que recibe el id, parametros y controlador del texto
   const UpdateNecesidadFormButton({
     super.key,
     required this.idNecesidad,

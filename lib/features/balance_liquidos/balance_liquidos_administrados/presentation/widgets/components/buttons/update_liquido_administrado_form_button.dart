@@ -6,6 +6,7 @@ import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administ
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/data/providers/liquidos_administrados_provider.dart';
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/presentation/controllers/update_liquido_administrado_controller.dart';
 
+// boton que ejecuta la actualizacion de un liquido administrado
 class UpdateLiquidoAdministradoFormbutton extends ConsumerWidget {
   final GlobalKey<FormState> _formKey;
   final String idLiquidoAdministrado;
@@ -35,6 +36,7 @@ class UpdateLiquidoAdministradoFormbutton extends ConsumerWidget {
         _dosisController = dosisController,
         _params = params; // New
 
+  // construye el boton que valida el formulario y llama al controller de actualizacion
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<void> state =

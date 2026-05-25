@@ -1,3 +1,4 @@
+// modelo inmutable de un tratamiento medico en la lista de tratamientos
 class ListaTratamientos {
   final String idListaTratamientos;
   final String medicamento;
@@ -23,6 +24,7 @@ class ListaTratamientos {
     this.fechaRegistro,
   });
 
+  // convierte el modelo a un mapa para firestore
   Map<String, dynamic> toJson() {
     return {
       'medicamento': medicamento,
@@ -37,6 +39,7 @@ class ListaTratamientos {
     };
   }
 
+  // construye el modelo desde un mapa de firestore
   factory ListaTratamientos.fromJson(Map<String, dynamic> json,
       {required String id}) {
     return ListaTratamientos(

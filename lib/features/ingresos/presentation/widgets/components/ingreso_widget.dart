@@ -4,6 +4,7 @@ import 'package:registro_uci/common/components/tappable_container.dart';
 import 'package:registro_uci/features/ingresos/domain/models/ingreso.dart';
 import 'package:registro_uci/pages/ingreso/ingreso_page.dart';
 
+// widget que muestra la tarjeta resumen de un ingreso en la lista
 class IngresoWidget extends StatelessWidget {
   final Ingreso ingreso;
   const IngresoWidget({
@@ -201,6 +202,7 @@ class IngresoWidget extends StatelessWidget {
     );
   }
 
+  // calcula la edad del paciente a partir de su fecha de nacimiento
   String _calculateAge(DateTime birthDate) {
     final currentDate = DateTime.now();
     int age = currentDate.year - birthDate.year;
@@ -215,6 +217,7 @@ class IngresoWidget extends StatelessWidget {
   }
 
   /// **Días empiezan en 0, pero Folio empieza en 1**
+  // calcula los dias transcurridos desde el ingreso hasta hoy o hasta el egreso
   int _calculateDaysPassed(DateTime fechaIngreso, DateTime? fechaFin) {
     final currentDate = DateTime.now();
     if (fechaFin == null) return currentDate.difference(fechaIngreso).inDays;

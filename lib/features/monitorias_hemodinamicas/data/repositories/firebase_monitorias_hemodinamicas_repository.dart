@@ -3,6 +3,7 @@ import 'package:registro_uci/common/constants/firebase_collection_names.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/domain/models/monitoria_hemodinamica.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/data/abstract_repositories/monitorias_hemodinamicas_repository.dart';
 
+// implementacion en firestore del repositorio de monitorias hemodinamicas
 class FirebaseMonitoriaHemodinamicaRepository
     implements MonitoriaHemodinamicaRepository {
   final FirebaseFirestore _firestore;
@@ -10,6 +11,7 @@ class FirebaseMonitoriaHemodinamicaRepository
   FirebaseMonitoriaHemodinamicaRepository({FirebaseFirestore? firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
+  // obtiene la referencia a la coleccion de monitorias en firestore
   CollectionReference<Map<String, dynamic>> _obtenerColeccion(
       {required String idIngreso, required String idRegistroDiario}) {
     return _firestore
@@ -21,6 +23,7 @@ class FirebaseMonitoriaHemodinamicaRepository
   }
 
   @override
+  // retorna un stream en tiempo real de todas las monitorias ordenadas
   Stream<List<MonitoriaHemodinamica>> obtenerTodasLasMonitoriasStream({
     required String idIngreso,
     required String idRegistroDiario,
@@ -36,6 +39,7 @@ class FirebaseMonitoriaHemodinamicaRepository
   }
 
   @override
+  // obtiene todas las monitorias como future (una sola vez)
   Future<List<MonitoriaHemodinamica>> obtenerTodasLasMonitorias({
     required String idIngreso,
     required String idRegistroDiario,
@@ -55,6 +59,7 @@ class FirebaseMonitoriaHemodinamicaRepository
   }
 
   @override
+  // obtiene una monitoria especifica por su id
   Future<MonitoriaHemodinamica?> obtenerMonitoriaPorId({
     required String idIngreso,
     required String idRegistroDiario,
@@ -75,6 +80,7 @@ class FirebaseMonitoriaHemodinamicaRepository
   }
 
   @override
+  // crea una nueva monitoria con calculo automatico de pam y orden
   Future<void> crearMonitoria({
     required String idIngreso,
     required String idRegistroDiario,
@@ -141,6 +147,7 @@ class FirebaseMonitoriaHemodinamicaRepository
   }
 
   @override
+  // actualiza los parametros de una monitoria existente
   Future<void> actualizarMonitoria({
     required String idIngreso,
     required String idRegistroDiario,
@@ -205,6 +212,7 @@ class FirebaseMonitoriaHemodinamicaRepository
   }
 
   @override
+  // elimina una monitoria por su id
   Future<void> eliminarMonitoria({
     required String idIngreso,
     required String idRegistroDiario,
@@ -221,6 +229,7 @@ class FirebaseMonitoriaHemodinamicaRepository
   }
 
   @override
+  // reordena las monitorias usando un batch update con los ids en el nuevo orden
   Future<void> reordenarMonitorias({
     required String idIngreso,
     required String idRegistroDiario,
@@ -243,6 +252,7 @@ class FirebaseMonitoriaHemodinamicaRepository
     }
   }
 
+  // calcula la presion arterial media con la formula (2*pad + pas) / 3
   int? _calcularPAM(int? pas, int? pad) {
     if (pas == null || pad == null) return null;
     return ((2 * pad + pas) / 3).round();

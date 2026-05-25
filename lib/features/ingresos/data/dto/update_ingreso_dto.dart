@@ -1,6 +1,7 @@
 import "dart:collection";
 import "package:registro_uci/features/ingresos/data/constants/strings.dart";
 
+// dto usado para actualizar un ingreso existente, extiende MapView para serializar a firestore
 class UpdateIngresoDto extends MapView<String, dynamic> {
   final String nombrePaciente;
   final String sala;
@@ -18,6 +19,7 @@ class UpdateIngresoDto extends MapView<String, dynamic> {
   final String cama;
   final String? alergias;
 
+  // constructor que recibe los datos actualizados y los mapea al mapa
   UpdateIngresoDto({
     required this.nombrePaciente,
     required this.fechaNacimientoPaciente,

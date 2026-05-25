@@ -5,10 +5,12 @@ import 'package:registro_uci/common/extensions/async_value_ui.dart';
 import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/intervenciones/presentation/controllers/add_intervenciones_to_registro_controller.dart';
 
+// boton que agrega las intervenciones seleccionadas al registro
 class AddIntervencionesToRegistroFormButton extends ConsumerWidget {
   final bool enabled;
   final List<String> intervencionesIds;
   final ReporteParams params;
+  // constructor de AddIntervencionesToRegistroFormButton
   const AddIntervencionesToRegistroFormButton({
     super.key,
     required this.enabled,
@@ -16,6 +18,7 @@ class AddIntervencionesToRegistroFormButton extends ConsumerWidget {
     required this.params,
   });
 
+  // construye el boton que dispara la accion de agregar intervenciones
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<void> state =

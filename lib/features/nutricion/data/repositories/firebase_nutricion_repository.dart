@@ -3,10 +3,12 @@ import 'package:registro_uci/features/nutricion/data/abstract_repositories/nutri
 import 'package:registro_uci/features/nutricion/data/dto/create_registro_nutricional_dto.dart';
 import 'package:registro_uci/features/nutricion/domain/models/registro_nutricional.dart';
 
+// implementacion en firestore del repositorio de registros nutricionales
 class FirebaseNutricionRepository implements NutricionRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
+  // crea un nuevo registro nutricional en firestore con id autogenerado
   Future<void> createRegistroNutricional(
     String idIngreso,
     CreateRegistroNutricionalDto dto,
@@ -21,6 +23,7 @@ class FirebaseNutricionRepository implements NutricionRepository {
   }
 
   @override
+  // actualiza un registro nutricional existente en firestore
   Future<void> updateRegistroNutricional(
     String idIngreso,
     String idRegistroNutricional,
@@ -36,6 +39,7 @@ class FirebaseNutricionRepository implements NutricionRepository {
   }
 
   @override
+  // elimina un registro nutricional de firestore
   Future<void> deleteRegistroNutricional(
     String idIngreso,
     String idRegistroNutricional,
@@ -50,6 +54,7 @@ class FirebaseNutricionRepository implements NutricionRepository {
   }
 
   @override
+  // obtiene todos los registros nutricionales ordenados por hora descendente
   Future<List<RegistroNutricional>> getRegistrosNutricionales(
     String idIngreso,
   ) async {
@@ -66,6 +71,7 @@ class FirebaseNutricionRepository implements NutricionRepository {
   }
 
   @override
+  // obtiene el ultimo registro nutricional registrado (mas reciente)
   Future<RegistroNutricional?> getUltimoRegistroNutricional(
     String idIngreso,
   ) async {

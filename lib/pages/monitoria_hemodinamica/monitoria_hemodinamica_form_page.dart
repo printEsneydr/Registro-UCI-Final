@@ -3,10 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/data/providers/monitoria_hemodinamica_provider.dart';
 
+// pantalla con formulario para crear o editar una monitoria hemodinamica
 class FormularioMonitoriaScreen extends ConsumerStatefulWidget {
+  // id del ingreso
   final String idIngreso;
+  // id del registro diario
   final String idRegistroDiario;
+  // hora inicial seleccionada por defecto
   final int? horaInicial;
+  // si ya existe, id de la monitoria a editar
   final String? idMonitoriaExistente;
 
   const FormularioMonitoriaScreen({
@@ -22,8 +27,10 @@ class FormularioMonitoriaScreen extends ConsumerStatefulWidget {
       FormularioMonitoriaScreenState();
 }
 
+// estado del formulario de monitoria hemodinamica
 class FormularioMonitoriaScreenState
     extends ConsumerState<FormularioMonitoriaScreen> {
+  // hora seleccionada en el formulario
   late int selectedHora;
   int? pas,
       pad,
@@ -55,6 +62,7 @@ class FormularioMonitoriaScreenState
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
+  // inicializa la hora seleccionada con el valor recibido o 8 por defecto
   @override
   void initState() {
     super.initState();
@@ -132,6 +140,7 @@ class FormularioMonitoriaScreenState
     );
   }
 
+  // construye una seccion expandible con titulo e icono
   Widget _buildSection({
     required String title,
     required IconData icon,
@@ -157,6 +166,7 @@ class FormularioMonitoriaScreenState
     );
   }
 
+  // campos para presion arterial sistolica y diastolica con calculo de PAM
   List<Widget> _buildPressureFields() => [
         Row(
           children: [
@@ -192,6 +202,7 @@ class FormularioMonitoriaScreenState
           ),
       ];
 
+  // campos para frecuencia cardiaca, respiratoria y temperatura
   List<Widget> _buildVitalSignsFields() => [
         _buildNumberField(
           label: 'FC (ppm)',
@@ -219,6 +230,7 @@ class FormularioMonitoriaScreenState
         ),
       ];
 
+  // campos para fio2 y saturacion de oxigeno
   List<Widget> _buildOxygenationFields() => [
         _buildNumberField(
           label: 'FiO₂ (%)',
@@ -237,6 +249,7 @@ class FormularioMonitoriaScreenState
         ),
       ];
 
+  // campos para presiones especiales: pvc, gc, ic, rvs, irvs, pia, ppa, pic, ppc
   List<Widget> _buildSpecialPressures() => [
         const SizedBox(height: 16),
         const Text(
@@ -321,6 +334,7 @@ class FormularioMonitoriaScreenState
         ),
       ];
 
+  // fila con dos widgets uno al lado del otro
   Widget _buildPressureRow({required Widget left, required Widget right}) {
     return Row(
       children: [
@@ -331,6 +345,7 @@ class FormularioMonitoriaScreenState
     );
   }
 
+  // campos para glucometria e insulina
   List<Widget> _buildMetabolicFields() => [
         Row(
           children: [
@@ -357,6 +372,7 @@ class FormularioMonitoriaScreenState
         ),
       ];
 
+  // construye un campo de texto numerico con validacion de rango
   Widget _buildNumberField({
     required String label,
     required int? value,
@@ -397,6 +413,7 @@ class FormularioMonitoriaScreenState
     );
   }
 
+  // botones de cancelar y guardar/crear en la parte inferior
   Widget _buildActionButtons() {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -435,6 +452,7 @@ class FormularioMonitoriaScreenState
     );
   }
 
+  // guarda o actualiza la monitoria llamando al provider correspondiente
   Future<void> _guardarMonitoria() async {
     if (!_formKey.currentState!.validate()) return;
 

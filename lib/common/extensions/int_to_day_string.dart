@@ -1,4 +1,6 @@
+// extension para convertir un numero de dia a su abreviatura en ingles
 extension ToDayString on int {
+  // 1=lunes, 2=martes, ..., 7=domingo
   String toDayString() {
     switch (this) {
       case 7:

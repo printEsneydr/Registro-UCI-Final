@@ -1,5 +1,7 @@
+// modelos de datos para observaciones extras, solicitudes, gram, firmas
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// modelo para una solicitud de laboratorio o radiologia
 class SolicitudLaboratorio {
   DateTime? fecha;
   String solicitud;
@@ -27,6 +29,7 @@ class SolicitudLaboratorio {
       );
 }
 
+// modelo para un registro de gram o cultivo
 class GramCultivo {
   DateTime? fecha;
   String cultivo;
@@ -53,6 +56,7 @@ class GramCultivo {
       );
 }
 
+// modelo para una orden de transfusion de componentes sanguineos
 class OrdenTransfusion {
   DateTime? fecha;
   String hora;
@@ -88,6 +92,7 @@ class OrdenTransfusion {
       );
 }
 
+// modelo para la firma del personal de enfermeria por turno
 class FirmaPersonal {
   String tipoPersonal;
   String turno;
@@ -119,6 +124,7 @@ class FirmaPersonal {
       );
 }
 
+// modelo principal que agrupa todas las observaciones extras del ingreso
 class ObservacionesExtrasData {
   List<SolicitudLaboratorio> solicitudes;
   List<GramCultivo> grams;

@@ -6,11 +6,13 @@ import 'package:registro_uci/features/intervenciones/presentation/widgets/compon
 import 'package:registro_uci/features/necesidades/domain/models/necesidad.dart';
 import 'package:registro_uci/features/necesidades/presentation/widgets/necesidad_action_buttons.dart';
 
+// widget que muestra la lista de intervenciones de un registro
 class IntervencionesList extends ConsumerWidget {
   final String idIngreso;
   final String idRegistro;
   final bool readOnly;
 
+  // constructor de IntervencionesList
   const IntervencionesList({
     super.key,
     required this.idIngreso,
@@ -18,6 +20,7 @@ class IntervencionesList extends ConsumerWidget {
     required this.readOnly,
   });
 
+  // construye la lista de intervenciones a partir del provider
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final params = ReporteParams(
@@ -51,11 +54,13 @@ class IntervencionesList extends ConsumerWidget {
   }
 }
 
+// widget que muestra una necesidad individual
 class NecesidadWidget extends StatelessWidget {
   final Necesidad necesidad;
   final ReporteParams params;
   final bool readOnly;
 
+  // constructor de NecesidadWidget
   const NecesidadWidget({
     super.key,
     required this.necesidad,

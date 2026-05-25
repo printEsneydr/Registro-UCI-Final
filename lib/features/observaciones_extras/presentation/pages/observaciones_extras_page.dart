@@ -1,3 +1,4 @@
+// pagina principal de observaciones extras, solicitudes, gram, firmas
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,6 +8,7 @@ import '../../domain/models/observaciones_extras_data.dart';
 import '../widgets/firma_pad_widget.dart';
 
 class ObservacionesExtrasPage extends ConsumerStatefulWidget {
+  // id del ingreso al que pertenecen estos datos
   final String idIngreso;
 
   const ObservacionesExtrasPage({
@@ -29,6 +31,7 @@ class _ObservacionesExtrasPageState extends ConsumerState<ObservacionesExtrasPag
     super.dispose();
   }
 
+  // guarda los datos en firestore y refresca el provider
   Future<void> _save() async {
     setState(() => _saving = true);
     _data.observaciones = _obsController.text;
@@ -108,6 +111,7 @@ class _ObservacionesExtrasPageState extends ConsumerState<ObservacionesExtrasPag
     );
   }
 
+  // construye un titulo de seccion con fondo azul
   Widget _buildSectionTitle(String title) {
     return Container(
       width: double.infinity,
@@ -127,7 +131,7 @@ class _ObservacionesExtrasPageState extends ConsumerState<ObservacionesExtrasPag
     );
   }
 
-  // ── TABLA 1: SOLICITUDES ──
+  // tabla de solicitudes de laboratorio y radiologia
   Widget _buildSolicitudesTable() {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -159,7 +163,7 @@ class _ObservacionesExtrasPageState extends ConsumerState<ObservacionesExtrasPag
     );
   }
 
-  // ── TABLA 2: GRAM ──
+  // tabla de gram y cultivos
   Widget _buildGramsTable() {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -191,7 +195,7 @@ class _ObservacionesExtrasPageState extends ConsumerState<ObservacionesExtrasPag
     );
   }
 
-  // ── TABLA 3: ÓRDENES TRANSFUSIÓN ──
+  // tabla de ordenes de transfusion sanguinea
   Widget _buildOrdenesTable() {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -233,7 +237,7 @@ class _ObservacionesExtrasPageState extends ConsumerState<ObservacionesExtrasPag
     );
   }
 
-  // ── OBSERVACIONES ──
+  // campo de texto para observaciones generales
   Widget _buildObservaciones() {
     return TextField(
       controller: _obsController,
@@ -246,7 +250,7 @@ class _ObservacionesExtrasPageState extends ConsumerState<ObservacionesExtrasPag
     );
   }
 
-  // ── TABLA 5: FIRMAS ──
+  // tabla de firmas del personal de enfermeria por turno
   Widget _buildFirmasTable() {
     final tipos = ['ENFERMERA JEFE', 'ENFERMERA'];
     final turnos = ['Mañana', 'Tarde', 'Noche'];
@@ -299,8 +303,7 @@ class _ObservacionesExtrasPageState extends ConsumerState<ObservacionesExtrasPag
   }
 }
 
-// ── HELPER WIDGETS ──
-
+// widget interno para editar una fecha en una celda
 class _DateCell extends StatelessWidget {
   final DateTime? date;
   final ValueChanged<DateTime> onChanged;
@@ -334,6 +337,7 @@ class _DateCell extends StatelessWidget {
   }
 }
 
+// widget interno para editar una hora en una celda
 class _TimeCell extends StatefulWidget {
   final String value;
   final ValueChanged<String> onChanged;
@@ -395,6 +399,7 @@ class _TimeCellState extends State<_TimeCell> {
   }
 }
 
+// widget interno para editar texto en una celda
 class _TextCell extends StatefulWidget {
   final String value;
   final ValueChanged<String> onChanged;
@@ -445,6 +450,7 @@ class _TextCellState extends State<_TextCell> {
   }
 }
 
+// widget interno que muestra la firma capturada o un boton para firmar
 class _FirmaCellWidget extends StatelessWidget {
   final String firmaBase64;
   final DateTime? fechaFirma;

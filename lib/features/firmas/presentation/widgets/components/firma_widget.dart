@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:registro_uci/features/firmas/domain/models/firma.dart';
 
+// widget que muestra una firma con estilo de certificado y animacion expandible
 class FirmaWidget extends StatefulWidget {
   final Firma firma;
 
@@ -11,6 +12,7 @@ class FirmaWidget extends StatefulWidget {
   FirmaWidgetState createState() => FirmaWidgetState();
 }
 
+// estado que controla la animacion de expandir/contraer la firma
 class FirmaWidgetState extends State<FirmaWidget> {
   bool _isExpanded = false; // Tracks if the widget is expanded or not
 

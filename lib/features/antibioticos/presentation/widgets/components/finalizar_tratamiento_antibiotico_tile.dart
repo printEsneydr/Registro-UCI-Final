@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/common/components/tile.dart';
 import 'package:registro_uci/features/antibioticos/presentation/widgets/components/confirm_finalizar_antibiotico_form.dart';
 
+// tile que al presionarlo muestra un dialogo para finalizar un tratamiento
 class FinalizarTratamientoAntibioticoTile extends StatelessWidget {
   final String idIngreso;
   final String idTratamientoAntibiotico;

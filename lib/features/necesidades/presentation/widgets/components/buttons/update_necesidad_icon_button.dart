@@ -5,10 +5,12 @@ import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/necesidades/domain/models/necesidad.dart';
 import 'package:registro_uci/features/necesidades/presentation/widgets/components/update_necesidad_form.dart';
 
+// boton icono que abre el dialogo para actualizar una necesidad
 class UpdateNecesidadIconButton extends ConsumerWidget {
   final Necesidad necesidad;
   final ReporteParams params;
 
+  // constructor que recibe la necesidad y los parametros del reporte
   const UpdateNecesidadIconButton({
     super.key,
     required this.necesidad,

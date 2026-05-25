@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:registro_uci/features/marcapasos/presentation/widgets/components/create_marcapaso_form.dart';
 
+// pagina con el formulario para crear un nuevo marcapaso
 class CreateMarcapasoPage extends StatelessWidget {
-  final String idIngreso; // 🔥 Se recibe el idIngreso
+  // id del ingreso al que se asociara el marcapaso
+  final String idIngreso;
 
+  // constructor, requiere el id del ingreso
   const CreateMarcapasoPage({super.key, required this.idIngreso});
 
   @override
@@ -12,9 +15,9 @@ class CreateMarcapasoPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Crear Marcapaso"),
       ),
+      // permite desplazar el contenido y oculta el teclado al arrastrar
       body: SingleChildScrollView(
-        keyboardDismissBehavior:
-            ScrollViewKeyboardDismissBehavior.onDrag, // 🔥 Mejora la UX
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: ConstrainedBox(
@@ -22,8 +25,8 @@ class CreateMarcapasoPage extends StatelessWidget {
               maxWidth:
                   600, // Evita desbordamiento horizontal en pantallas grandes
             ),
-            child: CreateMarcapasoForm(
-                idIngreso: idIngreso), // 🔥 Se pasa el idIngreso
+            // formulario de creacion de marcapaso
+            child: CreateMarcapasoForm(idIngreso: idIngreso),
           ),
         ),
       ),

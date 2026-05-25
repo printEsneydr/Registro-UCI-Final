@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/common/components/form_tile.dart';
 import 'package:registro_uci/pages/cambio_posicion/cambio_posicion_page.dart';
 
+// tile que navega a la pagina de control de posicion y cambios posturales
 class ControlDePosicionTile extends StatelessWidget {
   const ControlDePosicionTile({
     super.key,

@@ -5,13 +5,16 @@ import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/intervenciones/data/abstract_repositories/intervenciones_de_registro_repository.dart';
 import 'package:registro_uci/features/intervenciones/data/providers/intervenciones_de_registro_provider.dart';
 
+// controller para eliminar una intervencion de un registro
 class EliminarIntervencionDeRegistroController extends AsyncNotifier<void> {
   late final IntervencionesDeRegistroRepository _repository =
       ref.watch(intervencionesDeRegistroRepositoryProvider);
 
+  // estado inicial del controller
   @override
   FutureOr<void> build() {}
 
+  // elimina una intervencion especifica de un registro
   Future<void> eliminarIntervencionDeRegistro(
     String idIngreso,
     String idRegistro,
@@ -29,6 +32,7 @@ class EliminarIntervencionDeRegistroController extends AsyncNotifier<void> {
   }
 }
 
+// provider del controller de eliminacion de intervenciones
 final eliminarIntervencionDeRegistroControllerProvider =
     AsyncNotifierProvider<EliminarIntervencionDeRegistroController, void>(
   () => EliminarIntervencionDeRegistroController(),

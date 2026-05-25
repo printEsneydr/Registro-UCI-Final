@@ -14,8 +14,11 @@ import 'package:registro_uci/features/registros_diarios/presentation/widgets/com
 import 'package:registro_uci/features/registros_diarios/presentation/widgets/components/tiles/necesidades_tile.dart';
 import 'package:registro_uci/features/registros_diarios/presentation/widgets/components/tiles/tratamientos_tile.dart';
 
+// pagina que muestra un registro diario con todas sus secciones
 class RegistroDiarioPage extends ConsumerWidget {
+  // id del ingreso al que pertenece el registro
   final String idIngreso;
+  // id del registro diario
   final String idRegistro;
 
   const RegistroDiarioPage({
@@ -24,8 +27,10 @@ class RegistroDiarioPage extends ConsumerWidget {
     required this.idRegistro,
   });
 
+  // construye la pantalla con los tiles de necesidades, tratamientos, etc.
   @override
   Widget build(BuildContext context, ref) {
+    // obtiene los datos del registro diario desde el provider
     final registro = ref.watch(registroDiarioProvider(
         ReporteParams(idIngreso: idIngreso, idRegistro: idRegistro)));
 

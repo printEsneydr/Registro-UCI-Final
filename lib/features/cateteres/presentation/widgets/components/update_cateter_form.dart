@@ -4,6 +4,7 @@ import 'package:registro_uci/common/components/buttons/primary_button.dart';
 import 'package:registro_uci/features/cateteres/data/dto/update_cateter_dto.dart';
 import 'package:registro_uci/features/cateteres/data/providers/cateteres_providers.dart';
 
+// boton que actualiza los datos de un cateter existente
 class UpdateCateterFormButton extends ConsumerWidget {
   final GlobalKey<FormState> formKey;
   final String idIngreso;
@@ -89,7 +90,7 @@ class UpdateCateterFormButton extends ConsumerWidget {
     );
   }
 
-  /// 🔥 **Función para manejar fechas de forma segura**
+  // convierte un texto a fecha de forma segura, retorna null si falla
   DateTime? _parseFecha(String fechaTexto) {
     try {
       return DateTime.parse(fechaTexto);

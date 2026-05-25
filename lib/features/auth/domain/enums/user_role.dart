@@ -1,14 +1,22 @@
 import 'package:registro_uci/features/auth/domain/constants/strings.dart';
 
+// enumeracion con los roles de usuario del sistema
 enum UserRole {
+  // administrador del sistema
   admin,
+  // enfermero jefe
   headNurse,
+  // enfermero auxiliar
   auxNurse,
+  // nutricionista
   nutritionist,
+  // medico
   doctor,
+  // invitado sin permisos especiales
   guest,
 }
 
+// extension para convertir un string a UserRole
 extension ToUserRole on String {
   UserRole toUserRole() {
     switch (this) {
@@ -28,6 +36,7 @@ extension ToUserRole on String {
   }
 }
 
+// extension para convertir un UserRole a string
 extension RoleToString on UserRole {
   String roleToString() {
     switch (this) {

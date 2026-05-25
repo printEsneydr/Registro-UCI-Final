@@ -4,11 +4,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:registro_uci/common/providers/repository_providers.dart';
 
 // Define a class to hold the parameters
+// parametros para obtener el balance total de un registro diario
 @immutable
 class BalanceParams {
+  // id del ingreso del paciente
   final String idIngreso;
+  // id del registro diario
   final String idRegistroDiario;
 
+  // constructor con los parametros requeridos
   const BalanceParams({
     required this.idIngreso,
     required this.idRegistroDiario,
@@ -27,7 +31,7 @@ class BalanceParams {
   int get hashCode => Object.hash(idIngreso, idRegistroDiario);
 }
 
-// Provider for retrieving balance data (all hours)
+// provider que obtiene el balance total de liquidos de todas las horas
 final totalBalanceProvider =
     FutureProvider.family<Map<String, dynamic>, BalanceParams>(
         (ref, params) async {
@@ -97,12 +101,17 @@ final totalBalanceProvider =
 });
 
 // Provider para balance hasta una hora específica
+// parametros para obtener el balance hasta una hora especifica
 @immutable
 class BalancePorHoraParams {
+  // id del ingreso del paciente
   final String idIngreso;
+  // id del registro diario
   final String idRegistroDiario;
+  // hora limite para el calculo del balance
   final int hora;
 
+  // constructor con los parametros requeridos
   const BalancePorHoraParams({
     required this.idIngreso,
     required this.idRegistroDiario,
@@ -122,6 +131,7 @@ class BalancePorHoraParams {
   int get hashCode => Object.hash(idIngreso, idRegistroDiario, hora);
 }
 
+// provider que calcula el balance de liquidos hasta una hora especifica
 final balancePorHoraProvider =
     FutureProvider.family<Map<String, dynamic>, BalancePorHoraParams>(
         (ref, params) async {
@@ -195,7 +205,7 @@ final balancePorHoraProvider =
   };
 });
 
-// Provider para obtener balance en una hora específica
+// provider que obtiene el balance acumulado en una hora especifica
 final balanceAcumuladoProvider =
     FutureProvider.family<Map<String, double>, CalculateParams>(
         (ref, params) async {
@@ -267,12 +277,17 @@ final balanceAcumuladoProvider =
 });
 
 // Define a separate class for the calculation function parameters
+// parametros para la funcion de calculo de balance acumulado
 @immutable
 class CalculateParams {
+  // id del ingreso del paciente
   final String idIngreso;
+  // id del registro diario
   final String idRegistroDiario;
+  // hora para el calculo del balance
   final int hora;
 
+  // constructor con los parametros requeridos
   const CalculateParams({
     required this.idIngreso,
     required this.idRegistroDiario,
@@ -293,7 +308,7 @@ class CalculateParams {
   int get hashCode => Object.hash(idIngreso, idRegistroDiario, hora);
 }
 
-// Provider to calculate total balance up to a given hour
+// provider que calcula el balance total hasta una hora usando el repositorio
 final calculateBalanceProvider =
     FutureProvider.family<int, CalculateParams>((ref, params) async {
   final yourServiceClass = ref.watch(registrosDiariosRepositoryProvider);

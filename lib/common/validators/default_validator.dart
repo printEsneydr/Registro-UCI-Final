@@ -1,3 +1,4 @@
+// validador por defecto que verifica que el campo no este vacio
 String? Function(String?) defaultValidator = (String? value) {
   if (value == null || value == '') {
     return 'Este campo es obligatorio';

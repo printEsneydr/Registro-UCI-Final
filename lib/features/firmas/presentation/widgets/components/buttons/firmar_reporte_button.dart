@@ -3,6 +3,7 @@ import 'package:registro_uci/common/components/buttons/primary_button.dart';
 import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/firmas/presentation/widgets/components/confirm_firmar_reporte_form.dart';
 
+// boton que abre un dialogo para confirmar la firma del reporte
 class FirmarReporteButton extends StatelessWidget {
   final ReporteParams params;
   final String tipoFirma;

@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'cateter.freezed.dart';
 part 'cateter.g.dart';
 
+// modelo que representa un cateter con sus propiedades
 @freezed
 class Cateter with _$Cateter {
   const factory Cateter({
@@ -16,6 +17,7 @@ class Cateter with _$Cateter {
     required String caracteristicasSitioInsercion,
   }) = _Cateter;
 
+  // crea un cateter desde un documento de firestore
   factory Cateter.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
     final data = doc.data() ?? {};
 
@@ -32,6 +34,7 @@ class Cateter with _$Cateter {
     );
   }
 
+  // convierte el cateter a un mapa para guardar en firebase
   @override
   Map<String, dynamic> toJson() {
     return {

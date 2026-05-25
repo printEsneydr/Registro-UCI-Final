@@ -10,6 +10,7 @@ final deleteCateterControllerProvider =
   ),
 );
 
+// controlador que maneja la eliminacion de un cateter
 class DeleteCateterController extends StateNotifier<AsyncValue<void>> {
   final CateteresRepository _repository;
   final Ref _ref;
@@ -17,6 +18,7 @@ class DeleteCateterController extends StateNotifier<AsyncValue<void>> {
   DeleteCateterController(this._repository, this._ref)
       : super(const AsyncValue.data(null));
 
+  // elimina el cateter y refresca la lista
   Future<void> deleteCateter(String idIngreso, String idCateter) async {
     state = const AsyncValue.loading();
     try {

@@ -3,11 +3,13 @@ import 'package:registro_uci/features/control_riesgos/data/repositories/firabase
 import 'package:registro_uci/features/control_riesgos/domain/models/control_de_riesgos.dart';
 import 'package:registro_uci/features/control_riesgos/data/abstract_repositories/control_de_riesgos_repository.dart';
 
+// provider del repositorio de control de riesgos
 final controlDeRiesgosRepositoryProvider =
     Provider<ControlDeRiesgosRepository>((ref) {
   return FirebaseControlDeRiesgosRepository();
 });
 
+// provider que expone un stream de controles de riesgos por ingreso y registro
 final controlDeRiesgosByIngresoProvider = StreamProvider.family<
     List<ControlDeRiesgos>, ({String idIngreso, String idRegistroDiario})>(
   (ref, params) {
@@ -19,6 +21,7 @@ final controlDeRiesgosByIngresoProvider = StreamProvider.family<
   },
 );
 
+// provider que obtiene un control de riesgos por su id
 final controlDeRiesgosByIdProvider = FutureProvider.family<ControlDeRiesgos?,
     ({String idIngreso, String idRegistroDiario, String idControlDeRiesgos})>(
   (ref, params) async {

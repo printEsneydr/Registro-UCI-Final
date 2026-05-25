@@ -6,8 +6,10 @@ import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/intervenciones/data/providers/intervenciones_de_registro_provider.dart';
 import 'package:registro_uci/features/intervenciones/presentation/widgets/components/buttons/add_intervenciones_to_registro_form_button.dart';
 
+// formulario para agregar intervenciones a un registro
 class AddIntervencionesForm extends ConsumerStatefulWidget {
   final ReporteParams params;
+  // constructor de AddIntervencionesForm
   const AddIntervencionesForm({
     super.key,
     required this.params,
@@ -18,10 +20,12 @@ class AddIntervencionesForm extends ConsumerStatefulWidget {
       _AddIntervencionesFormState();
 }
 
+// estado del formulario para agregar intervenciones
 class _AddIntervencionesFormState extends ConsumerState<AddIntervencionesForm> {
   // Map to track the selection of each Intervencion
   final Map<String, bool> _selectedItems = {};
 
+  // inicializa todos los items como no seleccionados
   @override
   void initState() {
     super.initState();
@@ -32,11 +36,13 @@ class _AddIntervencionesFormState extends ConsumerState<AddIntervencionesForm> {
   }
 
   // Function to check if any item is selected
+  // verifica si al menos un item esta seleccionado
   bool _isAnyItemSelected() {
     return _selectedItems.values.contains(true);
   }
 
   // Function to handle button press
+  // obtiene la lista de ids de intervenciones seleccionadas
   List<String> _getIntervencionesIds() {
     return _selectedItems.entries
         .where((entry) => entry.value)
@@ -44,6 +50,7 @@ class _AddIntervencionesFormState extends ConsumerState<AddIntervencionesForm> {
         .toList();
   }
 
+  // construye la lista de checkboxes con intervenciones disponibles
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;

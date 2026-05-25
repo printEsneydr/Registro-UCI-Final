@@ -1,3 +1,4 @@
+// servicio que genera el documento pdf de la sabana clinica usando la libreria pdf
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
@@ -25,12 +26,15 @@ import 'package:registro_uci/features/firmas/domain/models/firma.dart';
 import 'package:registro_uci/features/necesidades/domain/models/reporte_necesidades.dart';
 import 'package:registro_uci/features/observaciones_extras/domain/models/observaciones_extras_data.dart';
 
+// servicio principal de generacion de pdf con todos los metodos de construccion
 class PdfReporteService {
+  // horas del dia de 8 am a 7 am del dia siguiente
   static const _hours = [8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,1,2,3,4,5,6,7];
 
   late pw.Font _regularFont;
   late pw.Font _boldFont;
 
+  // metodo principal que genera el pdf completo con todas las paginas
   Future<Uint8List> generateReporte({
     required Ingreso ingreso,
     required List<RegistroDiario> registrosDiarios,
@@ -122,6 +126,7 @@ class PdfReporteService {
     return pdf.save();
   }
 
+  // construye el encabezado con datos del ingreso: fecha, dias, cama, eps
   String _buildHeaderInfo(Ingreso ingreso) {
     final dateFormat = DateFormat('dd/MM/yyyy');
     final diasHospitalizado = DateTime.now().difference(ingreso.fechaIngreso).inDays;
@@ -133,9 +138,7 @@ class PdfReporteService {
         'Carpeta: ${ingreso.carpeta}';
   }
 
-  // ─────────────────────────────────────────────────────────────
-  // PÁGINA 1 — INFORMACIÓN GENERAL DEL PACIENTE
-  // ─────────────────────────────────────────────────────────────
+  // pagina 1 del pdf con informacion general, diagnosticos, riesgos, nutricion, antibioticos, tratamientos
   pw.Widget _buildPagina1(
     pw.Context context,
     Ingreso ingreso,
@@ -355,9 +358,7 @@ class PdfReporteService {
     );
   }
 
-  // ─────────────────────────────────────────────────────────────
-  // PÁGINA 2 — MONITORÍA HEMODINÁMICA
-  // ─────────────────────────────────────────────────────────────
+  // pagina 2 del pdf con tabla de monitoria hemodinamica, marcapasos y cateteres
   pw.Widget _buildPagina2(
     pw.Context context,
     Ingreso ingreso,
@@ -471,9 +472,7 @@ class PdfReporteService {
     );
   }
 
-  // ─────────────────────────────────────────────────────────────
-  // PÁGINA 3 — BALANCE DE LÍQUIDOS PARTE 1 (ADMINISTRADOS)
-  // ─────────────────────────────────────────────────────────────
+  // pagina 3 del pdf con tabla de liquidos administrados y sondas
   pw.Widget _buildPagina3(
     pw.Context context,
     Ingreso ingreso,
@@ -562,9 +561,7 @@ class PdfReporteService {
     );
   }
 
-  // ─────────────────────────────────────────────────────────────
-  // PÁGINA 4 — BALANCE DE LÍQUIDOS PARTE 2 (ELIMINADOS + RESUMEN)
-  // ─────────────────────────────────────────────────────────────
+  // pagina 4 del pdf con tabla de liquidos eliminados y resumen de balance
   pw.Widget _buildPagina4(
     pw.Context context,
     Ingreso ingreso,
@@ -674,9 +671,7 @@ class PdfReporteService {
     );
   }
 
-  // ─────────────────────────────────────────────────────────────
-  // PÁGINA 5 — CONTROL NEUROLÓGICO (GLASGOW + POSICIÓN + RASS)
-  // ─────────────────────────────────────────────────────────────
+  // pagina 5 del pdf con tabla de glasgow, escala rass y cambios de posicion
   pw.Widget _buildPagina5(
     pw.Context context,
     Ingreso ingreso,
@@ -761,9 +756,7 @@ class PdfReporteService {
     );
   }
 
-  // ─────────────────────────────────────────────────────────────
-  // OBSERVACIONES EXTRAS — LABORATORIOS, OBSERVACIONES, FIRMAS
-  // ─────────────────────────────────────────────────────────────
+  // pagina 6 con laboratorios, gram, ordenes, necesidades, observaciones y firmas
   pw.Widget _buildObservacionesExtras(
     pw.Context context,
     Ingreso ingreso,
@@ -930,8 +923,9 @@ class PdfReporteService {
     );
   }
 
-  // ── HELPER METHODS ──
+  // helpers para construir elementos comunes del pdf
 
+  // titulo de seccion con fondo gris oscuro
   pw.Widget _sectionTitle(String title) {
     return pw.Container(
       width: double.infinity,
@@ -948,6 +942,7 @@ class PdfReporteService {
     );
   }
 
+  // renderiza un par label-valor en el pdf
   pw.Widget _infoContent(String label, String value) {
     return pw.Container(
       padding: const pw.EdgeInsets.symmetric(horizontal: 2, vertical: 1),
@@ -972,6 +967,7 @@ class PdfReporteService {
   }
 
 
+  // genera una fila de la tabla de monitoria hemodinamica para una variable
   List<String> _monitoriaRow(String label, List<MonitoriaHemodinamica> data, String Function(MonitoriaHemodinamica) extractor) {
     return [
       label,
@@ -982,6 +978,7 @@ class PdfReporteService {
     ];
   }
 
+  // genera una fila de la tabla de glasgow para un parametro
   List<String> _glasgowRow(String label, List<Glasgow> data, String Function(Glasgow) extractor, {bool bold = false}) {
     return [
       label,
@@ -992,6 +989,7 @@ class PdfReporteService {
     ];
   }
 
+  // genera las filas de la tabla de escala rass
   List<List<String>> _rassRows(List<ControlSedacion> sedaciones) {
     const rassValues = [
       (4, 'Combativo'),
@@ -1018,6 +1016,7 @@ class PdfReporteService {
     }).toList();
   }
 
+  // genera una fila de la tabla de cambios de posicion
   List<String> _posicionRow(String label, List<CambioDePosicion> data, String posicion) {
     return [
       label,
@@ -1028,6 +1027,7 @@ class PdfReporteService {
     ];
   }
 
+  // celda de encabezado para la tabla de firmas
   pw.Widget _firmaHeaderCell(String text) {
     return pw.Container(
       padding: const pw.EdgeInsets.all(3),
@@ -1039,6 +1039,7 @@ class PdfReporteService {
     );
   }
 
+  // celda que renderiza la imagen de la firma en el pdf
   pw.Widget _buildFirmaImageCell(List<FirmaPersonal> firmas, String tipoPersonal, String turno) {
     final match = firmas.where((f) =>
         f.tipoPersonal == tipoPersonal && f.turno == turno).toList();
@@ -1057,6 +1058,7 @@ class PdfReporteService {
     }
   }
 
+  // construye la tabla de antibioticos con dias de tratamiento
   pw.Widget _buildAntibioticosTable(List<TratamientoAntibiotico> antibioticos) {
     if (antibioticos.isEmpty) {
       return _infoContent('Sin registro', 'No hay antibióticos registrados');

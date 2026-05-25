@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import '../../../../../pages/control_riegos/control_de_riesgos_page.dart';
 
+// boton flotante que navega a la pagina de control de riesgos
 class CreateControlRiegosFloatingButton extends StatelessWidget {
-  final String idIngreso; // ✅ Recibe el ID del ingreso
+  final String idIngreso;
 
   const CreateControlRiegosFloatingButton({
     super.key,
-    required this.idIngreso, // ✅ Se asegura que el ID sea obligatorio
+    required this.idIngreso,
   });
 
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: Colors.green, // ✅ Mantiene el color de la app
-      elevation: 6.0, // ✅ Agrega una elevación para mejor visibilidad
+      backgroundColor: Colors.green,
+      elevation: 6.0,
       onPressed: () {
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => ControlDeRiesgosPage(
-            idIngreso:
-                idIngreso, // ✅ Se pasa el ID de ingreso a la página de control de riesgos
-            idRegistroDiario: '', // Pasar el valor adecuado si es necesario
+            idIngreso: idIngreso,
+            idRegistroDiario: '',
           ),
         ));
       },
-      child: const Icon(Icons.add, size: 28), // ✅ Ícono del botón
+      child: const Icon(Icons.add, size: 28),
     );
   }
 }

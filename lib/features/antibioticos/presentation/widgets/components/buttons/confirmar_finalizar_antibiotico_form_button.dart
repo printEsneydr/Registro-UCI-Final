@@ -4,6 +4,7 @@ import 'package:registro_uci/common/components/buttons/primary_button.dart';
 import 'package:registro_uci/common/extensions/async_value_ui.dart';
 import 'package:registro_uci/features/antibioticos/presentation/controllers/finalizar_tratamiento_antibiotico_controller.dart';
 
+// boton que confirma y ejecuta la finalizacion del tratamiento antibiotico
 class ConfirmarFinalizarAntibioticoFormButton extends ConsumerWidget {
   final String idIngreso;
   final String idTratamientoAntibiotico;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:registro_uci/features/antibioticos/presentation/widgets/create_tratamiento_antibiotico_form.dart';
 
+// boton flotante que abre el dialogo para crear un tratamiento antibiotico
 class CreateTratamientoAntibioticoFAB extends StatelessWidget {
   const CreateTratamientoAntibioticoFAB({
     super.key,

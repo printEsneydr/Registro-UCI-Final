@@ -4,8 +4,11 @@ import 'package:registro_uci/features/intervenciones/domain/models/actividad.dar
 import 'package:registro_uci/features/intervenciones/domain/models/intervencion.dart';
 import 'package:registro_uci/pages/resultados/resultados_de_intervencion_page.dart';
 
+// pagina que muestra los detalles de una intervencion y sus actividades
 class IntervencionPage extends StatelessWidget {
+  // intervencion a mostrar
   final Intervencion intervencion;
+  // constructor, requiere la intervencion
   const IntervencionPage({super.key, required this.intervencion});
 
   @override

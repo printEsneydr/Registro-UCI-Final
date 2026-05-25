@@ -3,11 +3,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/glasgow/data/providers/glasgow_provider.dart';
 import 'package:registro_uci/features/monitorias_hemodinamicas/glasgow/presentation/widgets/update_glasgow_form.dart';
 
+// pagina para editar un registro existente de la escala de glasgow
 class UpdateGlasgowPage extends ConsumerWidget {
+  // id del ingreso del paciente
   final String idIngreso;
+  // id del registro diario asociado
   final String idRegistroDiario;
+  // id del registro de glasgow a editar
   final String glasgowId;
 
+  // constructor requiere id de ingreso, registro diario y glasgow
   const UpdateGlasgowPage({
     super.key,
     required this.idIngreso,
@@ -15,6 +20,7 @@ class UpdateGlasgowPage extends ConsumerWidget {
     required this.glasgowId,
   });
 
+  // carga el registro de glasgow y muestra el formulario de edicion
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final glasgowAsync = ref.watch(glasgowByIdProvider((

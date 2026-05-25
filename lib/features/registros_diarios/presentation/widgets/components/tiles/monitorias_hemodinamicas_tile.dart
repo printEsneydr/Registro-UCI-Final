@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/common/components/form_tile.dart';
 import 'package:registro_uci/pages/monitoria_hemodinamica/monitoria_hemodinamica_page.dart';
 
+// tile que navega a la pagina de monitoreo hemodinamico
 class MonitoriasHemodinamicasTile extends StatelessWidget {
   const MonitoriasHemodinamicasTile({
     super.key,
@@ -21,7 +22,6 @@ class MonitoriasHemodinamicasTile extends StatelessWidget {
       title: "Monitorías Hemodinámicas",
       subtitle: "Registro de parámetros hemodinámicos",
       onTap: () {
-        // Add navigation logic here
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) {
             return MonitoriaHemodinamicaPage(

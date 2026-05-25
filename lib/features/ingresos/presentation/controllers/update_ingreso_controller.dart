@@ -7,6 +7,7 @@ import 'package:registro_uci/features/ingresos/data/dto/update_ingreso_dto.dart'
 import 'package:registro_uci/features/ingresos/data/providers/ingreso_by_id_provider.dart';
 import 'package:registro_uci/features/ingresos/data/providers/ingresos_by_sala_provider.dart';
 
+// controller que maneja la actualizacion de un ingreso existente
 class UpdateIngresoController extends AsyncNotifier<void> {
   late final IngresosRepository _repository =
       ref.watch(ingresosRepositoryProvider);
@@ -14,6 +15,7 @@ class UpdateIngresoController extends AsyncNotifier<void> {
   @override
   FutureOr<void> build() {}
 
+  // ejecuta la actualizacion e invalida los providers de sala e ingreso
   Future<void> updateIngreso(String idIngreso, UpdateIngresoDto dto) async {
     state = const AsyncValue.loading();
     state =
@@ -26,6 +28,7 @@ class UpdateIngresoController extends AsyncNotifier<void> {
   }
 }
 
+// provider del controller de actualizacion de ingreso
 final updateIngresoControllerProvider =
     AsyncNotifierProvider<UpdateIngresoController, void>(
   () => UpdateIngresoController(),

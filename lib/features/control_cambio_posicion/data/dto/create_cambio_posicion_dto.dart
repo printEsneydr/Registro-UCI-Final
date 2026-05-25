@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+// dto para crear un cambio de posicion con validaciones
 class CreateCambioPosicionDto extends MapView<String, dynamic> {
   final String posicion;
   final int hora;
@@ -20,11 +21,10 @@ class CreateCambioPosicionDto extends MapView<String, dynamic> {
           if (observaciones != null) 'observaciones': observaciones,
           if (responsable != null) 'responsable': responsable,
         }) {
-    // Validaciones en el constructor
     _validarParametros();
   }
 
-  // Método de validación
+  // valida que los parametros esten en rangos permitidos
   void _validarParametros() {
     if (posicion.isEmpty) {
       throw ArgumentError('La posición no puede estar vacía');
@@ -45,10 +45,10 @@ class CreateCambioPosicionDto extends MapView<String, dynamic> {
     }
   }
 
-  // Método para Firestore
+  // convierte a mapa para firestore
   Map<String, dynamic> toFirestore() => Map<String, dynamic>.from(this);
 
-  // Factory desde Firestore
+  // construye desde firestore
   factory CreateCambioPosicionDto.fromFirestore(Map<String, dynamic> map) {
     return CreateCambioPosicionDto(
       posicion: map['posicion'] as String,
@@ -59,15 +59,15 @@ class CreateCambioPosicionDto extends MapView<String, dynamic> {
     );
   }
 
-  // Factory desde JSON (para APIs)
+  // construye desde json
   factory CreateCambioPosicionDto.fromJson(Map<String, dynamic> json) {
     return CreateCambioPosicionDto.fromFirestore(json);
   }
 
-  // Método para convertir a JSON (para APIs)
+  // convierte a json
   Map<String, dynamic> toJson() => toFirestore();
 
-  // Método copyWith para actualizaciones parciales
+  // crea una copia con campos actualizados parcialmente
   CreateCambioPosicionDto copyWith({
     String? posicion,
     int? hora,

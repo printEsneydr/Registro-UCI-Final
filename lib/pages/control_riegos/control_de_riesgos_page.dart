@@ -9,16 +9,21 @@ import 'package:registro_uci/features/control_riesgos/presentation/controllers/c
 import '../../pages/control_riegos/create_control_riegos_page.dart';
 import '../../pages/control_riegos/update_control_riegos_page.dart';
 
+// pagina que muestra la lista de registros de control de riesgos (upp, caidas, etc)
 class ControlDeRiesgosPage extends ConsumerWidget {
+  // id del ingreso del paciente
   final String idIngreso;
+  // id del registro diario asociado
   final String idRegistroDiario;
 
+  // constructor requiere id de ingreso y registro diario
   const ControlDeRiesgosPage({
     super.key,
     required this.idIngreso,
     required this.idRegistroDiario,
   });
 
+  // construye la pagina con la lista de registros de control de riesgos
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final role = ref.watch(roleProvider);
@@ -250,6 +255,7 @@ class ControlDeRiesgosPage extends ConsumerWidget {
     );
   }
 
+  // widget que muestra una etiqueta con el nivel de riesgo (upp/caida)
   Widget _buildRiskChip(String label, String risk) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -269,6 +275,7 @@ class ControlDeRiesgosPage extends ConsumerWidget {
     );
   }
 
+  // devuelve un color segun el nivel de riesgo (alto=rojo, moderado=naranja, bajo=verde)
   Color _getRiskColor(String risk) {
     switch (risk.toLowerCase()) {
       case 'alto':
@@ -283,6 +290,7 @@ class ControlDeRiesgosPage extends ConsumerWidget {
     }
   }
 
+  // muestra dialogo con los detalles completos del control de riesgos
   void _mostrarDetallesRegistro(
       BuildContext context, ControlDeRiesgos registro) {
     final dateFormat = DateFormat('dd/MM/yyyy HH:mm');
@@ -393,6 +401,7 @@ class ControlDeRiesgosPage extends ConsumerWidget {
     );
   }
 
+  // widget que muestra el titulo de una seccion en el dialogo de detalles
   Widget _buildSectionTitle(String title) {
     return Padding(
       padding: const EdgeInsets.only(top: 12, bottom: 8),
@@ -407,6 +416,7 @@ class ControlDeRiesgosPage extends ConsumerWidget {
     );
   }
 
+  // fila con titulo y valor para mostrar detalles en el dialogo
   Widget _buildDetailRow(String title, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -434,6 +444,7 @@ class ControlDeRiesgosPage extends ConsumerWidget {
     );
   }
 
+  // muestra dialogo de confirmacion y elimina el control de riesgos
   void _confirmDelete(
       BuildContext context, WidgetRef ref, ControlDeRiesgos registro) {
     showDialog<bool>(

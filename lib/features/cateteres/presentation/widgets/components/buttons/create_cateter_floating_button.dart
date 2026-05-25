@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../../../pages/cateteres/create_cateter_page.dart';
 
+// boton flotante que navega a la pagina de creacion de cateter
 class CreateCateterFloatingButton extends StatelessWidget {
   final String idIngreso; // Recibe el ID del ingreso
 

@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'control_sedacion.freezed.dart';
 
+// modelo de control de sedacion con escala rass, hora, orden y observaciones
 @freezed
 class ControlSedacion with _$ControlSedacion {
   const factory ControlSedacion({
@@ -12,11 +13,11 @@ class ControlSedacion with _$ControlSedacion {
     required int rass,
   }) = _ControlSedacion;
 
-  // Método personalizado para incluir el ID
+  // construye desde firestore incluyendo el id del documento
   factory ControlSedacion.fromJson(Map<String, dynamic> json,
       {required String id}) {
     return ControlSedacion(
-      id: id, // Asignamos el ID recibido
+      id: id,
       hora: json['hora'] as int,
       observacion: json['observacion'] as String,
       orden: json['orden'] as int,

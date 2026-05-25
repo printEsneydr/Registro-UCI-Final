@@ -3,11 +3,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:registro_uci/features/antibioticos/data/providers/tratamientos_antibioticos_de_ingreso_provider.dart';
 import 'package:registro_uci/features/antibioticos/presentation/widgets/components/tratamiento_antibiotico_widget.dart';
 
+// widget que muestra la lista de tratamientos antibioticos activos de un ingreso
 class TratamientosAntibioticosList extends ConsumerWidget {
   final String idIngreso;
+  // constructor que recibe el id del ingreso
   const TratamientosAntibioticosList({super.key, required this.idIngreso});
 
   @override
+  // construye la lista usando riverpod para obtener los datos
   Widget build(BuildContext context, WidgetRef ref) {
     final registrosDiarios =
         ref.watch(tratamientosAntibioticosProvider(idIngreso));

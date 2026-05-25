@@ -6,6 +6,7 @@ import '../../data/constants/constants.dart';
 import '../../data/repositories/firabase_control_de_riesgos.dart';
 import 'package:registro_uci/features/control_riesgos/domain/models/control_de_riesgos.dart';
 
+// formulario para crear un nuevo control de riesgos
 class CreateControlRiesgosForm extends StatefulWidget {
   final String idIngreso;
   final String idRegistroDiario;
@@ -25,7 +26,6 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
   final FirebaseControlDeRiesgosRepository _repositorio =
       FirebaseControlDeRiesgosRepository();
 
-  // Estados y controladores comunes
   bool tieneUPP = false;
   bool uppResuelta = false;
   bool enAislamiento = false;
@@ -40,19 +40,18 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
   DateTime? fechaRegistro;
 
   int? _diasAislamientoCalculados;
-  // Controladores para campos compartidos
   TextEditingController numeroReporteEAController = TextEditingController();
   TextEditingController numeroReporteCaidaController = TextEditingController();
   TextEditingController agenteAislamientoController = TextEditingController();
   TextEditingController medicamentoAlergicoController = TextEditingController();
   TextEditingController fechaRegistroController = TextEditingController();
 
-  // Controladores para UPP (independientes)
+  // controladores para valores de upp en tres horarios
   TextEditingController uppMananaController = TextEditingController();
   TextEditingController uppTardeController = TextEditingController();
   TextEditingController uppNocheController = TextEditingController();
 
-  // Controladores para Caídas (independientes)
+  // controladores para valores de caida en tres horarios
   TextEditingController caidaMananaController = TextEditingController();
   TextEditingController caidaTardeController = TextEditingController();
   TextEditingController caidaNocheController = TextEditingController();
@@ -64,7 +63,7 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
   @override
   void initState() {
     super.initState();
-    // Inicializar controladores con valores por defecto
+    // inicializa campos numericos con valor cero
     uppMananaController.text = '0';
     uppTardeController.text = '0';
     uppNocheController.text = '0';
@@ -75,7 +74,6 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
 
   @override
   void dispose() {
-    // Liberar todos los controladores
     uppMananaController.dispose();
     uppTardeController.dispose();
     uppNocheController.dispose();
@@ -90,6 +88,7 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
     super.dispose();
   }
 
+  // guarda los datos del formulario en firestore
   void _guardarDatos() async {
     if (fechaRegistro == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -101,6 +100,7 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
       return;
     }
 
+    // construye el modelo con los datos del formulario
     final controlDeRiesgos = ControlDeRiesgos(
       idControlDeRiesgos: '',
       tieneUPP: tieneUPP,
@@ -174,6 +174,7 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
     }
   }
 
+  // calcula el riesgo de caida basado en promedio de tres horarios
   String _calcularRiesgoCaida() {
     final manana = int.tryParse(caidaMananaController.text) ?? 0;
     final tarde = int.tryParse(caidaTardeController.text) ?? 0;
@@ -185,6 +186,7 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
     return 'Alto';
   }
 
+  // calcula los dias de aislamiento basado en fechas de inicio y fin
   void _calcularDiasAislamiento() {
     if (fechaInicioAislamiento != null) {
       final fechaReferencia = fechaFinAislamiento ?? DateTime.now();
@@ -230,6 +232,7 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
 
   @override
   Widget build(BuildContext context) {
+    // formulario completo de control de riesgos con todas las secciones
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -237,7 +240,7 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Fecha de registro común
+              // seccion de seleccion de fecha de creacion
               Card(
                 elevation: 5,
                 child: Padding(
@@ -279,15 +282,12 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
               ),
               const SizedBox(height: 20),
 
-              // Formulario de UPP
               _buildControlUPP(),
               const SizedBox(height: 20),
 
-              // Formulario de Caídas
               _buildRiesgoDeCaidas(),
               const SizedBox(height: 20),
 
-              // Otras secciones
               _buildAnticoagulantes(),
               const SizedBox(height: 20),
               _buildAislamiento(),
@@ -295,7 +295,7 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
               _buildAlergias(),
               const SizedBox(height: 20),
 
-              // Botón de guardar
+              // boton para guardar el formulario
               Center(
                 child: ElevatedButton(
                   onPressed: _guardarDatos,
@@ -309,6 +309,7 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
     );
   }
 
+  // construye la seccion de ulceras por presion (upp)
   Widget _buildControlUPP() {
     return Card(
       elevation: 5,
@@ -323,7 +324,7 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
             ),
             const SizedBox(height: 10),
 
-            // Campos numéricos para UPP
+            // campos numericos de upp para manana, tarde y noche
             const Text(
               'Valores UPP en tres horarios:',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -464,6 +465,7 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
     );
   }
 
+  // construye la seccion de riesgo de caidas
   Widget _buildRiesgoDeCaidas() {
     return Card(
       elevation: 5,
@@ -478,7 +480,7 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
             ),
             const SizedBox(height: 10),
 
-            // Campos numéricos para Caídas
+            // campos numericos de caida para manana, tarde y noche
             const Text(
               'Valores de Caída en tres horarios:',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -542,6 +544,7 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
     );
   }
 
+  // construye la seccion de anticoagulantes
   Widget _buildAnticoagulantes() {
     return Card(
       elevation: 5,
@@ -589,6 +592,7 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
     );
   }
 
+  // construye la seccion de aislamiento
   Widget _buildAislamiento() {
     return Card(
       elevation: 5,
@@ -721,6 +725,7 @@ class _CreateControlRiesgosFormState extends State<CreateControlRiesgosForm> {
     );
   }
 
+  // construye la seccion de alergias medicamentosas
   Widget _buildAlergias() {
     return Card(
       elevation: 5,

@@ -9,16 +9,23 @@ import 'package:registro_uci/features/cateteres/data/providers/cateteres_provide
 import 'update_cateteres_page.dart';
 import '../../features/cateteres/domain/models/cateter.dart';
 
+// pagina que lista los cateteres registrados para un ingreso
 class ListadoCateteresPage extends ConsumerWidget {
+  // id del ingreso al que pertenecen los cateteres
   final String idIngreso;
 
+  // constructor de la pagina, requiere el id del ingreso
   const ListadoCateteresPage({super.key, required this.idIngreso});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // obtiene el rol del usuario actual
     final role = ref.watch(roleProvider);
+    // verifica si el usuario es admin
     final isAdmin = role == UserRole.admin;
+    // obtiene la lista de cateteres desde el proveedor
     final cateteresAsync = ref.watch(cateteresByIngresoProvider(idIngreso));
+    // formato para mostrar fechas
     final dateFormat = DateFormat('dd/MM/yyyy HH:mm');
 
     return Scaffold(
@@ -214,6 +221,7 @@ class ListadoCateteresPage extends ConsumerWidget {
             },
           );
         },
+        // muestra un indicador de carga mientras se obtienen los datos
         loading: () => const Center(
           child: CircularProgressIndicator(
             strokeWidth: 2,
@@ -256,6 +264,7 @@ class ListadoCateteresPage extends ConsumerWidget {
     );
   }
 
+  // construye una fila con icono, etiqueta y valor para mostrar informacion
   Widget _buildInfoRow({
     required IconData icon,
     required String label,
@@ -293,6 +302,7 @@ class ListadoCateteresPage extends ConsumerWidget {
     );
   }
 
+  // muestra un dialogo de confirmacion y elimina el cateter si se confirma
   void _confirmDelete(BuildContext context, WidgetRef ref, Cateter cateter) {
     showDialog<bool>(
       context: context,

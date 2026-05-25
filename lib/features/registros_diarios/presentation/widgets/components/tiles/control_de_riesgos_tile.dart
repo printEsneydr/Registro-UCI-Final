@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_uci/common/components/form_tile.dart';
 import 'package:registro_uci/pages/control_riegos/control_de_riesgos_page.dart';
 
+// tile que navega a la pagina de control de riesgos del paciente
 class ControlDeRiesgosTile extends StatelessWidget {
   const ControlDeRiesgosTile({
     super.key,

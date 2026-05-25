@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:registro_uci/common/providers/repository_providers.dart';
 import 'package:registro_uci/features/balance_liquidos/balance_liquidos_administrados/data/dto/create_liquido_administrado_dto.dart';
 
+// provider que obtiene los tratamientos antibioticos activos como dto
 final getTratamientosAntibioticosActivosProvider = FutureProvider.family<
     List<CreateLiquidoAdministradoDto>,
     TratamientosAntibioticosActivosParams>((ref, params) async {
@@ -20,6 +21,7 @@ final getTratamientosAntibioticosActivosProvider = FutureProvider.family<
 });
 
 @immutable
+// parametros inmutables para consultar tratamientos activos
 class TratamientosAntibioticosActivosParams {
   final String idIngreso;
   final DateTime hora;

@@ -4,6 +4,7 @@ import 'package:registro_uci/common/components/lite_tile.dart';
 import 'package:registro_uci/features/registros_diarios/domain/models/registro_diario.dart';
 import 'package:registro_uci/pages/registro_diario/registro_diario_page.dart';
 
+// tile individual que muestra un registro diario y navega a su detalle
 class RegistroDiarioTile extends StatelessWidget {
   final RegistroDiario registroDiario;
   final String idIngreso;
@@ -15,6 +16,7 @@ class RegistroDiarioTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // muestra la fecha del registro formateada y permite navegar al detalle
     return LiteTile(
       title: DateFormat.MMMMEEEEd()
           .format(registroDiario.fechaRegistro)

@@ -5,10 +5,11 @@ import '../abstract_repositories/cateteres_repository.dart';
 import '../dto/create_cateter_dto.dart';
 import '../dto/update_cateter_dto.dart';
 
+// repositorio que implementa las operaciones de cateteres en firebase
 class FirebaseCateterRepository implements CateteresRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  /// 🔥 **Obtener todos los catéteres en tiempo real**
+  // obtiene todos los cateteres de todos los ingresos en tiempo real
   @override
   Stream<List<Cateter>> getAllCateteres() {
     return _firestore.collectionGroup('cateteres').snapshots().map((snapshot) {
@@ -18,7 +19,7 @@ class FirebaseCateterRepository implements CateteresRepository {
     });
   }
 
-  /// 🔥 **Registrar un nuevo catéter vinculado a un ingreso**
+  // crea un nuevo cateter vinculado a un ingreso
   @override
   Future<void> createCateter(CreateCateterDto dto) async {
     try {
@@ -46,7 +47,7 @@ class FirebaseCateterRepository implements CateteresRepository {
     }
   }
 
-  /// 🔥 **Obtener los catéteres de un ingreso específico en tiempo real**
+  // obtiene los cateteres de un ingreso especifico en tiempo real
   @override
   Stream<List<Cateter>> getCateteresByIngreso(String idIngreso) {
     return _firestore
@@ -61,7 +62,7 @@ class FirebaseCateterRepository implements CateteresRepository {
     });
   }
 
-  /// 🔥 **Obtener un catéter específico por ID**
+  // obtiene un cateter especifico por su id
   @override
   Future<Cateter?> getCateterById(String idIngreso, String idCateter) async {
     try {
@@ -84,7 +85,7 @@ class FirebaseCateterRepository implements CateteresRepository {
     }
   }
 
-  /// 🔥 **Actualizar un catéter**
+  // actualiza los datos de un cateter existente
   @override
   Future<void> updateCateter(
       String idIngreso, String idCateter, UpdateCateterDto dto) async {
@@ -103,7 +104,7 @@ class FirebaseCateterRepository implements CateteresRepository {
     }
   }
 
-  /// 🔥 **Eliminar un catéter**
+  // elimina un cateter de firebase
   @override
   Future<void> deleteCateter(String idIngreso, String idCateter) async {
     try {

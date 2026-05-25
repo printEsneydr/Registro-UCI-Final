@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:registro_uci/common/themes/color_schemes/light_color_scheme.dart';
 
+// tema claro de la aplicacion usando Material 3
 final lightTheme = ThemeData(
   useMaterial3: true,
   fontFamily: 'PlusJakartaSans',

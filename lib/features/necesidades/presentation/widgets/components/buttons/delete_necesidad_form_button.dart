@@ -5,7 +5,9 @@ import 'package:registro_uci/common/extensions/async_value_ui.dart';
 import 'package:registro_uci/features/firmas/domain/models/reporte_params.dart';
 import 'package:registro_uci/features/necesidades/presentation/controllers/delete_necesidad_controller.dart';
 
+// boton de formulario que ejecuta la eliminacion de una necesidad
 class DeleteNecesidadFormButton extends ConsumerWidget {
+  // constructor que recibe el id de la necesidad y los parametros del reporte
   const DeleteNecesidadFormButton({
     super.key,
     required this.idNecesidad,
